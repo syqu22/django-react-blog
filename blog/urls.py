@@ -4,5 +4,5 @@ from django.urls.conf import include
 
 urlpatterns = [
     path('', include('frontend.urls')),
-    path(''. include('leads.urls'))
+    #path(''. include('api.urls')),
 ]
