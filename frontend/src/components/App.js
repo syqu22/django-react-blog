@@ -1,18 +1,24 @@
-import React, { StrictMode } from "react";
-import { render } from "react-dom";
+import React from "react";
+import PostMinimal from "./PostMinimal";
+import NavBar from "./NavBar";
 
 const App = () => {
+  const title = "Hello";
   return (
-    <div>
-      <p>Hello World</p>
+    <div className="App">
+      <h1 className="title">{title}</h1>
+      <NavBar />
+      <div className="posts-list">
+        <PostMinimal />
+        <PostMinimal />
+        <PostMinimal />
+        <PostMinimal />
+        <PostMinimal />
+        <PostMinimal />
+        <PostMinimal />
+      </div>
     </div>
   );
 };
 
-const root = document.getElementById("root");
-render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-  root
-);
+export default App;
