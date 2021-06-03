@@ -1,19 +1,12 @@
 body {
   margin: 0;
+  min-height: 100vh;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
-  background-image: linear-gradient(
-    to right,
-    rgba(49, 47, 48, 0.616),
-    rgba(78, 75, 77, 0.603),
-    rgba(126, 120, 123, 0.445),
-    rgba(71, 68, 70, 0.705),
-    rgba(49, 47, 48, 0.616)
-  );
   position: fixed;
   width: 100%;
   height: 100%;
@@ -22,22 +15,50 @@ body {
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.8);
+}
+
 .title {
   padding-left: 5%;
-  color: coral;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.title:hover {
+  color: rgba(128, 128, 128, 0.685);
+}
+
+.home-page {
+  margin-top: 5px;
+  margin-left: 10px;
 }
 
 .posts-list {
-  width: 70%;
   float: left;
-  padding-left: 0.5%;
+  padding-left: 10px;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 30% 30% 30%;
 }
 
-.post-minimal {
+.minimal-post {
+  overflow: hidden;
+  height: auto;
   background-color: white;
   border-radius: 5px;
-  box-shadow: 5px 7px 5px grey;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.336);
   padding-left: 1%;
+  padding: 20px;
+  margin: 20px;
+  white-space: normal;
+}
+
+.minimal-post img {
+  float: right;
+  width: 100%;
+  height: 90px;
+  object-fit: cover;
 }
 
 .navbar {
@@ -51,7 +72,6 @@ body {
 .navbar-item {
   float: left;
   padding: 12px 15px;
-  text-decoration: none;
   text-align: center;
   display: block;
   color: white;
@@ -63,10 +83,9 @@ body {
 
 .navbar-search {
   padding-top: 8px;
-  text-decoration: none;
   text-align: center;
-  display: block;
   color: white;
+  margin-right: 30px;
 }
 
 #search-form {
@@ -76,9 +95,9 @@ body {
 }
 
 .navbar-item:hover {
-  background-color: black;
+  background-color: rgba(128, 128, 128, 0.685);
 }
 
 .navbar-home {
-  background-color: rgb(107, 103, 103);
+  background-color: rgba(0, 0, 0, 0.8);
 }

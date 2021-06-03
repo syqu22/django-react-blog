@@ -1,51 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
+import { NavLink } from "react-router-dom";
 import SearchBar from "./SearchBar";
 
 const NavBar = () => {
-  const [test, setTest] = useState("#");
-
   return (
     <ul className="navbar">
-      <li
-        className="navbar-item navbar-home"
-        onClick={() => {
-          setTest("#");
-        }}
-      >
-        {test}
-      </li>
-      <li
-        className="navbar-item"
-        onClick={() => {
-          setTest("1");
-        }}
-      >
-        About Me
-      </li>
-      <li
-        className="navbar-item"
-        onClick={() => {
-          setTest("2");
-        }}
-      >
-        Projects
-      </li>
-      <li
-        className="navbar-item"
-        onClick={() => {
-          setTest("3");
-        }}
-      >
-        Contact
-      </li>
-      <li
-        className="navbar-item navbar-item-right"
-        onClick={() => {
-          setTest(4);
-        }}
-      >
-        Admin
-      </li>
+      <NavLink to="/">
+        <li className="navbar-item navbar-home">Home</li>
+      </NavLink>
+      <NavLink to="/about-me">
+        <li className="navbar-item">About Me</li>
+      </NavLink>
+      <NavLink to="/projects">
+        <li className="navbar-item">Projects</li>
+      </NavLink>
+      <NavLink to="/contact">
+        <li className="navbar-item">Contact</li>
+      </NavLink>
+      <a href="/admin">
+        <li className="navbar-item navbar-item-right">Login</li>
+      </a>
       <li className="navbar-search navbar-item-right">
         <SearchBar />
       </li>
