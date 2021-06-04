@@ -31,7 +31,12 @@ a {
 
 .hero-image {
   top: 50%;
-  background-image: url("https://wallpaperaccess.com/full/138728.jpg");
+  background-image: linear-gradient(
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.8)
+    ),
+    url("https://wallpaperaccess.com/full/138728.jpg");
   height: 500px;
   background-position: center;
   background-repeat: no-repeat;
@@ -51,9 +56,25 @@ a {
   margin: 2rem;
 }
 
+.arrow-button {
+  font-size: 2.5rem;
+  background: none;
+  border: none;
+  transition: 0.5s;
+  margin: auto;
+}
+
+.inactive {
+  color: grey;
+}
+
+.arrow-button:hover {
+  transform: scale(1.2);
+}
+
 .posts-list {
   display: grid;
-  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-columns: 9% 20% 20% 20% 20% 9%;
 }
 
 .posts-list a {
@@ -63,9 +84,8 @@ a {
 .minimal-post {
   overflow: hidden;
   height: auto;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.336);
   white-space: normal;
-  transition: transform 1s;
+  transition: 1s;
 }
 
 .minimal-post:hover {
@@ -81,7 +101,7 @@ h2 {
 .minimal-post img {
   float: right;
   width: 100%;
-  height: 90px;
+  height: 10rem;
   object-fit: cover;
 }
 
@@ -127,6 +147,10 @@ h2 {
 }
 
 @media screen and (max-width: 600px) {
+  .arrow-button {
+    font-size: 15px;
+  }
+
   .posts-list a {
     margin: 0.3rem;
   }
