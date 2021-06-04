@@ -20,11 +20,6 @@ a {
   color: rgba(0, 0, 0, 0.8);
 }
 
-.title {
-  padding-left: 5%;
-  color: rgba(0, 0, 0, 0.8);
-}
-
 .social {
   text-align: right;
 }
@@ -32,11 +27,7 @@ a {
 .social-button {
   background: none;
   border: none;
-  font-size: 1.4rem;
-}
-
-.home-page {
-  margin-top: 5px;
+  font-size: 1.6rem;
 }
 
 .hero-image {
@@ -48,6 +39,7 @@ a {
     ),
     url("https://wallpaperaccess.com/full/138728.jpg");
   height: 500px;
+  background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -70,7 +62,7 @@ a {
   font-size: 2.5rem;
   background: none;
   border: none;
-  transition: 0.5s;
+  transition: 0.2s;
   margin: auto;
 }
 
@@ -95,7 +87,7 @@ a {
   overflow: hidden;
   height: auto;
   white-space: normal;
-  transition: 1s;
+  transition: 0.2s;
 }
 
 .minimal-post:hover {
@@ -158,7 +150,7 @@ h2 {
 
 @media screen and (max-width: 600px) {
   .social-button {
-    font-size: 1 rem;
+    font-size: 1.2rem;
   }
 
   .arrow-button {

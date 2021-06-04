@@ -6,29 +6,16 @@ import AboutMe from "./AboutMe";
 import Projects from "./Projects";
 import Contact from "./Contact";
 import NavBar from "./NavBar";
-import { GrFacebook, GrInstagram, GrTwitter } from "react-icons/gr";
+import Socials from "./Socials";
 
 const App = () => {
-  const title = "Hello Blog";
-
   return (
     <Router>
       <div className="App">
-        <h1 className="title">{title}</h1>
-        <div className="social">
-          <button className="social-button">
-            <GrFacebook />
-          </button>
-          <button className="social-button">
-            <GrInstagram />
-          </button>
-          <button className="social-button">
-            <GrTwitter />
-          </button>
-        </div>
         <NavBar />
+        <Socials />
         <Switch>
-          <Route exact path="/" component={HomePage}></Route>
+          <Route exact path="/" component={HomePage} />
           <Route path="/post/:id" component={Post} />
           <Route path="/about-me" component={AboutMe} />
           <Route path="/projects" component={Projects} />
