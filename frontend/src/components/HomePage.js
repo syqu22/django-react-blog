@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Hero from "./Hero";
 import MinimalPost from "./MinimalPost";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { IconContext } from "react-icons";
 
 const HomePage = () => {
   const [postsList, setPostsList] = useState([]);

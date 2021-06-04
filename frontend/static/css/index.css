@@ -25,6 +25,16 @@ a {
   color: rgba(0, 0, 0, 0.8);
 }
 
+.social {
+  text-align: right;
+}
+
+.social-button {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+}
+
 .home-page {
   margin-top: 5px;
 }
@@ -147,6 +157,10 @@ h2 {
 }
 
 @media screen and (max-width: 600px) {
+  .social-button {
+    font-size: 1 rem;
+  }
+
   .arrow-button {
     font-size: 15px;
   }

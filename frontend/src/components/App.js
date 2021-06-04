@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "./HomePage";
 import Post from "./Post";
@@ -6,6 +6,7 @@ import AboutMe from "./AboutMe";
 import Projects from "./Projects";
 import Contact from "./Contact";
 import NavBar from "./NavBar";
+import { GrFacebook, GrInstagram, GrTwitter } from "react-icons/gr";
 
 const App = () => {
   const title = "Hello Blog";
@@ -14,6 +15,17 @@ const App = () => {
     <Router>
       <div className="App">
         <h1 className="title">{title}</h1>
+        <div className="social">
+          <button className="social-button">
+            <GrFacebook />
+          </button>
+          <button className="social-button">
+            <GrInstagram />
+          </button>
+          <button className="social-button">
+            <GrTwitter />
+          </button>
+        </div>
         <NavBar />
         <Switch>
           <Route exact path="/" component={HomePage}></Route>
