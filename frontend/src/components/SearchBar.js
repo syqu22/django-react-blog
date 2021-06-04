@@ -8,7 +8,7 @@ const SearchBar = () => {
       <label htmlFor="search-form">Search: </label>
       <input
         type="text"
-        id="search-form"
+        className="search-form"
         onChange={(e) => {
           setSearch(e.target.value);
         }}

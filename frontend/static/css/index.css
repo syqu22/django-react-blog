@@ -1,13 +1,13 @@
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-family: Roboto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
-  position: fixed;
+  position: absolute;
   width: 100%;
   height: 100%;
   left: 0;
@@ -25,33 +25,57 @@ a {
   color: rgba(0, 0, 0, 0.8);
 }
 
-.title:hover {
-  color: rgba(128, 128, 128, 0.685);
-}
-
 .home-page {
   margin-top: 5px;
-  margin-left: 10px;
+}
+
+.hero-image {
+  top: 50%;
+  background-image: url("https://wallpaperaccess.com/full/138728.jpg");
+  height: 500px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.hero-text {
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  position: absolute;
+  color: white;
+}
+
+.recent {
+  margin: 2rem;
 }
 
 .posts-list {
-  float: left;
-  padding-left: 10px;
   display: grid;
-  width: 100%;
-  grid-template-columns: 30% 30% 30%;
+  grid-template-columns: 25% 25% 25% 25%;
+}
+
+.posts-list a {
+  margin: 2rem;
 }
 
 .minimal-post {
   overflow: hidden;
   height: auto;
-  background-color: white;
-  border-radius: 5px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.336);
-  padding-left: 1%;
-  padding: 20px;
-  margin: 20px;
   white-space: normal;
+  transition: transform 1s;
+}
+
+.minimal-post:hover {
+  transform: scale(1.1);
+}
+
+.minimal-post p,
+h2 {
+  padding-left: 0.3em;
+  float: inline-start;
 }
 
 .minimal-post img {
@@ -88,7 +112,7 @@ a {
   margin-right: 30px;
 }
 
-#search-form {
+.search-form {
   border-radius: 3px;
   border: 1px solid;
   height: 22px;
@@ -100,4 +124,19 @@ a {
 
 .navbar-home {
   background-color: rgba(0, 0, 0, 0.8);
+}
+
+@media screen and (max-width: 600px) {
+  .posts-list a {
+    margin: 0.3rem;
+  }
+
+  .minimal-post {
+    font-size: x-small;
+    height: 5.5rem;
+  }
+
+  .minimal-post img {
+    height: 2.5rem;
+  }
 }

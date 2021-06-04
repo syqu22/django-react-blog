@@ -6,6 +6,7 @@ import AboutMe from "./AboutMe";
 import Projects from "./Projects";
 import Contact from "./Contact";
 import NavBar from "./NavBar";
+import Hero from "./Hero";
 
 const App = () => {
   const title = "Personal Blog";
@@ -21,13 +22,13 @@ const App = () => {
   const renderHomePage = () => {
     return (
       <div className="home-page">
-        <h3>Recent Posts</h3>
+        <label className="recent">Recent Posts</label>
         <div className="posts-list">
-          {postsList.map((post) => (
+          {postsList.slice(0, 4).map((post) => (
             <MinimalPost key={post.id} {...post} />
           ))}
         </div>
-        <h1>Welcome</h1>
+        <Hero />
       </div>
     );
   };
