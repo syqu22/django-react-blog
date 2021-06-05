@@ -10,21 +10,25 @@ const HomePage = () => {
   const [page, setPage] = useState(0);
 
   useEffect(() => {
-    fetch("/api")
-      .then((response) => response.json())
+    fetch("/api/posts")
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
       .then((data) => {
-        // Reduce data to max of 10 elements
         if (data) {
-          data.slice(0, 10);
           setPostsList(data);
           setPage(1);
         }
+      })
+      .catch((error) => {
+        console.log(error);
       });
   }, []);
 
   useEffect(() => {
     // Pagination logic
-    console.log(postsList);
     if (page - 1 < 1) {
       setLeft(false);
     } else {

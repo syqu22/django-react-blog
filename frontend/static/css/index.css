@@ -22,12 +22,19 @@ a {
 
 .social {
   text-align: right;
+  margin-top: 1rem;
+  margin-right: 2rem;
 }
 
 .social-button {
   background: none;
   border: none;
   font-size: 1.6rem;
+  transition: 0.2s;
+}
+
+.social-button:hover {
+  transform: scale(1.1);
 }
 
 .hero-image {
@@ -63,7 +70,6 @@ a {
   background: none;
   border: none;
   transition: 0.2s;
-  margin: auto;
 }
 
 .inactive {
@@ -85,7 +91,6 @@ a {
 
 .minimal-post {
   overflow: hidden;
-  height: auto;
   white-space: normal;
   transition: 0.2s;
 }
@@ -119,7 +124,6 @@ h2 {
   float: left;
   padding: 12px 15px;
   text-align: center;
-  display: block;
   color: white;
 }
 
@@ -148,6 +152,28 @@ h2 {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
+.error {
+  text-align: center;
+  font-size: 2.2rem;
+}
+
+.post h1 {
+  font-size: 4.5rem;
+}
+
+.post img {
+  height: 15rem;
+  width: 100%;
+  object-fit: cover;
+  filter: opacity(50%);
+}
+
+.post-header {
+  position: absolute;
+  top: 3rem;
+  left: 2rem;
+}
+
 @media screen and (max-width: 600px) {
   .social-button {
     font-size: 1.2rem;
@@ -168,5 +194,9 @@ h2 {
 
   .minimal-post img {
     height: 2.5rem;
+  }
+
+  .error {
+    font-size: 1.5rem;
   }
 }

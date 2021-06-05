@@ -7,7 +7,8 @@ from rest_framework.response import Response
 
 
 class GetPostList(generics.ListCreateAPIView):
-    queryset = Post.objects.all()
+    # TODO add pagination
+    queryset = Post.objects.order_by("-created_at")[:10]
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     serializer_class = PostSerializer
 
