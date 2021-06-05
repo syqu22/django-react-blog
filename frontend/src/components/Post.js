@@ -5,10 +5,10 @@ const Post = (props) => {
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const id = props.location.pathname.split("/")[2];
+  const slug = props.location.pathname.split("/")[1];
 
   useEffect(() => {
-    fetch(`/api/posts/${id}`)
+    fetch(`/api/posts/${slug}`)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -37,9 +37,14 @@ const Post = (props) => {
           <p>{date}</p>
           <p>{post.author}</p>
         </div>
-        <p>{post.body}</p>
-        <p>{post.tags}</p>
-        {post.comments}
+        <div className="post-body">
+          <p>{post.body}</p>
+          <p>{post.tags}</p>
+        </div>
+        <div className="post-comments">
+          <p>Comments:</p>
+          {post.comments}
+        </div>
       </div>
     );
   };
@@ -52,7 +57,7 @@ const Post = (props) => {
     );
   }
 
-  return <div>{!isLoading ? renderPost() : ""}</div>;
+  return <>{!isLoading ? renderPost() : ""}</>;
 };
 
 export default Post;

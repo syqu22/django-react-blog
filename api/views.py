@@ -7,20 +7,19 @@ from rest_framework.response import Response
 
 
 class GetPostList(generics.ListCreateAPIView):
-    # TODO add pagination
-    queryset = Post.objects.order_by("-created_at")[:10]
+    queryset = Post.objects.filter(is_public=True)[:10]
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     serializer_class = PostSerializer
 
 
 class GetPost(APIView):
-    def get(self, request: Request, id: int):
-        post = Post.objects.filter(id=id)
+    def get(self, request: Request, slug: str):
+        post = Post.objects.filter(slug=slug).filter(is_public=True)
 
         if post.exists():
             data = PostSerializer(post[0]).data
             return Response(data, status=status.HTTP_200_OK)
-        return Response({'Post not found': f'Cannot find post with id: {id}'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'Post not found': f'Cannot find post with slug: {slug}'}, status=status.HTTP_404_NOT_FOUND)
 
 
 class GetCommentsList(generics.ListCreateAPIView):

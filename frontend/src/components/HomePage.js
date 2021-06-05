@@ -44,12 +44,12 @@ const HomePage = () => {
   const renderPosts = () => {
     return postsList
       .slice(page - 1, page + 3)
-      .map((post) => <MinimalPost key={post.id} {...post} />);
+      .map((post) => <MinimalPost key={post.slug} {...post} />);
   };
 
   const renderRecentPosts = () => {
     return (
-      <div>
+      <>
         <label className="recent">Recent Posts:</label>
         <div className="posts-list">
           <button
@@ -70,7 +70,7 @@ const HomePage = () => {
             <FaArrowRight />
           </button>
         </div>
-      </div>
+      </>
     );
   };
 

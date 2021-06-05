@@ -15,7 +15,7 @@ const App = () => {
         <Socials />
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route path="/post/:id" component={Post} />
+          <Route path="/:slug" component={Post} />
           <Route path="/projects" component={Projects} />
           <Route path="/contact" component={Contact} />
         </Switch>

@@ -61,7 +61,7 @@ const NavBar = () => {
     );
   };
 
-  return <div>{!isMobile ? renderNavBar() : renderMobileNavBar()}</div>;
+  return <>{!isMobile ? renderNavBar() : renderMobileNavBar()}</>;
 };
 
 export default NavBar;

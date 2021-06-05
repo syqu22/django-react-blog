@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const MinimalPost = ({ id, thumbnail_url, title, created_at }) => {
+const MinimalPost = ({ slug, thumbnail_url, title, created_at }) => {
   const date = new Date(created_at).toLocaleDateString();
 
   return (
-    <Link to={`/post/${id}`}>
+    <Link to={`/${slug}`}>
       <div className="minimal-post">
         <img src={thumbnail_url} />
         <p>{date}</p>
