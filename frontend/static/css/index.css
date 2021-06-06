@@ -241,7 +241,12 @@ a {
   cursor: pointer;
 }
 
-.search-form {
+.search {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.search-bar {
   border-radius: 5px;
   border: 1px solid;
   height: 1.5rem;
@@ -271,5 +276,27 @@ a {
 
   .error {
     font-size: 1.5rem;
+  }
+
+  .social {
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+  }
+
+  .recent-text {
+    font-size: small;
+    margin-top: 2.5rem;
+  }
+
+  .recent-button {
+    padding: 1rem;
+  }
+
+  .search-form {
+    height: 1rem;
+  }
+
+  .post-header h1 {
+    font-size: large;
   }
 }

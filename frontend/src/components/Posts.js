@@ -10,7 +10,7 @@ const Posts = () => {
   const [canLeft, setLeft] = useState(false);
   const [canRight, setRight] = useState(false);
 
-  const postsPerPage = 6;
+  const postsPerPage = 4;
 
   useEffect(() => {
     fetch("/api/posts")
@@ -61,7 +61,7 @@ const Posts = () => {
     return numbers;
   };
 
-  const paginate = () => {
+  const renderPagination = () => {
     return (
       <div className="pagination">
         <button
@@ -90,7 +90,7 @@ const Posts = () => {
   return (
     <>
       <SearchBar />
-      {paginate()}
+      {maxPages > 1 && renderPagination()}
       <div className="container">
         {postsList
           .slice(
