@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Hero from "./Hero";
 import MinimalPost from "./MinimalPost";
 
@@ -25,13 +26,17 @@ const HomePage = () => {
   const renderRecentPosts = () => {
     return (
       <>
-        <h3 className="item-text">Recent posts:</h3>
+        <h3 className="recent-text">Recent posts:</h3>
         <div className="container">
           {postsList.map((post) => (
             <MinimalPost key={post.slug} {...post} />
           ))}
         </div>
-        <button className="item-text">See more</button>
+        <div className="recent-text">
+          <Link className="recent-button" to="/posts">
+            <span>See more</span>
+          </Link>
+        </div>
       </>
     );
   };

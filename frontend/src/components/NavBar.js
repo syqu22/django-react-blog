@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import SearchBar from "./SearchBar";
 
 const NavBar = () => {
   const [windowDimension, setWindowDimension] = useState(null);
@@ -35,9 +34,6 @@ const NavBar = () => {
         <a href="/admin">
           <li className="navbar-item navbar-item-right">Login</li>
         </a>
-        <li className="navbar-search navbar-item-right">
-          <SearchBar />
-        </li>
       </ul>
     );
   };

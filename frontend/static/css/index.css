@@ -2,7 +2,7 @@
 
 body {
   margin: 0;
-  min-height: 100vh;
+  min-height: 100%;
   font-family: "Open Sans", sans-serif;
 }
 
@@ -36,6 +36,7 @@ a {
   border: none;
   font-size: 1.6rem;
   transition: 0.2s;
+  cursor: pointer;
 }
 
 .social-button:hover {
@@ -43,7 +44,7 @@ a {
 }
 
 .hero-image {
-  margin-top: 20%;
+  margin-top: 15%;
   background-image: linear-gradient(
       rgba(0, 0, 0, 0.2),
       rgba(0, 0, 0, 0.5),
@@ -67,6 +68,11 @@ a {
   background: none;
   border: none;
   transition: 0.2s;
+  cursor: pointer;
+}
+
+.active {
+  color: black;
 }
 
 .inactive {
@@ -77,29 +83,59 @@ a {
   transform: scale(1.2);
 }
 
+.recent-text {
+  text-align: center;
+  margin: auto auto 2rem;
+  overflow: hidden;
+}
+
+.recent-button {
+  padding: 3rem;
+  position: relative;
+  background-color: lightgray;
+  transition: 0.4s;
+}
+
+.recent-button::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: black;
+  transition: 0.4s;
+}
+
+.recent-button:hover {
+  color: lightgray;
+}
+
+.recent-button span {
+  position: relative;
+  z-index: 1;
+}
+
+.recent-button:hover::after {
+  width: 100%;
+}
+
 .container {
-  margin-top: 2rem;
   display: grid;
-  row-gap: 3rem;
+  grid-template-columns: 50% 50%;
   white-space: normal;
   text-align: center;
 }
 
 .item {
-  width: 50%;
-  margin: auto;
+  width: 80%;
+  margin: 1rem auto 1rem;
   overflow: hidden;
   transition: 0.4s;
 }
 
 .item:hover {
   transform: scale(1.1);
-}
-
-.item-text {
-  text-align: center;
-  margin: auto;
-  overflow: hidden;
 }
 
 .item span {
@@ -129,19 +165,6 @@ a {
 
 .navbar-item-right {
   float: right;
-}
-
-.navbar-search {
-  padding-top: 8px;
-  text-align: center;
-  color: white;
-  margin-right: 30px;
-}
-
-.search-form {
-  border-radius: 3px;
-  border: 1px solid;
-  height: 22px;
 }
 
 .navbar-item:hover {
@@ -196,6 +219,32 @@ a {
   padding: 0 1rem;
   margin: 0.5rem;
   border-radius: 0.7rem;
+}
+
+.pagination {
+  margin: auto;
+  width: 50%;
+  text-align: center;
+  display: grid;
+  padding-bottom: 5rem;
+  grid-template-columns: auto auto auto;
+  white-space: normal;
+  gap: 1px;
+}
+
+.pagination-numbers {
+  font-size: 2rem;
+}
+
+.pagination-numbers span {
+  margin: 1rem;
+  cursor: pointer;
+}
+
+.search-form {
+  border-radius: 5px;
+  border: 1px solid;
+  height: 1.5rem;
 }
 
 @media screen and (max-width: 600px) {
