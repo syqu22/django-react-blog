@@ -1,15 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Tags from "./Tags";
 
-const MinimalPost = ({ slug, thumbnail_url, title, created_at }) => {
+const MinimalPost = ({ slug, thumbnail_url, title, created_at, tags }) => {
   const date = new Date(created_at).toLocaleDateString();
 
   return (
-    <Link to={`/${slug}`}>
-      <div className="minimal-post">
+    <Link to={`/post/${slug}`} className="item">
+      <div>
         <img src={thumbnail_url} />
-        <p>{date}</p>
+        <span>{date}</span>
         <h2>{title}</h2>
+        <Tags values={tags} />
       </div>
     </Link>
   );

@@ -1,9 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: Roboto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: "Open Sans", sans-serif;
 }
 
 #root {
@@ -13,11 +13,16 @@ body {
   left: 0;
   top: 0;
   box-sizing: border-box;
+  overflow: auto;
 }
 
 a {
   text-decoration: none;
   color: rgba(0, 0, 0, 0.8);
+}
+
+.home-page {
+  width: auto;
 }
 
 .social {
@@ -34,11 +39,11 @@ a {
 }
 
 .social-button:hover {
-  transform: scale(1.1);
+  transform: scale(1.2);
 }
 
 .hero-image {
-  top: 50%;
+  margin-top: 20%;
   background-image: linear-gradient(
       rgba(0, 0, 0, 0.2),
       rgba(0, 0, 0, 0.5),
@@ -50,19 +55,11 @@ a {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  text-align: center;
 }
 
 .hero-text {
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  position: absolute;
   color: white;
-}
-
-.recent {
-  margin: 2rem;
 }
 
 .arrow-button {
@@ -80,35 +77,38 @@ a {
   transform: scale(1.2);
 }
 
-.posts-list {
+.container {
+  margin-top: 2rem;
   display: grid;
-  grid-template-columns: 9% 20% 20% 20% 20% 9%;
-}
-
-.posts-list a {
-  margin: 2rem;
-}
-
-.minimal-post {
-  overflow: hidden;
+  row-gap: 3rem;
   white-space: normal;
-  transition: 0.2s;
+  text-align: center;
 }
 
-.minimal-post:hover {
+.item {
+  width: 50%;
+  margin: auto;
+  overflow: hidden;
+  transition: 0.4s;
+}
+
+.item:hover {
   transform: scale(1.1);
 }
 
-.minimal-post p,
-h2 {
-  padding-left: 0.3em;
-  float: inline-start;
+.item-text {
+  text-align: center;
+  margin: auto;
+  overflow: hidden;
 }
 
-.minimal-post img {
-  float: right;
+.item span {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.item img {
   width: 100%;
-  height: 10rem;
+  height: 15rem;
   object-fit: cover;
 }
 
@@ -182,6 +182,22 @@ h2 {
   margin-left: 1rem;
 }
 
+.tags {
+  display: inline-flex;
+  flex-direction: row;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  align-self: center;
+  margin: 0 -1rem;
+}
+
+.tag {
+  width: max-content;
+  padding: 0 1rem;
+  margin: 0.5rem;
+  border-radius: 0.7rem;
+}
+
 @media screen and (max-width: 600px) {
   .social-button {
     font-size: 1.2rem;
@@ -191,16 +207,16 @@ h2 {
     font-size: 15px;
   }
 
-  .posts-list a {
+  .container a {
     margin: 0.3rem;
   }
 
-  .minimal-post {
+  .item {
     font-size: x-small;
     height: 5.5rem;
   }
 
-  .minimal-post img {
+  .item img {
     height: 2.5rem;
   }
 

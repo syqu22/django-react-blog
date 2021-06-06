@@ -7,7 +7,13 @@ from rest_framework.response import Response
 
 
 class GetPostList(generics.ListCreateAPIView):
-    queryset = Post.objects.filter(is_public=True)[:10]
+    queryset = Post.objects.filter(is_public=True)
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    serializer_class = PostSerializer
+
+
+class GetRecentPostList(generics.ListCreateAPIView):
+    queryset = Post.objects.filter(is_public=True)[:2]
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     serializer_class = PostSerializer
 

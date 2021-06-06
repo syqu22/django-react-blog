@@ -4,7 +4,7 @@ from django.contrib.postgres.fields import ArrayField
 
 class Post(models.Model):
     title = models.CharField(max_length=150, unique=True)
-    slug = models.SlugField(max_length=150, unique=True)
+    slug = models.SlugField(max_length=150, unique=True, allow_unicode=True)
     description = models.CharField(max_length=400, null=True, blank=True)
     author = models.CharField(max_length=50)
     thumbnail_url = models.URLField(max_length=400, null=True, blank=True)

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import Tags from "./Tags";
 
 const Post = (props) => {
   const [post, setPost] = useState(null);
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const slug = props.location.pathname.split("/")[1];
+  const slug = props.location.pathname.split("/")[2];
 
   useEffect(() => {
     fetch(`/api/posts/${slug}`)
@@ -39,7 +40,7 @@ const Post = (props) => {
         </div>
         <div className="post-body">
           <p>{post.body}</p>
-          <p>{post.tags}</p>
+          <Tags values={post.tags} />
         </div>
         <div className="post-comments">
           <p>Comments:</p>
@@ -50,11 +51,7 @@ const Post = (props) => {
   };
 
   if (error) {
-    return (
-      <div className="error">
-        <h1>{error}</h1>
-      </div>
-    );
+    return <p className="error"> {error} </p>;
   }
 
   return <>{!isLoading ? renderPost() : ""}</>;
