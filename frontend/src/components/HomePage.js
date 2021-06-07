@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Hero from "./Hero";
 import MinimalPost from "./MinimalPost";
+import NavBar from "./NavBar";
 
 const HomePage = () => {
   const [postsList, setPostsList] = useState([]);
@@ -43,6 +44,7 @@ const HomePage = () => {
 
   return (
     <div className="home-page">
+      <NavBar />
       {postsList.length ? renderRecentPosts() : ""}
       <Hero />
     </div>

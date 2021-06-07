@@ -9,6 +9,7 @@ const Posts = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [canLeft, setLeft] = useState(false);
   const [canRight, setRight] = useState(false);
+  const [search, setSearch] = useState();
 
   const postsPerPage = 4;
 
@@ -87,10 +88,13 @@ const Posts = () => {
     );
   };
 
+  // TODO FILTRY Z 'search'
   return (
     <>
-      <SearchBar />
+      <SearchBar setSearch={setSearch} />
+      {search}
       {maxPages > 1 && renderPagination()}
+
       <div className="container">
         {postsList
           .slice(

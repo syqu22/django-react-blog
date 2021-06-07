@@ -7,6 +7,8 @@ body {
 }
 
 #root {
+  --primary: white;
+  --secondary: black;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -17,8 +19,9 @@ body {
 }
 
 a {
+  outline: none;
+  color: var(--secondary);
   text-decoration: none;
-  color: rgba(0, 0, 0, 0.8);
 }
 
 .home-page {
@@ -35,10 +38,11 @@ a {
   font-size: 1.6rem;
   transition: 0.2s;
   cursor: pointer;
-  padding-right: 1.5rem;
+  margin-right: 1.5rem;
 }
 
-.social-button:hover {
+.social-button:hover,
+.social-button:focus {
   transform: scale(1.2);
 }
 
@@ -59,7 +63,7 @@ a {
 }
 
 .hero-text {
-  color: white;
+  color: var(--primary);
 }
 
 .arrow-button {
@@ -71,14 +75,15 @@ a {
 }
 
 .active {
-  color: black;
-}
-
-.inactive {
   color: grey;
 }
 
-.arrow-button:hover {
+.inactive {
+  color: var(--secondary);
+}
+
+.arrow-button:hover,
+.arrow-button:focus {
   transform: scale(1.2);
 }
 
@@ -100,15 +105,17 @@ a {
   left: 0;
   width: 0;
   height: 100%;
-  background: black;
+  background: var(--secondary);
   transition: 0.4s;
 }
 
-.recent-button:hover::after {
+.recent-button:hover::after,
+.recent-button:focus::after {
   width: 100%;
 }
 
-.recent-button:hover {
+.recent-button:hover,
+.recent-button:focus {
   color: lightgray;
 }
 
@@ -131,12 +138,13 @@ a {
   transition: 0.4s;
 }
 
-.item:hover {
+.item:hover,
+.item:focus {
   transform: scale(1.1);
 }
 
 .item span {
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .item img {
@@ -155,7 +163,7 @@ a {
   position: relative;
   padding: 0.9rem 1rem;
   text-align: center;
-  color: black;
+  color: var(--secondary);
 }
 
 .navbar-item::after {
@@ -166,11 +174,12 @@ a {
   right: 0.5rem;
   width: 0;
   height: 0.2em;
-  background-color: black;
+  background-color: var(--secondary);
   transition: 0.5s;
 }
 
-.navbar-item:hover::after {
+.navbar-item:hover::after,
+.navbar-item:focus::after {
   width: 80%;
 }
 
@@ -188,21 +197,22 @@ a {
   font-size: 2.2rem;
 }
 
-.post h1 {
-  font-size: 4.5rem;
-}
-
-.post img {
-  height: 15rem;
-  width: 100%;
-  object-fit: cover;
-  filter: opacity(50%);
+.post {
+  overflow: hidden;
 }
 
 .post-header {
-  position: absolute;
-  top: 3rem;
-  left: 2rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.post-header h1 {
+  margin-left: 5rem;
+}
+
+.post-info {
+  display: flex;
 }
 
 .post-body {
@@ -230,23 +240,37 @@ a {
 }
 
 .pagination {
-  margin: auto;
-  width: 50%;
-  text-align: center;
+  justify-content: center;
   display: grid;
-  padding-bottom: 5rem;
-  grid-template-columns: auto auto auto;
-  white-space: normal;
-  gap: 1px;
+  margin-bottom: 5rem;
+  grid-template-columns: min-content auto min-content;
+  gap: 1rem;
 }
 
 .pagination-numbers {
   font-size: 2rem;
+  border: 1px solid var(--secondary);
 }
 
 .pagination-numbers span {
   margin: 1rem;
   cursor: pointer;
+}
+
+.pagination-numbers .inactive::after {
+  position: absolute;
+  content: "";
+  height: 0.2rem;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  background: var(--secondary);
+  transition: 0.4s;
+}
+
+.pagination-numbers .inactive:hover::after,
+.pagination-numbers .inactive:focus::after {
+  width: 100%;
 }
 
 .search {

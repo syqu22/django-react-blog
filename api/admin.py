@@ -14,7 +14,7 @@ class PostAdmin(admin.ModelAdmin):
         (None, {
             'classes': ('extrapretty',),
             'fields': (
-                'title', 'description', 'author', 'slug', 'thumbnail_url', 'body', 'is_public', 'tags'
+                'title', 'author', 'slug', 'thumbnail_url', 'body', 'read_time', 'is_public', 'tags'
             ),
         }), ('Comments', {
             'classes': ('collapse',),

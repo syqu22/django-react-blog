@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { FaSearch } from "react-icons/fa";
 
-const SearchBar = () => {
-  const [search, setSearch] = useState();
-
+const SearchBar = ({ setSearch }) => {
   return (
     <form className="search">
       <label htmlFor="search-bar">Search: </label>
@@ -15,11 +13,7 @@ const SearchBar = () => {
           setSearch(e.target.value);
         }}
       />
-      <FaSearch
-        onClick={() => {
-          window.alert("Hello World");
-        }}
-      />
+      <FaSearch />
     </form>
   );
 };

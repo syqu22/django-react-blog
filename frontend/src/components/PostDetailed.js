@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Tags from "./Tags";
 
-const Post = (props) => {
+const PostDetailed = (props) => {
   const [post, setPost] = useState(null);
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -31,12 +31,16 @@ const Post = (props) => {
 
     return (
       <div className="post">
-        <img src={post.thumbnail_url} />
-        <div className="post-header">
+        <div
+          className="post-header"
+          style={{ backgroundImage: `url("${post.thumbnail_url}")` }}
+        >
           <h1>{post.title}</h1>
-          <h2>{post.description}</h2>
-          <p>{date}</p>
-          <p>{post.author}</p>
+          <div className="post-info">
+            <p>{date}</p>
+            <p>Created by: {post.author}</p>
+            <p>Average read time: {post.read_time} minutes</p>
+          </div>
         </div>
         <div className="post-body">
           <p>{post.body}</p>
@@ -57,4 +61,4 @@ const Post = (props) => {
   return <>{!isLoading ? renderPost() : ""}</>;
 };
 
-export default Post;
+export default PostDetailed;
