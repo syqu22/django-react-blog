@@ -49,7 +49,7 @@ const Posts = () => {
     for (let index = 0; index < maxPages; index++) {
       numbers.push(
         <span
-          className={currentPage === index ? "active" : "inactive"}
+          className={currentPage === index ? "inactive" : "active"}
           onClick={() => {
             setCurrentPage(index);
           }}
@@ -59,6 +59,7 @@ const Posts = () => {
         </span>
       );
     }
+
     return numbers;
   };
 
@@ -88,15 +89,14 @@ const Posts = () => {
     );
   };
 
-  // TODO FILTRY Z 'search'
   return (
     <>
       <SearchBar setSearch={setSearch} />
-      {search}
       {maxPages > 1 && renderPagination()}
 
       <div className="container">
         {postsList
+          .filter((e) => e.title.match(search) || e.tags.includes(search))
           .slice(
             currentPage * postsPerPage,
             currentPage * postsPerPage + postsPerPage

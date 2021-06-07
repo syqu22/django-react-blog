@@ -77,11 +77,13 @@ a {
 }
 
 .active {
-  color: var(--info);
+  color: var(--secondary);
+  cursor: pointer;
 }
 
 .inactive {
-  color: var(--secondary);
+  color: var(--info);
+  cursor: auto;
 }
 
 .arrow-button:hover,
@@ -256,10 +258,13 @@ a {
 
 .pagination-numbers span {
   margin: 1rem;
-  cursor: pointer;
 }
 
-.pagination-numbers .inactive::after {
+.pagination-numbers .active {
+  position: relative;
+}
+
+.pagination-numbers .active::after {
   position: absolute;
   content: "";
   height: 0.2rem;
@@ -270,8 +275,8 @@ a {
   transition: 0.4s;
 }
 
-.pagination-numbers .inactive:hover::after,
-.pagination-numbers .inactive:focus::after {
+.pagination-numbers .active:hover::after,
+.pagination-numbers .active:focus::after {
   width: 100%;
 }
 
