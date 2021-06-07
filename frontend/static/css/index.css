@@ -7,8 +7,10 @@ body {
 }
 
 #root {
-  --primary: white;
-  --secondary: black;
+  --primary: rgb(255, 240, 240);
+  --secondary: rgb(26, 23, 23);
+  --info: rgb(207, 201, 201);
+  --date: rgb(128, 120, 120);
   position: absolute;
   width: 100%;
   height: 100%;
@@ -49,9 +51,9 @@ a {
 .hero-image {
   margin-top: 15%;
   background-image: linear-gradient(
-      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.4),
       rgba(0, 0, 0, 0.5),
-      rgba(0, 0, 0, 0.8)
+      rgba(0, 0, 0, 0.6)
     ),
     url("https://wallpaperaccess.com/full/138728.jpg");
   height: 500px;
@@ -75,7 +77,7 @@ a {
 }
 
 .active {
-  color: grey;
+  color: var(--info);
 }
 
 .inactive {
@@ -94,7 +96,7 @@ a {
 .recent-button {
   padding: 0.6rem;
   position: relative;
-  background-color: lightgray;
+  background-color: var(--info);
   transition: 0.4s;
 }
 
@@ -116,7 +118,7 @@ a {
 
 .recent-button:hover,
 .recent-button:focus {
-  color: lightgray;
+  color: var(--info);
 }
 
 .recent-button span {
@@ -144,7 +146,7 @@ a {
 }
 
 .item span {
-  color: rgba(0, 0, 0, 0.7);
+  color: var(--date);
 }
 
 .item img {
@@ -236,7 +238,7 @@ a {
   padding: 0 1rem;
   margin: 0.5rem;
   border-radius: 0.7rem;
-  background-color: lightgrey;
+  background-color: var(--info);
 }
 
 .pagination {
