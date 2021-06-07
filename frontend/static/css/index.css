@@ -26,9 +26,7 @@ a {
 }
 
 .social {
-  text-align: right;
-  margin-top: 1rem;
-  margin-right: 2rem;
+  margin-top: 0.6rem;
 }
 
 .social-button {
@@ -37,6 +35,7 @@ a {
   font-size: 1.6rem;
   transition: 0.2s;
   cursor: pointer;
+  padding-right: 1.5rem;
 }
 
 .social-button:hover {
@@ -85,12 +84,10 @@ a {
 
 .recent-text {
   text-align: center;
-  margin: auto auto 2rem;
-  overflow: hidden;
 }
 
 .recent-button {
-  padding: 3rem;
+  padding: 0.6rem;
   position: relative;
   background-color: lightgray;
   transition: 0.4s;
@@ -107,6 +104,10 @@ a {
   transition: 0.4s;
 }
 
+.recent-button:hover::after {
+  width: 100%;
+}
+
 .recent-button:hover {
   color: lightgray;
 }
@@ -114,10 +115,6 @@ a {
 .recent-button span {
   position: relative;
   z-index: 1;
-}
-
-.recent-button:hover::after {
-  width: 100%;
 }
 
 .container {
@@ -150,29 +147,40 @@ a {
 
 .navbar {
   list-style-type: none;
-  margin: 0;
-  padding: 0;
   overflow: hidden;
-  background-color: #333;
 }
 
 .navbar-item {
   float: left;
-  padding: 12px 15px;
+  position: relative;
+  padding: 0.9rem 1rem;
   text-align: center;
-  color: white;
+  color: black;
 }
 
-.navbar-item-right {
-  float: right;
+.navbar-item::after {
+  text-align: center;
+  position: absolute;
+  content: "";
+  bottom: 0.5rem;
+  right: 0.5rem;
+  width: 0;
+  height: 0.2em;
+  background-color: black;
+  transition: 0.5s;
 }
 
-.navbar-item:hover {
-  background-color: rgba(128, 128, 128, 0.685);
+.navbar-item:hover::after {
+  width: 80%;
 }
 
 .navbar-home {
-  background-color: rgba(0, 0, 0, 0.8);
+  font-weight: 600;
+}
+
+.navbar-item-right {
+  margin-right: 2rem;
+  float: right;
 }
 
 .error {
@@ -210,7 +218,6 @@ a {
   flex-direction: row;
   margin-left: 1rem;
   margin-right: 1rem;
-  align-self: center;
   margin: 0 -1rem;
 }
 
@@ -219,6 +226,7 @@ a {
   padding: 0 1rem;
   margin: 0.5rem;
   border-radius: 0.7rem;
+  background-color: lightgrey;
 }
 
 .pagination {
@@ -257,6 +265,11 @@ a {
     font-size: 1.2rem;
   }
 
+  .navbar-item {
+    text-align: left;
+    padding: 0.7rem 0.8rem;
+  }
+
   .arrow-button {
     font-size: 15px;
   }
@@ -276,11 +289,6 @@ a {
 
   .error {
     font-size: 1.5rem;
-  }
-
-  .social {
-    margin-top: 0.5rem;
-    margin-right: 0.5rem;
   }
 
   .recent-text {

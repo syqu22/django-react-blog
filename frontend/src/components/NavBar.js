@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import Socials from "./Socials";
 
 const NavBar = () => {
   const [windowDimension, setWindowDimension] = useState(null);
@@ -34,6 +35,7 @@ const NavBar = () => {
         <a href="/admin">
           <li className="navbar-item navbar-item-right">Login</li>
         </a>
+        <Socials />
       </ul>
     );
   };
@@ -50,6 +52,7 @@ const NavBar = () => {
         <NavLink to="/contact">
           <li className="navbar-item">Contact</li>
         </NavLink>
+        <Socials />
       </ul>
     );
   };

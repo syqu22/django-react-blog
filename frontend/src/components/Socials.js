@@ -7,7 +7,7 @@ const Socials = () => {
   const twitterURL = "https://twitter.com/";
 
   return (
-    <div className="social">
+    <div className="social navbar-item-right">
       <button
         onClick={() => {
           location.href = facebookURL;
