@@ -42,10 +42,10 @@ const HomePage = () => {
   };
 
   return (
-    <div className="home-page">
+    <>
       {postsList.length ? renderRecentPosts() : ""}
       <Hero />
-    </div>
+    </>
   );
 };
 

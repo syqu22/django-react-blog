@@ -22,33 +22,35 @@ const NavBar = () => {
 
   const renderNavBar = () => {
     return (
-      <ul className="navbar">
-        <li>
-          <NavLink className="navbar-item navbar-home" to="/">
-            Home
-          </NavLink>
-        </li>
+      <nav>
+        <ul className="navbar">
+          <li>
+            <NavLink className="navbar-item navbar-home" exact to="/">
+              Home
+            </NavLink>
+          </li>
 
-        <li>
-          <NavLink className="navbar-item" to="/posts">
-            Posts
-          </NavLink>
-        </li>
+          <li>
+            <NavLink className="navbar-item" to="/posts">
+              Posts
+            </NavLink>
+          </li>
 
-        <li>
-          <NavLink className="navbar-item" to="/contact">
-            Contact
-          </NavLink>
-        </li>
+          <li>
+            <NavLink className="navbar-item" to="/contact">
+              Contact
+            </NavLink>
+          </li>
 
-        <li>
-          <a className="navbar-item navbar-item-right" href="/admin">
-            Login
-          </a>
-        </li>
+          <li>
+            <a className="navbar-item navbar-item-right" href="/admin">
+              Login
+            </a>
+          </li>
 
-        <Socials />
-      </ul>
+          <Socials />
+        </ul>
+      </nav>
     );
   };
 

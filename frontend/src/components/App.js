@@ -5,6 +5,8 @@ import PostDetailed from "./PostDetailed";
 import Posts from "./Posts";
 import Contact from "./Contact";
 import NavBar from "./NavBar";
+import NotFound from "./errors/NotFound";
+import InternalServer from "./errors/InternalServer";
 
 const App = () => {
   return (
@@ -16,6 +18,9 @@ const App = () => {
           <Route path="/posts" component={Posts} />
           <Route path="/contact" component={Contact} />
           <Route path="/post/:slug" component={PostDetailed} />
+
+          <Route path="/500" component={InternalServer} />
+          <Route path="*" component={NotFound} />
         </Switch>
       </div>
     </Router>

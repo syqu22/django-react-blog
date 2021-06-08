@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import NotFound from "./errors/NotFound";
 import Tags from "./Tags";
 
 const PostDetailed = (props) => {
   const [post, setPost] = useState(null);
+  const [error, setError] = useState(false);
   const [isLoading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const slug = props.location.pathname.split("/")[2];
 
@@ -14,7 +15,7 @@ const PostDetailed = (props) => {
         if (response.ok) {
           return response.json();
         } else {
-          setError("Post not found");
+          setError(true);
         }
       })
       .then((data) => {
@@ -55,7 +56,7 @@ const PostDetailed = (props) => {
   };
 
   if (error) {
-    return <p className="error"> {error} </p>;
+    return <NotFound />;
   }
 
   return <>{!isLoading ? renderPost() : ""}</>;
