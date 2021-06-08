@@ -1,9 +1,11 @@
 from django.contrib import admin, messages
+from django_summernote.admin import SummernoteModelAdmin
 
 from .models import *
 
 
-class PostAdmin(admin.ModelAdmin):
+class PostAdmin(SummernoteModelAdmin):
+    summernote_fields = ('body',)
     list_display = ('title', 'is_public', 'slug',
                     'author', 'edited_at', 'created_at')
     list_filter = ('is_public',)

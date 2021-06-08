@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'api.apps.ApiConfig',
     'frontend.apps.FrontendConfig',
+    'django_summernote',
 ]
 
 MIDDLEWARE = [
@@ -106,6 +108,24 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Summernote settings
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+SUMMERNOTE_THEME = 'bs4'
+SUMMERNOTE_CONFIG = {
+    'summernote': {
+        'width': '100%',
+        'height': '600',
+        'fontNames': ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New',
+                      'Helvetica Neue', 'Helvetica', 'Impact', 'Lucida Grande',
+                      'Tahoma', 'Times New Roman', 'Verdana', ],
+        'attachment_filesize_limit': 1024*1024*10,
+
+
+    },
+    'attachment_require_authentication': True,
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
