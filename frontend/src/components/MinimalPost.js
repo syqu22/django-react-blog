@@ -7,12 +7,10 @@ const MinimalPost = ({ slug, thumbnail_url, title, created_at, tags }) => {
 
   return (
     <Link to={`/post/${slug}`} className="item">
-      <div>
-        <img src={thumbnail_url} />
-        <span>{date}</span>
-        <h2>{title}</h2>
-        <Tags values={tags} />
-      </div>
+      <img src={thumbnail_url} />
+      <span>{date}</span>
+      <h2>{title}</h2>
+      <Tags values={tags} />
     </Link>
   );
 };

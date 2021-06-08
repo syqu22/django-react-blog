@@ -27,26 +27,32 @@ const PostDetailed = (props) => {
       });
   }, []);
 
-  const renderPost = () => {
-    const date = new Date(post.created_at).toLocaleString();
+  const calculateDate = () => {
+    return new Date(post.created_at).toLocaleString();
+  };
 
+  const renderPost = () => {
     return (
       <div className="post">
         <div
           className="post-header"
           style={{ backgroundImage: `url("${post.thumbnail_url}")` }}
-        >
-          <h1>{post.title}</h1>
-          <div className="post-info">
-            <p>{date}</p>
-            <p>Created by: {post.author}</p>
-            <p>Average read time: {post.read_time} minutes</p>
-          </div>
+        ></div>
+        <h1>{post.title}</h1>
+        <Tags values={post.tags} />
+        <div className="post-info">
+          <p>{post.author}</p>
+          <span>{calculateDate()}</span>
+          {post.read_time ? (
+            <span>Average read time: {post.read_time} minutes</span>
+          ) : (
+            ""
+          )}
         </div>
-        <div className="post-body">
-          <p>{post.body}</p>
-          <Tags values={post.tags} />
-        </div>
+        <div
+          className="post-body"
+          dangerouslySetInnerHTML={{ __html: `${post.body}` }}
+        ></div>
         <div className="post-comments">
           <p>Comments:</p>
           {post.comments}

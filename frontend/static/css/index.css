@@ -10,7 +10,7 @@ body {
   --primary: rgb(255, 255, 255);
   --secondary: rgb(26, 23, 23);
   --info: rgb(207, 201, 201);
-  --date: rgb(128, 120, 120);
+  --date: rgb(110, 106, 106);
   position: absolute;
   width: 100%;
   height: 100%;
@@ -28,6 +28,7 @@ a {
 
 .social {
   margin-top: 0.6rem;
+  display: inline-flex;
 }
 
 .social-button {
@@ -124,10 +125,11 @@ a {
 }
 
 .container {
+  width: 100%;
   display: grid;
-  grid-template-columns: 50% 50%;
-  white-space: normal;
+  grid-template-columns: 1fr 1fr;
   text-align: center;
+  justify-items: center;
 }
 
 .item {
@@ -148,7 +150,7 @@ a {
 
 .item img {
   width: 100%;
-  height: 15rem;
+  height: 50%;
   object-fit: cover;
 }
 
@@ -158,13 +160,14 @@ nav {
 
 .navbar {
   list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 .navbar-item {
-  float: left;
   position: relative;
   padding: 0.9rem 1rem;
-  text-align: center;
   color: var(--secondary);
 }
 
@@ -200,40 +203,9 @@ nav {
   font-weight: 600;
 }
 
-.navbar-item-right {
-  margin-right: 2rem;
-  float: right;
-}
-
 .error {
   text-align: center;
   font-size: 2.2rem;
-}
-
-.post {
-  overflow: hidden;
-}
-
-.post-header {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.post-header h1 {
-  margin-left: 5rem;
-}
-
-.post-info {
-  display: flex;
-}
-
-.post-body {
-  margin: 0 15rem 2rem 3rem;
-}
-
-.post-comments {
-  margin-left: 1rem;
 }
 
 .tags {
@@ -241,7 +213,6 @@ nav {
   flex-direction: row;
   margin-left: 1rem;
   margin-right: 1rem;
-  margin: 0 -1rem;
 }
 
 .tag {
@@ -250,6 +221,54 @@ nav {
   margin: 0.5rem;
   border-radius: 0.7rem;
   background-color: var(--info);
+}
+
+.post {
+  overflow: hidden;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.post-header {
+  margin-top: 1rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: auto;
+  border: 1px solid var(--secondary);
+  height: 10rem;
+}
+
+.post .tags {
+  margin: 0;
+}
+
+.post-info {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.post-info span {
+  border-left: 1px solid var(--secondary);
+}
+
+.post-info span,
+.post-info p {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.post-info span {
+  color: var(--date);
+}
+
+.post-body {
+  margin-top: 5rem;
+}
+
+.post-comments {
+  margin-top: 2.5rem;
 }
 
 .pagination {
@@ -318,12 +337,11 @@ nav {
   }
 
   .navbar-item {
-    text-align: left;
     padding: 0.7rem 0.8rem;
   }
 
   .arrow-button {
-    font-size: 15px;
+    font-size: 1rem;
   }
 
   .container a {
@@ -349,11 +367,13 @@ nav {
   }
 
   .recent-button {
-    padding: 1rem;
+    padding: 0.6rem;
   }
 
-  .search-form {
-    height: 1rem;
+  .search-bar {
+    padding: 0.4rem;
+    margin-top: 1rem;
+    font-size: small;
   }
 
   .post-header h1 {
