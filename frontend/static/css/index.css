@@ -7,7 +7,7 @@ body {
 }
 
 #root {
-  --primary: rgb(255, 240, 240);
+  --primary: rgb(255, 255, 255);
   --secondary: rgb(26, 23, 23);
   --info: rgb(207, 201, 201);
   --date: rgb(128, 120, 120);
@@ -26,10 +26,6 @@ a {
   text-decoration: none;
 }
 
-.home-page {
-  width: auto;
-}
-
 .social {
   margin-top: 0.6rem;
 }
@@ -38,14 +34,14 @@ a {
   background: none;
   border: none;
   font-size: 1.6rem;
-  transition: 0.2s;
-  cursor: pointer;
+  transition: 0.2s ease-out;
   margin-right: 1.5rem;
 }
 
 .social-button:hover,
 .social-button:focus {
   transform: scale(1.2);
+  cursor: pointer;
 }
 
 .hero-image {
@@ -72,16 +68,16 @@ a {
   font-size: 2.5rem;
   background: none;
   border: none;
-  transition: 0.2s;
+  transition: 0.2s ease-out;
   cursor: pointer;
 }
 
-.active {
+.enabled {
   color: var(--secondary);
   cursor: pointer;
 }
 
-.inactive {
+.disabled {
   color: var(--info);
   cursor: auto;
 }
@@ -99,7 +95,6 @@ a {
   padding: 0.6rem;
   position: relative;
   background-color: var(--info);
-  transition: 0.4s;
 }
 
 .recent-button::after {
@@ -110,7 +105,7 @@ a {
   width: 0;
   height: 100%;
   background: var(--secondary);
-  transition: 0.4s;
+  transition: 0.4s ease-out;
 }
 
 .recent-button:hover::after,
@@ -120,7 +115,7 @@ a {
 
 .recent-button:hover,
 .recent-button:focus {
-  color: var(--info);
+  color: var(--primary);
 }
 
 .recent-button span {
@@ -139,7 +134,7 @@ a {
   width: 80%;
   margin: 1rem auto 1rem;
   overflow: hidden;
-  transition: 0.4s;
+  transition: 0.3s ease-out;
 }
 
 .item:hover,
@@ -157,9 +152,12 @@ a {
   object-fit: cover;
 }
 
+nav {
+  overflow: hidden;
+}
+
 .navbar {
   list-style-type: none;
-  overflow: hidden;
 }
 
 .navbar-item {
@@ -179,12 +177,23 @@ a {
   width: 0;
   height: 0.2em;
   background-color: var(--secondary);
-  transition: 0.5s;
+  transition: 0.3s ease-out;
 }
 
 .navbar-item:hover::after,
 .navbar-item:focus::after {
   width: 80%;
+}
+
+.active::before {
+  text-align: center;
+  position: absolute;
+  content: "";
+  bottom: 0.5rem;
+  right: 0.5rem;
+  width: 80%;
+  height: 0.2em;
+  background-color: var(--secondary);
 }
 
 .navbar-home {
@@ -260,11 +269,11 @@ a {
   margin: 1rem;
 }
 
-.pagination-numbers .active {
+.pagination-numbers .enabled {
   position: relative;
 }
 
-.pagination-numbers .active::after {
+.pagination-numbers .enabled::after {
   position: absolute;
   content: "";
   height: 0.2rem;
@@ -272,11 +281,11 @@ a {
   bottom: 0;
   width: 0;
   background: var(--secondary);
-  transition: 0.4s;
+  transition: 0.4s ease-out;
 }
 
-.pagination-numbers .active:hover::after,
-.pagination-numbers .active:focus::after {
+.pagination-numbers .enabled:hover::after,
+.pagination-numbers .enabled:focus::after {
   width: 100%;
 }
 
@@ -286,9 +295,21 @@ a {
 }
 
 .search-bar {
-  border-radius: 5px;
-  border: 1px solid;
-  height: 1.5rem;
+  background: transparent;
+  font-size: 1rem;
+  padding: 0.5rem;
+  outline: none;
+  border: solid 2px var(--secondary);
+  border-radius: 35px;
+  transition: 0.45s ease-in-out;
+}
+
+.search-bar:hover,
+.search-bar:focus {
+  transform: scale(1.5);
+  background-color: var(--secondary);
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 @media screen and (max-width: 600px) {

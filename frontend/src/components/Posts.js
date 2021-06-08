@@ -9,9 +9,9 @@ const Posts = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [canLeft, setLeft] = useState(false);
   const [canRight, setRight] = useState(false);
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState("");
 
-  const postsPerPage = 4;
+  const postsPerPage = 6;
 
   useEffect(() => {
     fetch("/api/posts")
@@ -32,6 +32,7 @@ const Posts = () => {
   }, []);
 
   useEffect(() => {
+    // Pagination
     if (currentPage + 1 < maxPages) {
       setRight(true);
     } else {
@@ -44,12 +45,18 @@ const Posts = () => {
     }
   }, [currentPage, maxPages]);
 
+  useEffect(() => {
+    // Pagination during search
+    let query = postsList.filter((e) => e.title.match(search));
+    setMaxPages(Math.ceil(query.length / postsPerPage));
+  }, [search]);
+
   const renderPageNumbers = () => {
     const numbers = [];
     for (let index = 0; index < maxPages; index++) {
       numbers.push(
         <span
-          className={currentPage === index ? "inactive" : "active"}
+          className={currentPage === index ? "disabled" : "enabled"}
           onClick={() => {
             setCurrentPage(index);
           }}
@@ -89,11 +96,8 @@ const Posts = () => {
     );
   };
 
-  return (
-    <>
-      <SearchBar setSearch={setSearch} />
-      {maxPages > 1 && renderPagination()}
-
+  const renderPosts = () => {
+    return (
       <div className="container">
         {postsList
           .filter((e) => e.title.match(search) || e.tags.includes(search))
@@ -105,6 +109,14 @@ const Posts = () => {
             <MinimalPost key={post.slug} {...post} />
           ))}
       </div>
+    );
+  };
+
+  return (
+    <>
+      <SearchBar callback={setSearch} />
+      {maxPages > 1 && renderPagination()}
+      {renderPosts()}
     </>
   );
 };

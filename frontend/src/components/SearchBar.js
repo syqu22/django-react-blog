@@ -1,19 +1,17 @@
 import React from "react";
-import { FaSearch } from "react-icons/fa";
 
-const SearchBar = ({ setSearch }) => {
+const SearchBar = ({ callback }) => {
   return (
-    <form className="search">
-      <label htmlFor="search-bar">Search: </label>
-
+    <form className="search" onSubmit={(e) => e.preventDefault()}>
       <input
         type="text"
         className="search-bar"
+        placeholder="Search..."
         onChange={(e) => {
-          setSearch(e.target.value);
+          callback(e.target.value);
         }}
+        style={{ backgroundImage: "blue" }}
       />
-      <FaSearch />
     </form>
   );
 };
