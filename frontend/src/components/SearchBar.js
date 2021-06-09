@@ -10,7 +10,6 @@ const SearchBar = ({ callback }) => {
         onChange={(e) => {
           callback(e.target.value);
         }}
-        style={{ backgroundImage: "blue" }}
       />
     </form>
   );

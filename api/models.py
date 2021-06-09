@@ -24,11 +24,11 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    username = models.CharField(max_length=50, default='Anonymous')
+    author = models.CharField(max_length=50, default='Anonymous')
     email = models.EmailField(max_length=254, null=True, blank=True)
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     confirmed = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.id}.[{self.confirmed}] Comment by {self.username}'
+        return f'{self.id}.[{self.confirmed}] Comment by {self.author}'

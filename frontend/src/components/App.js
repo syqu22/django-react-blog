@@ -7,6 +7,7 @@ import Contact from "./Contact";
 import NavBar from "./NavBar";
 import NotFound from "./errors/NotFound";
 import InternalServer from "./errors/InternalServer";
+import Footer from "./Footer";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/500" component={InternalServer} />
           <Route path="*" component={NotFound} />
         </Switch>
+        <Footer />
       </div>
     </Router>
   );

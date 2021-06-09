@@ -15,16 +15,15 @@ const Posts = () => {
 
   useEffect(() => {
     fetch("/api/posts")
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
+      .then((res) => {
+        if (!res.ok) {
+          return Promise.reject(`Http error: ${res.status}`);
         }
+        return res.json();
       })
       .then((data) => {
-        if (data) {
-          setPostsList(data);
-          setMaxPages(Math.ceil(data.length / postsPerPage));
-        }
+        setPostsList(data);
+        setMaxPages(Math.ceil(data.length / postsPerPage));
       })
       .catch((error) => {
         console.log(error);
@@ -50,6 +49,10 @@ const Posts = () => {
     let query = postsList.filter((e) => e.title.match(search));
     setMaxPages(Math.ceil(query.length / postsPerPage));
   }, [search]);
+
+  const queryFilter = (e) => {
+    return e.title.match(search) || e.tags.includes(search);
+  };
 
   const renderPageNumbers = () => {
     const numbers = [];
@@ -96,18 +99,20 @@ const Posts = () => {
     );
   };
 
+  const showPosts = (post) => {
+    return <MinimalPost key={post.slug} {...post} />;
+  };
+
   const renderPosts = () => {
     return (
       <div className="container">
         {postsList
-          .filter((e) => e.title.match(search) || e.tags.includes(search))
+          .filter(queryFilter)
           .slice(
             currentPage * postsPerPage,
             currentPage * postsPerPage + postsPerPage
           )
-          .map((post) => (
-            <MinimalPost key={post.slug} {...post} />
-          ))}
+          .map(showPosts)}
       </div>
     );
   };

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import NotFound from "./errors/NotFound";
 import Tags from "./Tags";
+import CommentForm from "./CommentForm";
 
 const PostDetailed = (props) => {
   const [post, setPost] = useState(null);
@@ -11,12 +12,11 @@ const PostDetailed = (props) => {
 
   useEffect(() => {
     fetch(`/api/posts/${slug}`)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          setError(true);
+      .then((res) => {
+        if (!res.ok) {
+          return Promise.reject(`Http error: ${res.status}`);
         }
+        return res.json();
       })
       .then((data) => {
         setPost(data);
@@ -24,6 +24,7 @@ const PostDetailed = (props) => {
       })
       .catch((error) => {
         console.log(error);
+        setError(true);
       });
   }, []);
 
@@ -31,41 +32,42 @@ const PostDetailed = (props) => {
     return new Date(post.created_at).toLocaleString();
   };
 
-  const renderPost = () => {
-    return (
-      <div className="post">
-        <div
-          className="post-header"
-          style={{ backgroundImage: `url("${post.thumbnail_url}")` }}
-        ></div>
-        <h1>{post.title}</h1>
-        <Tags values={post.tags} />
-        <div className="post-info">
-          <p>{post.author}</p>
-          <span>{calculateDate()}</span>
-          {post.read_time ? (
-            <span>Average read time: {post.read_time} minutes</span>
-          ) : (
-            ""
-          )}
-        </div>
-        <div
-          className="post-body"
-          dangerouslySetInnerHTML={{ __html: `${post.body}` }}
-        ></div>
-        <div className="post-comments">
-          <p>Comments:</p>
-          {post.comments}
-        </div>
-      </div>
-    );
-  };
-
   if (error) {
     return <NotFound />;
   }
 
-  return <>{!isLoading ? renderPost() : ""}</>;
+  if (isLoading) {
+    return "";
+  }
+
+  return (
+    <div className="post">
+      <div
+        className="post-header"
+        style={{ backgroundImage: `url("${post.thumbnail_url}")` }}
+      ></div>
+      <h1>{post.title}</h1>
+      <Tags values={post.tags} />
+      <div className="post-info">
+        <img
+          src="https://www.w3schools.com/howto/img_avatar.png"
+          className="avatar"
+        />
+        <p>{post.author}</p>
+        <span>{calculateDate()}</span>
+        {post.read_time ? <span>Read time: {post.read_time} minutes</span> : ""}
+      </div>
+      <div
+        className="post-body"
+        dangerouslySetInnerHTML={{ __html: `${post.body}` }}
+      ></div>
+      <div className="post-comments">
+        <p>Comments:</p>
+        <CommentForm slug={slug} />
+        {post.comments}
+      </div>
+    </div>
+  );
 };
 
 export default PostDetailed;
