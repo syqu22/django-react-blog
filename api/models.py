@@ -14,7 +14,6 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     edited_at = models.DateTimeField(auto_now=True)
     is_public = models.BooleanField(default=False)
-    comments = models.ManyToManyField('api.Comment', blank=True)
 
     class Meta:
         ordering = ['-created_at']
@@ -24,11 +23,17 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
+    post = models.ForeignKey(
+        "api.Post", on_delete=models.CASCADE, related_name='comments')
+    title = models.CharField(max_length=60)
     author = models.CharField(max_length=50, default='Anonymous')
-    email = models.EmailField(max_length=254, null=True, blank=True)
+    email = models.EmailField(max_length=254, null=True)
     body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    confirmed = models.BooleanField(default=False)
+    is_confirmed = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-created_at']
 
     def __str__(self):
-        return f'{self.id}.[{self.confirmed}] Comment by {self.author}'
+        return f'{self.id}. Comment by {self.author}'

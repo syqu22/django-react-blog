@@ -4,27 +4,15 @@ from django_summernote.admin import SummernoteModelAdmin
 from .models import *
 
 
+@admin.register(Post)
 class PostAdmin(SummernoteModelAdmin):
     summernote_fields = ('body',)
     list_display = ('title', 'is_public', 'slug',
                     'author', 'edited_at', 'created_at')
-    list_filter = ('is_public',)
-    search_fields = ['title', 'author']
+    list_filter = ('is_public', 'created_at', 'edited_at',)
+    search_fields = ['title', 'slug', 'author']
     prepopulated_fields = {'slug': ('title',)}
-
-    fieldsets = (
-        (None, {
-            'classes': ('extrapretty',),
-            'fields': (
-                'title', 'author', 'slug', 'thumbnail_url', 'body', 'read_time', 'is_public', 'tags'
-            ),
-        }), ('Comments', {
-            'classes': ('collapse',),
-            'fields': (
-                'comments',
-            )
-        })
-    )
+    actions = ['make_public', 'make_unpublic']
 
     def make_public(modeladmin, request, queryset):
         queryset.update(is_public=True)
@@ -36,16 +24,16 @@ class PostAdmin(SummernoteModelAdmin):
         messages.success(
             request, 'Selected Post(s) are no longer public!')
 
-    admin.site.add_action(make_public, 'Make public')
-    admin.site.add_action(make_unpublic, 'Make unpublic')
 
-
+@admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('email', 'created_at')
+    list_display = ('title', 'is_confirmed', 'post',
+                    'author', 'email', 'created_at')
+    list_filter = ('is_confirmed', 'created_at')
+    search_fields = ['title', 'author', 'email']
+    actions = ['confirm_comment']
 
-    def has_add_permission(self, request):
-        return False
-
-
-admin.site.register(Post, PostAdmin)
-admin.site.register(Comment, CommentAdmin)
+    def confirm_comment(self, request, queryset):
+        queryset.update(is_confirmed=True)
+        messages.success(
+            request, 'Selected Comment(s) are no now visible!')

@@ -6,13 +6,21 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ['id', 'username', 'email', 'body', 'created_at']
+        fields = ['id', 'title', 'author',
+                  'email', 'body', 'created_at', 'post']
+
+
+class CreateCommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Comment
+        fields = ['post_id', 'title', 'author', 'email', 'body']
 
 
 class PostSerializer(serializers.ModelSerializer):
-    comments = CommentSerializer(read_only=True, many=True)
+    comments = CommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Post
-        fields = ['id', 'title', 'slug', 'author', 'thumbnail_url',
-                  'body', 'read_time', 'tags', 'created_at', 'edited_at', 'is_public', 'comments']
+        fields = ['title', 'slug', 'author', 'thumbnail_url',
+                  'body', 'read_time', 'tags', 'created_at', 'comments']
