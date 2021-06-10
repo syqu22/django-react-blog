@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import NotFound from "./errors/NotFound";
 import Tags from "./Tags";
 import CommentForm from "./CommentForm";
+import Comments from "./Comments";
+import moment from "moment";
 
-const PostDetailed = (props) => {
-  const [post, setPost] = useState(null);
+const PostDetail = (props) => {
+  const [post, setPost] = useState({});
   const [error, setError] = useState(false);
   const [isLoading, setLoading] = useState(true);
 
@@ -28,8 +30,8 @@ const PostDetailed = (props) => {
       });
   }, []);
 
-  const calculateDate = () => {
-    return new Date(post.created_at).toLocaleString();
+  const formatDate = (date) => {
+    return moment(date).fromNow();
   };
 
   if (error) {
@@ -37,7 +39,7 @@ const PostDetailed = (props) => {
   }
 
   if (isLoading) {
-    return "";
+    return null;
   }
 
   return (
@@ -45,7 +47,7 @@ const PostDetailed = (props) => {
       <div
         className="post-header"
         style={{ backgroundImage: `url("${post.thumbnail_url}")` }}
-      ></div>
+      />
       <h1>{post.title}</h1>
       <Tags values={post.tags} />
       <div className="post-info">
@@ -54,7 +56,7 @@ const PostDetailed = (props) => {
           className="avatar"
         />
         <p>{post.author}</p>
-        <span>{calculateDate()}</span>
+        <span>{formatDate(post.created_at)}</span>
         {post.read_time ? <span>Read time: {post.read_time} minutes</span> : ""}
       </div>
       <div
@@ -64,10 +66,10 @@ const PostDetailed = (props) => {
       <div className="post-comments">
         <p>Comments:</p>
         <CommentForm slug={slug} />
-        {post.comments}
+        {post.comments.length > 0 && <Comments values={post.comments} />}
       </div>
     </div>
   );
 };
 
-export default PostDetailed;
+export default PostDetail;

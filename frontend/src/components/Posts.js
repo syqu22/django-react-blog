@@ -50,14 +50,13 @@ const Posts = () => {
     setMaxPages(Math.ceil(query.length / postsPerPage));
   }, [search]);
 
-  const queryFilter = (e) => {
-    return e.title.match(search) || e.tags.includes(search);
+  const queryFilter = (value) => {
+    return value.title.match(search) || value.tags.includes(search);
   };
 
   const renderPageNumbers = () => {
-    const numbers = [];
     for (let index = 0; index < maxPages; index++) {
-      numbers.push(
+      return (
         <span
           className={currentPage === index ? "disabled" : "enabled"}
           onClick={() => {
@@ -69,34 +68,6 @@ const Posts = () => {
         </span>
       );
     }
-
-    return numbers;
-  };
-
-  const renderPagination = () => {
-    return (
-      <div className="pagination">
-        <button
-          onClick={() => {
-            canLeft && setCurrentPage(currentPage - 1);
-          }}
-          className={`arrow-button ${!canLeft && "inactive"}`}
-        >
-          <FaArrowLeft />
-        </button>
-
-        <div className="pagination-numbers">{renderPageNumbers()}</div>
-
-        <button
-          onClick={() => {
-            canRight && setCurrentPage(currentPage + 1);
-          }}
-          className={`arrow-button ${!canRight && "inactive"}`}
-        >
-          <FaArrowRight />
-        </button>
-      </div>
-    );
   };
 
   const showPosts = (post) => {
@@ -120,7 +91,29 @@ const Posts = () => {
   return (
     <>
       <SearchBar callback={setSearch} />
-      {maxPages > 1 && renderPagination()}
+      {maxPages > 1 && (
+        <div className="pagination">
+          <button
+            onClick={() => {
+              canLeft && setCurrentPage(currentPage - 1);
+            }}
+            className={`arrow-button ${!canLeft && "inactive"}`}
+          >
+            <FaArrowLeft />
+          </button>
+
+          <div className="pagination-numbers">{renderPageNumbers()}</div>
+
+          <button
+            onClick={() => {
+              canRight && setCurrentPage(currentPage + 1);
+            }}
+            className={`arrow-button ${!canRight && "inactive"}`}
+          >
+            <FaArrowRight />
+          </button>
+        </div>
+      )}
       {renderPosts()}
     </>
   );

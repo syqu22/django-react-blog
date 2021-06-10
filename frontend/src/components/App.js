@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "./HomePage";
-import PostDetailed from "./PostDetailed";
+import PostDetail from "./PostDetail";
 import Posts from "./Posts";
 import Contact from "./Contact";
 import NavBar from "./NavBar";
@@ -18,7 +18,7 @@ const App = () => {
           <Route exact path="/" component={HomePage} />
           <Route path="/posts" component={Posts} />
           <Route path="/contact" component={Contact} />
-          <Route path="/post/:slug" component={PostDetailed} />
+          <Route path="/post/:slug" component={PostDetail} />
 
           <Route path="/500" component={InternalServer} />
           <Route path="*" component={NotFound} />

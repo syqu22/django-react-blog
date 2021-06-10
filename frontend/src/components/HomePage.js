@@ -7,7 +7,7 @@ const HomePage = () => {
   const [postsList, setPostsList] = useState([]);
 
   useEffect(() => {
-    fetch("/api/posts/recent")
+    fetch("/api/posts?recent=true")
       .then((res) => {
         if (!res.ok) {
           return Promise.reject(`Http error: ${res.status}`);
@@ -26,23 +26,19 @@ const HomePage = () => {
     return <MinimalPost key={post.slug} {...post} />;
   };
 
-  const renderRecentPosts = () => {
-    return (
-      <>
-        <h3 className="recent-text">Recent posts:</h3>
-        <div className="container">{postsList.map(showPosts)}</div>
-        <div className="recent-text">
-          <Link className="recent-button" to="/posts">
-            <span>See more</span>
-          </Link>
-        </div>
-      </>
-    );
-  };
-
   return (
     <>
-      {postsList.length ? renderRecentPosts() : ""}
+      {postsList.length > 0 && (
+        <>
+          <h3 className="recent-text">Recent posts:</h3>
+          <div className="container">{postsList.map(showPosts)}</div>
+          <div className="recent-text">
+            <Link className="recent-button" to="/posts">
+              <span>See more</span>
+            </Link>
+          </div>
+        </>
+      )}
       <Hero />
     </>
   );
