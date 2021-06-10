@@ -26,9 +26,8 @@ class Comment(models.Model):
     post = models.ForeignKey(
         "api.Post", on_delete=models.CASCADE, related_name='comments')
     title = models.CharField(max_length=60)
-    author = models.CharField(max_length=50, default='Anonymous')
-    email = models.EmailField(max_length=254, null=True)
-    body = models.TextField()
+    author = models.CharField(max_length=50, blank=True)
+    body = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     is_confirmed = models.BooleanField(default=False)
 

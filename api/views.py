@@ -19,6 +19,8 @@ class PostsList(generics.ListCreateAPIView):
 
 
 class PostDetail(APIView):
+    authentication_classes = []
+
     def get(self, request: Request, slug: str, format=None):
         post = Post.objects.filter(slug=slug).filter(is_public=True)
 
@@ -30,11 +32,15 @@ class PostDetail(APIView):
 
 
 class CommentsList(APIView):
+    authentication_classes = []
+
     def get(self, request: Request, slug: str, format=None):
+
         post = Post.objects.filter(slug=slug).filter(is_public=True)
 
         if post.exists():
-            comments = Comment.objects.filter(is_confirmed=True)
+            comments = Comment.objects.filter(
+                post_id=post.first().id).filter(is_confirmed=True)
             data = CommentSerializer(
                 comments, many=True).data
             return Response(data, status=status.HTTP_200_OK)
@@ -45,17 +51,23 @@ class CommentsList(APIView):
         serializer = CreateCommentSerializer(data=request.data)
 
         if serializer.is_valid():
-            post_id = Post.objects.filter(
-                slug=slug).filter(is_public=True).first().id
-            title = serializer.data.get('title')
-            author = serializer.data.get('author')
-            email = serializer.data.get('email')
-            body = serializer.data.get('body')
+            post = Post.objects.filter(slug=slug).filter(is_public=True)
 
-            comment = Comment(post_id=post_id, title=title, author=author,
-                              email=email, body=body)
-            comment.save()
+            if post.exists():
+                post = post.first()
+                title = serializer.data.get('title')
+                author = serializer.data.get('author')
+                body = serializer.data.get('body')
 
-            return Response(CommentSerializer(comment).data, status=status.HTTP_201_CREATED)
+                if not title:
+                    title = "Unknown"
+
+                comment = Comment(post=post, title=title,
+                                  author=author, body=body)
+                comment.save()
+
+                return Response(CommentSerializer(comment).data, status=status.HTTP_201_CREATED)
+
+            return Response({'Post not found': f'Cannot find post with slug: {slug}'}, status=status.HTTP_404_NOT_FOUND)
 
         return Response({'Bad Request': 'Invalid POST data'}, status=status.HTTP_400_BAD_REQUEST)

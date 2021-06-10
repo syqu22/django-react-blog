@@ -28,9 +28,9 @@ class PostAdmin(SummernoteModelAdmin):
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('title', 'is_confirmed', 'post',
-                    'author', 'email', 'created_at')
+                    'author', 'created_at')
     list_filter = ('is_confirmed', 'created_at')
-    search_fields = ['title', 'author', 'email']
+    search_fields = ['title', 'author', 'body']
     actions = ['confirm_comment']
 
     def confirm_comment(self, request, queryset):

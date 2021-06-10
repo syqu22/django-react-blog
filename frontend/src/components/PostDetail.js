@@ -64,7 +64,7 @@ const PostDetail = (props) => {
         dangerouslySetInnerHTML={{ __html: `${post.body}` }}
       ></div>
       <div className="post-comments">
-        <p>Comments:</p>
+        <h2>Comments</h2>
         <CommentForm slug={slug} />
         <Comments slug={slug} />
       </div>

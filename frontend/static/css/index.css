@@ -269,7 +269,12 @@ nav {
 }
 
 .post-comments {
-  margin-top: 2.5rem;
+  margin-top: 15rem;
+}
+
+.post-comments h2 {
+  padding-left: 2rem;
+  border-bottom: 1px solid var(--secondary);
 }
 
 .avatar {
@@ -355,6 +360,33 @@ footer {
   color: var(--date);
   padding: 0.6rem;
   margin-left: 2rem;
+}
+
+.comment-form {
+  padding: 1rem;
+  display: grid;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.comment-form button {
+  width: 5rem;
+  justify-self: center;
+  margin: 1rem;
+  padding: 0.5rem;
+}
+
+.comment-form textarea {
+  resize: none;
+}
+
+.comments {
+  display: grid;
+  gap: 1rem;
+}
+
+.comment {
+  background-color: var(--info);
 }
 
 @media screen and (max-width: 600px) {
