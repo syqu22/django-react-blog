@@ -66,7 +66,7 @@ const PostDetail = (props) => {
       <div className="post-comments">
         <p>Comments:</p>
         <CommentForm slug={slug} />
-        {post.comments.length > 0 && <Comments values={post.comments} />}
+        <Comments slug={slug} />
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ class PostDetail(APIView):
         post = Post.objects.filter(slug=slug).filter(is_public=True)
 
         if post.exists():
-            data = PostSerializer(post[0]).data
+            data = PostSerializer(post.first()).data
             return Response(data, status=status.HTTP_200_OK)
 
         return Response({'Post not found': f'Cannot find post with slug: {slug}'}, status=status.HTTP_404_NOT_FOUND)
@@ -45,24 +45,12 @@ class CommentsList(APIView):
         serializer = CreateCommentSerializer(data=request.data)
 
         if serializer.is_valid():
-
             post_id = Post.objects.filter(
                 slug=slug).filter(is_public=True).first().id
             title = serializer.data.get('title')
             author = serializer.data.get('author')
             email = serializer.data.get('email')
             body = serializer.data.get('body')
-
-            #queryset = Comment.objects.filter(id=id)
-            # if queryset.exists():
-            #    comment = queryset[0]
-            #    comment.title = title
-            #    comment.author = author
-            #    comment.email = email
-            #    comment.body = body
-            #    comment.save(update_fields=[
-            #                 'title', 'author', 'email', 'body'])
-            #    return Response(CommentSerializer(comment).data, status=status.HTTP_200_OK)
 
             comment = Comment(post_id=post_id, title=title, author=author,
                               email=email, body=body)
