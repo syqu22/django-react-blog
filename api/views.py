@@ -70,4 +70,4 @@ class CommentsList(APIView):
 
             return Response({'Post not found': f'Cannot find post with slug: {slug}'}, status=status.HTTP_404_NOT_FOUND)
 
-        return Response({'Bad Request': 'Invalid POST data'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

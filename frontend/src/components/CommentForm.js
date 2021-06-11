@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const CommentForm = ({ slug }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [body, setBody] = useState("");
-  const [comment, setComment] = useState(null);
+  const [commentCreated, setCommentCreated] = useState(false);
+  const [error, setError] = useState({});
+
+  useEffect(() => {
+    clearState();
+    setError({});
+  }, [commentCreated]);
 
   const clearState = () => {
     setTitle("");
@@ -13,52 +20,51 @@ const CommentForm = ({ slug }) => {
   };
 
   const handleSubmit = (e) => {
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, author, body }),
-    };
     e.preventDefault();
 
-    fetch(`/api/posts/${slug}/comments`, requestOptions)
-      .then((res) => {
-        if (!res.ok) {
-          return Promise.reject(`Http error: ${res.status}`);
-        }
-        return res.json();
+    axios
+      .post(`/api/posts/${slug}/comments`, {
+        title,
+        author,
+        body,
       })
-      .then((data) => setComment(data))
-      .then(clearState())
-      .catch((error) => {
-        console.log(error);
-      });
+      .then(() => setCommentCreated(true))
+      .catch((err) => setError(err.response.data));
   };
 
   return (
     <>
-      {comment && (
+      {commentCreated && (
         <>
           <p className="new-comment">
-            Comment successfully created! Waiting for verification
+            Comment successfully created! Waiting for verification, It might
+            take some time.
           </p>
         </>
       )}
       <form className="comment-form" onSubmit={handleSubmit}>
-        <label htmlFor="title">Title</label>
+        <label htmlFor="title">
+          Title <span className="invalid-value">{error.title}</span>
+        </label>
         <input
           type="text"
           id="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <label htmlFor="author">Author (Optional)</label>
+        <label htmlFor="author">
+          Author (Optional){" "}
+          <span className="invalid-value">{error.author}</span>
+        </label>
         <input
           type="text"
           id="author"
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
         />
-        <label htmlFor="body">Content</label>
+        <label htmlFor="body">
+          Content <span className="invalid-value">{error.body}</span>
+        </label>
         <textarea
           value={body}
           id="body"
@@ -69,11 +75,12 @@ const CommentForm = ({ slug }) => {
           }}
           maxLength="255"
           rows={4}
-        />{" "}
+        />
         <p className="info">{body.length} / 255</p>
-        <button type="submit">Post Comment</button>
+        <button className="comment-form-button" type="submit">
+          <span>Send Comment</span>
+        </button>
       </form>
-      )
     </>
   );
 };
