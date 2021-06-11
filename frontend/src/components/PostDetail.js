@@ -7,8 +7,7 @@ import moment from "moment";
 
 const PostDetail = (props) => {
   const [post, setPost] = useState({});
-  const [error, setError] = useState(false);
-  const [isLoading, setLoading] = useState(true);
+  const [state, setState] = useState("loading");
 
   const slug = props.location.pathname.split("/")[2];
 
@@ -22,11 +21,11 @@ const PostDetail = (props) => {
       })
       .then((data) => {
         setPost(data);
-        setLoading(false);
+        setState("loaded");
       })
       .catch((error) => {
         console.log(error);
-        setError(true);
+        setState("error");
       });
   }, []);
 
@@ -34,11 +33,11 @@ const PostDetail = (props) => {
     return moment(date).fromNow();
   };
 
-  if (error) {
+  if (state === "error") {
     return <NotFound />;
   }
 
-  if (isLoading) {
+  if (state === "loading") {
     return null;
   }
 

@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from "react";
-import Comment from "./Comment";
+import React, { useState } from "react";
 
 const CommentForm = ({ slug }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [body, setBody] = useState("");
   const [comment, setComment] = useState(null);
+
+  const clearState = () => {
+    setTitle("");
+    setAuthor("");
+    setBody("");
+  };
 
   const handleSubmit = (e) => {
     const requestOptions = {
@@ -22,9 +27,8 @@ const CommentForm = ({ slug }) => {
         }
         return res.json();
       })
-      .then((data) => {
-        setComment(data);
-      })
+      .then((data) => setComment(data))
+      .then(clearState())
       .catch((error) => {
         console.log(error);
       });
@@ -32,41 +36,44 @@ const CommentForm = ({ slug }) => {
 
   return (
     <>
+      {comment && (
+        <>
+          <p className="new-comment">
+            Comment successfully created! Waiting for verification
+          </p>
+        </>
+      )}
       <form className="comment-form" onSubmit={handleSubmit}>
         <label htmlFor="title">Title</label>
         <input
           type="text"
           id="title"
           value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-          }}
+          onChange={(e) => setTitle(e.target.value)}
         />
-        <label htmlFor="author">Author</label>
+        <label htmlFor="author">Author (Optional)</label>
         <input
           type="text"
           id="author"
           value={author}
-          onChange={(e) => {
-            setAuthor(e.target.value);
-          }}
+          onChange={(e) => setAuthor(e.target.value)}
         />
         <label htmlFor="body">Content</label>
         <textarea
           value={body}
           id="body"
           onChange={(e) => {
+            e.target.style.height = "inherit";
+            e.target.style.height = `${e.target.scrollHeight}px`;
             setBody(e.target.value);
           }}
-        />
-        <button type="submit">Create</button>
+          maxLength="255"
+          rows={4}
+        />{" "}
+        <p className="info">{body.length} / 255</p>
+        <button type="submit">Post Comment</button>
       </form>
-      {comment && (
-        <>
-          <p>Comment created! Waiting for verification</p>
-          <Comment values={comment} />
-        </>
-      )}
+      )
     </>
   );
 };
