@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import axios from "axios";
 import MinimalPost from "./MinimalPost";
 import SearchBar from "./SearchBar";
 
@@ -12,21 +13,15 @@ const Posts = () => {
   const [search, setSearch] = useState("");
 
   const postsPerPage = 6;
-
   useEffect(() => {
-    fetch("/api/posts")
+    axios
+      .get("/api/posts")
       .then((res) => {
-        if (!res.ok) {
-          return Promise.reject(`Http error: ${res.status}`);
-        }
-        return res.json();
+        setPostsList(res.data);
+        setMaxPages(Math.ceil(res.data.length / postsPerPage));
       })
-      .then((data) => {
-        setPostsList(data);
-        setMaxPages(Math.ceil(data.length / postsPerPage));
-      })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err.message);
       });
   }, []);
 

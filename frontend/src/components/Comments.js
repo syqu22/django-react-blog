@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Comment from "./Comment";
 
 const Comments = ({ slug }) => {
   const [data, setdata] = useState(null);
 
   useEffect(() => {
-    fetch(`/api/posts/${slug}/comments`)
-      .then((res) => res.json())
-      .then((data) => setdata(data));
+    axios
+      .get(`/api/posts/${slug}/comments`)
+      .then((res) => setdata(res.data))
+      .catch((err) => console.log(err.message));
   }, []);
 
   if (!data) {

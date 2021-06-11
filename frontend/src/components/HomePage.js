@@ -1,24 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import Hero from "./Hero";
 import MinimalPost from "./MinimalPost";
 
 const HomePage = () => {
   const [postsList, setPostsList] = useState([]);
-
   useEffect(() => {
-    fetch("/api/posts?recent=true")
+    axios
+      .get("/api/posts?recent=true")
       .then((res) => {
-        if (!res.ok) {
-          return Promise.reject(`Http error: ${res.status}`);
-        }
-        return res.json();
+        setPostsList(res.data);
       })
-      .then((data) => {
-        setPostsList(data);
-      })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err.message);
       });
   }, []);
 

@@ -29,7 +29,10 @@ const CommentForm = ({ slug }) => {
         body,
       })
       .then(() => setCommentCreated(true))
-      .catch((err) => setError(err.response.data));
+      .catch((err) => {
+        setError(err.response.data);
+        console.log(err.message);
+      });
   };
 
   return (

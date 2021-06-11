@@ -1,30 +1,25 @@
 import React, { useState, useEffect } from "react";
+import moment from "moment";
+import axios from "axios";
 import NotFound from "./errors/NotFound";
 import Tags from "./Tags";
 import CommentForm from "./CommentForm";
 import Comments from "./Comments";
-import moment from "moment";
 
 const PostDetail = (props) => {
   const [post, setPost] = useState({});
   const [state, setState] = useState("loading");
 
   const slug = props.location.pathname.split("/")[2];
-
   useEffect(() => {
-    fetch(`/api/posts/${slug}`)
+    axios
+      .get(`/api/posts/${slug}`)
       .then((res) => {
-        if (!res.ok) {
-          return Promise.reject(`Http error: ${res.status}`);
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setPost(data);
+        setPost(res.data);
         setState("loaded");
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err.message);
         setState("error");
       });
   }, []);
