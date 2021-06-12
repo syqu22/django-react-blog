@@ -8,11 +8,10 @@ const Posts = () => {
   const [postsList, setPostsList] = useState([]);
   const [maxPages, setMaxPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
-  const [canLeft, setLeft] = useState(false);
-  const [canRight, setRight] = useState(false);
   const [search, setSearch] = useState("");
 
-  const postsPerPage = 6;
+  const postsPerPage = 4;
+
   useEffect(() => {
     axios
       .get("/api/posts")
@@ -26,20 +25,6 @@ const Posts = () => {
   }, []);
 
   useEffect(() => {
-    // Pagination
-    if (currentPage + 1 < maxPages) {
-      setRight(true);
-    } else {
-      setRight(false);
-    }
-    if (currentPage <= 0) {
-      setLeft(false);
-    } else {
-      setLeft(true);
-    }
-  }, [currentPage, maxPages]);
-
-  useEffect(() => {
     // Pagination during search
     let query = postsList.filter((e) => e.title.match(search));
     setMaxPages(Math.ceil(query.length / postsPerPage));
@@ -50,8 +35,10 @@ const Posts = () => {
   };
 
   const renderPageNumbers = () => {
+    const numbers = [];
+
     for (let index = 0; index < maxPages; index++) {
-      return (
+      numbers.push(
         <span
           className={currentPage === index ? "disabled" : "enabled"}
           onClick={() => {
@@ -63,6 +50,7 @@ const Posts = () => {
         </span>
       );
     }
+    return numbers;
   };
 
   const showPosts = (post) => {
@@ -83,16 +71,28 @@ const Posts = () => {
     );
   };
 
+  const handleArrow = (direction) => {
+    if (direction === "left") {
+      if (currentPage - 1 < 0) {
+      } else {
+        setCurrentPage(currentPage - 1);
+      }
+    } else if (direction === "right") {
+      if (currentPage + 1 >= maxPages) {
+      } else {
+        setCurrentPage(currentPage + 1);
+      }
+    }
+  };
+
   return (
     <>
       <SearchBar callback={setSearch} />
       {maxPages > 1 && (
         <div className="pagination">
           <button
-            onClick={() => {
-              canLeft && setCurrentPage(currentPage - 1);
-            }}
-            className={`arrow-button ${!canLeft && "inactive"}`}
+            onClick={() => handleArrow("left")}
+            className={`arrow-button`}
           >
             <FaArrowLeft />
           </button>
@@ -100,10 +100,8 @@ const Posts = () => {
           <div className="pagination-numbers">{renderPageNumbers()}</div>
 
           <button
-            onClick={() => {
-              canRight && setCurrentPage(currentPage + 1);
-            }}
-            className={`arrow-button ${!canRight && "inactive"}`}
+            onClick={() => handleArrow("right")}
+            className={`arrow-button`}
           >
             <FaArrowRight />
           </button>

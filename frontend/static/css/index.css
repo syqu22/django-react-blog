@@ -21,6 +21,10 @@ body {
   overflow: auto;
 }
 
+#App {
+  margin-bottom: 100rem;
+}
+
 a {
   outline: none;
   color: var(--secondary);
@@ -67,7 +71,7 @@ a {
 }
 
 .arrow-button {
-  font-size: 2.5rem;
+  font-size: 2rem;
   background: none;
   border: none;
   transition: 0.2s ease-out;
@@ -296,7 +300,6 @@ nav {
 
 .pagination-numbers {
   font-size: 2rem;
-  border: 1px solid var(--secondary);
 }
 
 .pagination-numbers span {
