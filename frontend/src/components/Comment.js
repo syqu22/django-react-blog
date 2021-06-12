@@ -8,14 +8,15 @@ const Comment = ({ values }) => {
 
   return (
     <div className="comment">
-      <img
-        src="https://www.w3schools.com/howto/img_avatar.png"
-        className="avatar"
-      />
-      <p>Title: {values.title}</p>
-      <p>Author: {values.author}</p>
-      <p>Date: {formatDate(values.created_at)}</p>
-      <p>Body: {values.body}</p>
+      <div className="left-item">
+        <img
+          src="https://www.w3schools.com/howto/img_avatar.png"
+          className="avatar"
+        />
+        <span>{values.author}</span>
+        <p>{formatDate(values.created_at)}</p>
+      </div>
+      <div className="right-item">{values.body}</div>
     </div>
   );
 };

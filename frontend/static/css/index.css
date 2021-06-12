@@ -71,11 +71,12 @@ a {
 }
 
 .arrow-button {
-  font-size: 2rem;
+  font-size: 1.8rem;
   background: none;
   border: none;
   transition: 0.2s ease-out;
   cursor: pointer;
+  padding-top: 0.4rem;
 }
 
 .enabled {
@@ -359,7 +360,6 @@ nav {
 }
 
 .comment-form-button {
-  width: 50%;
   justify-self: center;
   font: unset;
   border-radius: 0;
@@ -368,6 +368,7 @@ nav {
   background-color: var(--info);
   text-align: center;
   border: 1px solid var(--secondary);
+  margin-top: -3rem;
 }
 
 .comment-form-button::after {
@@ -443,7 +444,35 @@ nav {
 }
 
 .comment {
-  background-color: var(--info);
+  display: grid;
+  border: 1px solid var(--secondary);
+  padding: 0.4rem;
+  grid-template-columns: 10rem 1fr;
+  grid-template-rows: 3rem 1fr;
+  grid-template-areas:
+    "a b"
+    "a b";
+  overflow-wrap: anywhere;
+}
+
+.left-item {
+  grid-area: a;
+  border-right: 1px solid var(--secondary);
+}
+
+.left-item span {
+  font-weight: bold;
+  margin-left: 1rem;
+}
+
+.left-item p {
+  color: var(--date);
+}
+
+.right-item {
+  grid-area: b;
+  margin-top: 1rem;
+  margin-left: 1rem;
 }
 
 .footer {

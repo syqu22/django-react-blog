@@ -55,15 +55,13 @@ class CommentsList(APIView):
 
             if post.exists():
                 post = post.first()
-                title = serializer.data.get('title')
                 author = serializer.data.get('author')
                 body = serializer.data.get('body')
 
-                if not title:
-                    title = "Unknown"
+                if not author:
+                    author = "Guest"
 
-                comment = Comment(post=post, title=title,
-                                  author=author, body=body)
+                comment = Comment(post=post, author=author, body=body)
                 comment.save()
 
                 return Response(CommentSerializer(comment).data, status=status.HTTP_201_CREATED)

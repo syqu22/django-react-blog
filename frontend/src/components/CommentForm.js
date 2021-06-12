@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const CommentForm = ({ slug }) => {
-  const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [body, setBody] = useState("");
   const [commentCreated, setCommentCreated] = useState(false);
@@ -14,7 +13,6 @@ const CommentForm = ({ slug }) => {
   }, [commentCreated]);
 
   const clearState = () => {
-    setTitle("");
     setAuthor("");
     setBody("");
   };
@@ -24,7 +22,6 @@ const CommentForm = ({ slug }) => {
 
     axios
       .post(`/api/posts/${slug}/comments`, {
-        title,
         author,
         body,
       })
@@ -46,15 +43,6 @@ const CommentForm = ({ slug }) => {
         </>
       )}
       <form className="comment-form" onSubmit={handleSubmit}>
-        <label htmlFor="title">
-          Title <span className="invalid-value">{error.title}</span>
-        </label>
-        <input
-          type="text"
-          id="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
         <label htmlFor="author">
           Author (Optional){" "}
           <span className="invalid-value">{error.author}</span>
@@ -81,7 +69,7 @@ const CommentForm = ({ slug }) => {
         />
         <p className="info">{body.length} / 255</p>
         <button className="comment-form-button" type="submit">
-          <span>Send Comment</span>
+          <span>Comment</span>
         </button>
       </form>
     </>
