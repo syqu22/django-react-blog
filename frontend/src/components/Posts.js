@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import axios from "axios";
 import MinimalPost from "./MinimalPost";
 import SearchBar from "./SearchBar";
+import Pagination from "./Pagination";
 
 const Posts = () => {
   const [postsList, setPostsList] = useState([]);
@@ -25,40 +25,24 @@ const Posts = () => {
   }, []);
 
   useEffect(() => {
-    // Pagination during search
     let query = postsList.filter((e) => e.title.match(search));
     setMaxPages(Math.ceil(query.length / postsPerPage));
+    // Swap to first page to make sure we won't be stuck on any page without items
+    setCurrentPage(0);
   }, [search]);
 
   const queryFilter = (value) => {
     return value.title.match(search) || value.tags.includes(search);
   };
 
-  const renderPageNumbers = () => {
-    const numbers = [];
-
-    for (let index = 0; index < maxPages; index++) {
-      numbers.push(
-        <span
-          className={currentPage === index ? "disabled" : "enabled"}
-          onClick={() => {
-            setCurrentPage(index);
-          }}
-          key={index}
-        >
-          {index + 1}
-        </span>
-      );
-    }
-    return numbers;
-  };
-
-  const showPosts = (post) => {
-    return <MinimalPost key={post.slug} {...post} />;
-  };
-
-  const renderPosts = () => {
-    return (
+  return (
+    <>
+      <SearchBar callback={setSearch} />
+      <Pagination
+        page={currentPage}
+        maxPages={maxPages}
+        handleChange={setCurrentPage}
+      />
       <div className="container">
         {postsList
           .filter(queryFilter)
@@ -66,48 +50,10 @@ const Posts = () => {
             currentPage * postsPerPage,
             currentPage * postsPerPage + postsPerPage
           )
-          .map(showPosts)}
+          .map((post) => (
+            <MinimalPost key={post.slug} {...post} />
+          ))}
       </div>
-    );
-  };
-
-  const handleArrow = (direction) => {
-    if (direction === "left") {
-      if (currentPage - 1 < 0) {
-      } else {
-        setCurrentPage(currentPage - 1);
-      }
-    } else if (direction === "right") {
-      if (currentPage + 1 >= maxPages) {
-      } else {
-        setCurrentPage(currentPage + 1);
-      }
-    }
-  };
-
-  return (
-    <>
-      <SearchBar callback={setSearch} />
-      {maxPages > 1 && (
-        <div className="pagination">
-          <button
-            onClick={() => handleArrow("left")}
-            className={`arrow-button`}
-          >
-            <FaArrowLeft />
-          </button>
-
-          <div className="pagination-numbers">{renderPageNumbers()}</div>
-
-          <button
-            onClick={() => handleArrow("right")}
-            className={`arrow-button`}
-          >
-            <FaArrowRight />
-          </button>
-        </div>
-      )}
-      {renderPosts()}
     </>
   );
 };
