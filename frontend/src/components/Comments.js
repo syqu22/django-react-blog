@@ -1,27 +1,44 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Comment from "./Comment";
+import Pagination from "./Pagination";
 
 const Comments = ({ slug }) => {
-  const [data, setdata] = useState(null);
+  const [commentsList, setCommentsList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const commentsPerPage = 6;
+  const maxComments = commentsList.length / commentsPerPage;
 
   useEffect(() => {
     axios
       .get(`/api/posts/${slug}/comments`)
-      .then((res) => setdata(res.data))
+      .then((res) => setCommentsList(res.data))
       .catch((err) => console.log(err.message));
   }, []);
 
-  if (!data) {
-    return null;
+  if (!commentsList) {
+    return <h1 className="error">No comments</h1>;
   }
 
   return (
-    <div className="comments">
-      {data.map((comment) => {
-        return <Comment key={comment.id} values={comment} />;
-      })}
-    </div>
+    <>
+      <div className="comments">
+        {commentsList
+          .slice(
+            currentPage * commentsPerPage,
+            currentPage * commentsPerPage + commentsPerPage
+          )
+          .map((comment) => {
+            return <Comment key={comment.id} values={comment} />;
+          })}
+      </div>
+      <Pagination
+        page={currentPage}
+        maxPages={maxComments}
+        handleChange={setCurrentPage}
+      />
+    </>
   );
 };
 

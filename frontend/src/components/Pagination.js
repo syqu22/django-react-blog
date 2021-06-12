@@ -2,14 +2,17 @@ import React from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 const Pagination = ({ page, maxPages, handleChange }) => {
   const handleArrow = (direction) => {
-    if (direction === "left") {
-      if (page - 1 >= 0) {
-        handleChange(page - 1);
-      }
-    } else if (direction === "right") {
-      if (page + 1 < maxPages) {
-        handleChange(page + 1);
-      }
+    switch (direction) {
+      case "left":
+        if (page - 1 >= 0) {
+          handleChange(page - 1);
+        }
+        break;
+      case "right":
+        if (page + 1 < maxPages) {
+          handleChange(page + 1);
+        }
+        break;
     }
   };
 
@@ -19,6 +22,7 @@ const Pagination = ({ page, maxPages, handleChange }) => {
     for (let index = 0; index < maxPages; index++) {
       numbers.push(
         <span
+          tabIndex={0}
           className={page === index ? "disabled" : "enabled"}
           onClick={() => handleChange(index)}
           key={index}

@@ -9,12 +9,8 @@ const HomePage = () => {
   useEffect(() => {
     axios
       .get("/api/posts?recent=true")
-      .then((res) => {
-        setPostsList(res.data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+      .then((res) => setPostsList(res.data))
+      .catch((err) => console.log(err.message));
   }, []);
 
   const showPosts = (post) => {

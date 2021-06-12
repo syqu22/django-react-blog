@@ -19,9 +19,7 @@ const Posts = () => {
         setPostsList(res.data);
         setMaxPages(Math.ceil(res.data.length / postsPerPage));
       })
-      .catch((err) => {
-        console.log(err.message);
-      });
+      .catch((err) => console.log(err.message));
   }, []);
 
   useEffect(() => {
@@ -34,6 +32,10 @@ const Posts = () => {
   const queryFilter = (value) => {
     return value.title.match(search) || value.tags.includes(search);
   };
+
+  if (postsList.length === 0) {
+    return <h1 className="error">There are no public posts</h1>;
+  }
 
   return (
     <>
