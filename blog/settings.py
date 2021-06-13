@@ -41,10 +41,10 @@ INSTALLED_APPS = [
     'django_summernote',
     'rest_framework',
 
+    'users.apps.UsersConfig',
     'api.apps.ApiConfig',
     'contact.apps.ContactConfig',
     'frontend.apps.FrontendConfig',
-
 ]
 
 MIDDLEWARE = [
@@ -92,6 +92,8 @@ DATABASES = {
     }
 }
 
+# Authentication
+AUTH_USER_MODEL = 'users.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
