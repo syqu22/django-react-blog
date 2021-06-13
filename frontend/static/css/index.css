@@ -400,7 +400,7 @@ nav {
 
 .comment-form input,
 .comment-form textarea {
-  border: 1px solid var(--secondary);
+  border: 1px solid var(--info);
   font: unset;
   border-radius: 0;
 }
