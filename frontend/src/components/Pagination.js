@@ -1,5 +1,7 @@
 import React from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import PropTypes from "prop-types";
+
 const Pagination = ({ page, maxPages, handleChange }) => {
   const handleArrow = (direction) => {
     switch (direction) {
@@ -49,6 +51,12 @@ const Pagination = ({ page, maxPages, handleChange }) => {
       </div>
     )
   );
+};
+
+Pagination.propTypes = {
+  page: PropTypes.number,
+  maxPages: PropTypes.number,
+  handleChange: PropTypes.func,
 };
 
 export default Pagination;

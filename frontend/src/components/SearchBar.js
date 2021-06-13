@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const SearchBar = ({ callback }) => {
   return (
@@ -13,6 +14,10 @@ const SearchBar = ({ callback }) => {
       />
     </form>
   );
+};
+
+SearchBar.propTypes = {
+  callback: PropTypes.func,
 };
 
 export default SearchBar;

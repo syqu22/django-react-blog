@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import PropTypes from "prop-types";
 
 const CommentForm = ({ slug }) => {
   const [author, setAuthor] = useState("");
@@ -97,6 +98,10 @@ const CommentForm = ({ slug }) => {
       </form>
     </>
   );
+};
+
+CommentForm.propTypes = {
+  slug: PropTypes.string,
 };
 
 export default CommentForm;

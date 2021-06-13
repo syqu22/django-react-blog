@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+import PropTypes from "prop-types";
 
 const Comment = ({ values }) => {
   const formatDate = (date) => {
@@ -19,6 +20,10 @@ const Comment = ({ values }) => {
       <div className="right-item">{values.body}</div>
     </div>
   );
+};
+
+Comment.propTypes = {
+  values: PropTypes.array,
 };
 
 export default Comment;

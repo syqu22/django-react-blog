@@ -5,6 +5,7 @@ import NotFound from "./errors/NotFound";
 import Tags from "./Tags";
 import CommentForm from "./CommentForm";
 import Comments from "./Comments";
+import PropTypes from "prop-types";
 
 const PostDetail = (props) => {
   const [post, setPost] = useState({});
@@ -64,6 +65,10 @@ const PostDetail = (props) => {
       </div>
     </div>
   );
+};
+
+PostDetail.propTypes = {
+  location: PropTypes.string,
 };
 
 export default PostDetail;

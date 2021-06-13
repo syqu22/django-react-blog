@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Comment from "./Comment";
 import Pagination from "./Pagination";
+import PropTypes from "prop-types";
 
 const Comments = ({ slug }) => {
   const [commentsList, setCommentsList] = useState([]);
@@ -40,6 +41,10 @@ const Comments = ({ slug }) => {
       />
     </>
   );
+};
+
+Comments.propTypes = {
+  slug: PropTypes.string,
 };
 
 export default Comments;
