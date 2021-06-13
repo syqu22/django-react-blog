@@ -1,3 +1,4 @@
+from datetime import datetime
 from rest_framework.request import Request
 from api.serializers import CreateCommentSerializer, CommentSerializer, PostSerializer
 from api.models import Comment, Post
@@ -35,7 +36,6 @@ class CommentsList(APIView):
     authentication_classes = []
 
     def get(self, request: Request, slug: str, format=None):
-
         post = Post.objects.filter(slug=slug).filter(is_public=True)
 
         if post.exists():
@@ -50,6 +50,18 @@ class CommentsList(APIView):
     def post(self, request: Request, slug: str, format=None):
         serializer = CreateCommentSerializer(data=request.data)
 
+        if not self.request.session.exists(self.request.session.session_key):
+            self.request.session.create()
+
+        if self.request.session.has_key('comment_posted'):
+            delta = round((self.request.session['comment_posted'] +
+                           60) - datetime.now().timestamp())
+
+            if delta > 0:
+                return Response({'Too Many Requests': f'Please wait {delta} more seconds before posting another comment.'}, status=status.HTTP_429_TOO_MANY_REQUESTS)
+            else:
+                self.request.session.pop('comment_posted')
+
         if serializer.is_valid():
             post = Post.objects.filter(slug=slug).filter(is_public=True)
 
@@ -63,6 +75,9 @@ class CommentsList(APIView):
 
                 comment = Comment(post=post, author=author, body=body)
                 comment.save()
+
+                self.request.session['comment_posted'] = datetime.now(
+                ).timestamp()
 
                 return Response(CommentSerializer(comment).data, status=status.HTTP_201_CREATED)
 

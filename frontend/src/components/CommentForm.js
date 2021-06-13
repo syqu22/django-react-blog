@@ -5,11 +5,29 @@ const CommentForm = ({ slug }) => {
   const [author, setAuthor] = useState("");
   const [body, setBody] = useState("");
   const [commentCreated, setCommentCreated] = useState(false);
+  const [countdown, setCountdown] = useState(0);
   const [error, setError] = useState({});
 
   useEffect(() => {
     clearState();
     setError({});
+  }, [commentCreated]);
+
+  useEffect(() => {
+    countdown > 0 && setTimeout(() => setCountdown(countdown - 1), 1000);
+  }, [countdown]);
+
+  useEffect(() => {
+    const err = error["Too Many Requests"];
+    if (err) {
+      setCountdown(err.split(" ")[2]);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setCommentCreated(false);
+    }, 5000);
   }, [commentCreated]);
 
   const clearState = () => {
@@ -41,6 +59,11 @@ const CommentForm = ({ slug }) => {
             take some time.
           </p>
         </>
+      )}
+      {countdown > 0 && (
+        <p className="comment-countdown">
+          Please wait {countdown} seconds before posting another comment.
+        </p>
       )}
       <form className="comment-form" onSubmit={handleSubmit}>
         <label htmlFor="author">

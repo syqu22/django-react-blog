@@ -10,7 +10,7 @@ body {
   --primary: rgb(255, 255, 255);
   --secondary: rgb(26, 23, 23);
   --info: rgb(207, 201, 201);
-  --date: rgb(110, 106, 106);
+  --light: rgb(110, 106, 106);
   --success: rgb(29 121 49);
   position: absolute;
   width: 100%;
@@ -151,7 +151,7 @@ a {
 }
 
 .item span {
-  color: var(--date);
+  color: var(--light);
 }
 
 .item img {
@@ -268,7 +268,7 @@ nav {
 }
 
 .post-info span {
-  color: var(--date);
+  color: var(--light);
 }
 
 .post-body {
@@ -429,8 +429,15 @@ nav {
 
 .invalid-value {
   float: right;
-  color: var(--date);
+  color: var(--light);
 }
+
+.comment-countdown {
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--light);
+}
+
 .new-comment {
   text-align: center;
   margin-bottom: 1.5rem;
@@ -453,6 +460,7 @@ nav {
     "a b"
     "a b";
   overflow-wrap: anywhere;
+  box-shadow: 0 2px 4px var(--secondary);
 }
 
 .left-item {
@@ -466,7 +474,7 @@ nav {
 }
 
 .left-item p {
-  color: var(--date);
+  color: var(--light);
 }
 
 .right-item {
@@ -487,7 +495,7 @@ nav {
 }
 
 footer {
-  color: var(--date);
+  color: var(--light);
   padding: 0.6rem;
   margin-left: 2rem;
 }
