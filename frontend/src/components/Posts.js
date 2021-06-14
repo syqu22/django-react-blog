@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import MinimalPost from "./MinimalPost";
 import SearchBar from "./SearchBar";
 import Pagination from "./Pagination";
+import connection from "../connection";
 
 const Posts = () => {
   const [postsList, setPostsList] = useState([]);
@@ -13,8 +13,8 @@ const Posts = () => {
   const postsPerPage = 4;
 
   useEffect(() => {
-    axios
-      .get("/api/posts")
+    connection
+      .get("posts")
       .then((res) => {
         setPostsList(res.data);
         setMaxPages(Math.ceil(res.data.length / postsPerPage));

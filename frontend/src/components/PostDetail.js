@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import moment from "moment";
-import axios from "axios";
 import NotFound from "./errors/NotFound";
 import Tags from "./Tags";
 import CommentForm from "./CommentForm";
 import Comments from "./Comments";
 import PropTypes from "prop-types";
+import connection from "../connection";
 
 const PostDetail = (props) => {
   const [post, setPost] = useState({});
@@ -13,8 +13,8 @@ const PostDetail = (props) => {
 
   const slug = props.location.pathname.split("/")[2];
   useEffect(() => {
-    axios
-      .get(`/api/posts/${slug}`)
+    connection
+      .get(`posts/${slug}`)
       .then((res) => {
         setPost(res.data);
         setState("loaded");

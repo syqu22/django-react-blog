@@ -40,6 +40,21 @@ const NavBar = () => {
             Contact
           </NavLink>
         </li>
+        <li>
+          <NavLink className="navbar-item" to="/signup">
+            Sign Up
+          </NavLink>
+        </li>
+        <li>
+          <NavLink className="navbar-item" to="/login">
+            Log In
+          </NavLink>
+        </li>
+        <li>
+          <NavLink className="navbar-item" to="/logout">
+            Log Out
+          </NavLink>
+        </li>
 
         <Socials />
 

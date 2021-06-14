@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import connection from "../connection";
 import Hero from "./Hero";
 import MinimalPost from "./MinimalPost";
 
 const HomePage = () => {
   const [postsList, setPostsList] = useState([]);
+
   useEffect(() => {
-    axios
-      .get("/api/posts?recent=true")
+    connection
+      .get("posts?recent=true")
       .then((res) => setPostsList(res.data))
       .catch((err) => console.log(err.message));
   }, []);

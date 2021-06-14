@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import PropTypes from "prop-types";
+import connection from "../connection";
 
 const CommentForm = ({ slug }) => {
-  const [author, setAuthor] = useState("");
-  const [body, setBody] = useState("");
+  const initialData = Object.freeze({
+    author: "",
+    body: "",
+  });
+
+  const [formData, setFormData] = useState(initialData);
   const [commentCreated, setCommentCreated] = useState(false);
   const [countdown, setCountdown] = useState(0);
   const [error, setError] = useState({});
@@ -25,6 +29,13 @@ const CommentForm = ({ slug }) => {
     }
   }, [error]);
 
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value.trim(),
+    });
+  };
+
   useEffect(() => {
     setTimeout(() => {
       setCommentCreated(false);
@@ -32,17 +43,16 @@ const CommentForm = ({ slug }) => {
   }, [commentCreated]);
 
   const clearState = () => {
-    setAuthor("");
-    setBody("");
+    setFormData(initialData);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios
-      .post(`/api/posts/${slug}/comments`, {
-        author,
-        body,
+    connection
+      .post(`posts/${slug}/comments`, {
+        author: formData.author,
+        body: formData.body,
       })
       .then(() => setCommentCreated(true))
       .catch((err) => {
@@ -71,27 +81,22 @@ const CommentForm = ({ slug }) => {
           Author (Optional){" "}
           <span className="invalid-value">{error.author}</span>
         </label>
-        <input
-          type="text"
-          id="author"
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
-        />
+        <input type="text" id="author" name="author" onChange={handleChange} />
         <label htmlFor="body">
           Content <span className="invalid-value">{error.body}</span>
         </label>
         <textarea
-          value={body}
           id="body"
+          name="body"
           onChange={(e) => {
             e.target.style.height = "inherit";
             e.target.style.height = `${e.target.scrollHeight}px`;
-            setBody(e.target.value);
+            handleChange;
           }}
           maxLength="255"
           rows={4}
         />
-        <p className="info">{body.length} / 255</p>
+        <p className="info">{formData.body.length} / 255</p>
         <button className="comment-form-button" type="submit">
           <span>Comment</span>
         </button>
