@@ -23,7 +23,6 @@
     "webpack-cli": "^4.7.0"
   },
   "dependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.13.0",
     "axios": "^0.21.1",
     "moment": "^2.29.1",
     "prop-types": "^15.7.2",

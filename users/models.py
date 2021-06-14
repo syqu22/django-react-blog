@@ -1,22 +1,26 @@
+from blog.settings import DATABASES
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 
 class UserManager(BaseUserManager):
 
-    def create_user(self, username: str, email: str, password: str = None):
+    def create_user(self, username: str, email: str, first_name: str, last_name: str, password: str):
         if not username:
             raise TypeError('User needs to have an username')
         if not email:
             raise TypeError('User needs to have an email')
+        if not password:
+            raise TypeError('User password cannot be empty')
 
-        user = self.model(username=username, email=self.normalize_email(email))
+        user = self.model(username=username, email=self.normalize_email(
+            email), first_name=first_name, last_name=last_name)
         user.set_password(password)
         user.save()
 
         return user
 
-    def create_superuser(self, username: str, email: str, password: str = None):
+    def create_superuser(self, username: str, email: str, first_name: str, last_name: str, password: str):
         if not username:
             raise TypeError('Superuser needs to have an username')
         if not email:
@@ -24,23 +28,11 @@ class UserManager(BaseUserManager):
         if not password:
             raise TypeError('Superuser password cannot be empty')
 
-        user = self.create_user(username, email, password)
+        user = self.create_user(username=username, email=email,
+                                first_name=first_name, last_name=last_name, password=password)
+        user.is_staff = True
         user.is_superuser = True
-        user.is_staff = True
-        user.save()
-
-        return user
-
-    def create_staff(self, username: str, email: str, password: str = None):
-        if not username:
-            raise TypeError('Staff member needs to have an username')
-        if not email:
-            raise TypeError('Staff member needs to have an email')
-        if not password:
-            raise TypeError('Staff member password cannot be empty')
-
-        user = self.create_user(username, email, password)
-        user.is_staff = True
+        user.is_active = True
         user.save()
 
         return user
@@ -49,15 +41,19 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=150, unique=True)
     email = models.EmailField(max_length=254, unique=True)
+    first_name = models.CharField(max_length=150, blank=True)
+    last_name = models.CharField(max_length=150, blank=True)
+    title = models.CharField(max_length=50, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    is_verified = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-
-    USERNAME_FIELD = 'email'
+    # Change later to false
+    is_active = models.BooleanField(default=True)
 
     objects = UserManager()
 
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
+
     def __str__(self):
-        return self.email
+        return f'{self.username} - {self.email}'
