@@ -22,9 +22,10 @@ const CommentForm = ({ slug }) => {
   }, [countdown]);
 
   useEffect(() => {
-    const err = error["Too Many Requests"];
-    if (err) {
-      setCountdown(err.split(" ")[2]);
+    const tooManyRequests = error["Too Many Requests"];
+
+    if (tooManyRequests) {
+      setCountdown(tooManyRequests.split(" ")[2]);
     }
   }, [error]);
 
@@ -51,8 +52,7 @@ const CommentForm = ({ slug }) => {
     e.preventDefault();
 
     connection
-      .post(`posts/${slug}/comments/`, {
-        author: formData.author,
+      .post(`posts/${slug}/comments/send/`, {
         body: formData.body,
       })
       .then(() => setCommentCreated(true))
@@ -72,6 +72,7 @@ const CommentForm = ({ slug }) => {
           </p>
         </>
       )}
+
       {countdown > 0 && (
         <p className="comment-countdown">
           Please wait {countdown} seconds before posting another comment.
@@ -79,7 +80,11 @@ const CommentForm = ({ slug }) => {
       )}
       <form className="comment-form" onSubmit={handleSubmit} noValidate>
         <label htmlFor="body">
-          Content <span className="invalid-value">{error.body}</span>
+          Content{" "}
+          <span className="invalid-value">
+            {error.body}
+            {error.detail}
+          </span>
         </label>
         <textarea
           id="body"

@@ -9,7 +9,7 @@ const SearchBar = ({ callback }) => {
         className="search-bar"
         placeholder="Search..."
         onChange={(e) => {
-          callback(e.target.value);
+          callback(e.target.value.toLowerCase());
         }}
       />
     </form>

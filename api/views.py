@@ -31,7 +31,6 @@ class PostsList(generics.ListCreateAPIView):
 
 
 class PostDetail(APIView):
-
     def get(self, request: Request, slug: str, format=None):
         post = Post.objects.filter(slug=slug)
 
@@ -43,7 +42,6 @@ class PostDetail(APIView):
 
 
 class CommentsList(APIView):
-
     def get(self, request: Request, slug: str, format=None):
         post = Post.objects.filter(slug=slug)
 
@@ -56,6 +54,8 @@ class CommentsList(APIView):
 
         return Response({'Comments not found': f'Cannot find comments for post with slug: {slug}'}, status=status.HTTP_404_NOT_FOUND)
 
+
+class CreateComment(APIView):
     def post(self, request: Request, slug: str, format=None):
         serializer = CreateCommentSerializer(data=request.data)
 

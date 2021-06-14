@@ -5,4 +5,5 @@ urlpatterns = [
     path('', PostsList.as_view()),
     path('<slug:slug>/', PostDetail.as_view()),
     path('<slug:slug>/comments/', CommentsList.as_view()),
+    path('<slug:slug>/comments/send/', CreateComment.as_view())
 ]
