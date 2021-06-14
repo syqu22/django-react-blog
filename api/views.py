@@ -76,13 +76,9 @@ class CommentsList(APIView):
 
             if post.exists():
                 post = post.first()
-                author = serializer.data.get('author')
                 body = serializer.data.get('body')
 
-                if not author:
-                    author = "Guest"
-
-                comment = Comment(post=post, author=author, body=body)
+                comment = Comment(post=post, body=body)
                 comment.save()
 
                 self.request.session['comment_posted'] = datetime.now(

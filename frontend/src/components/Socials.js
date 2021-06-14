@@ -1,7 +1,9 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import { GrFacebook, GrInstagram, GrTwitter } from "react-icons/gr";
 
 const Socials = () => {
+  const location = useLocation();
   const facebookURL = "https://www.facebook.com/";
   const instagramURL = "http://instagram.com/";
   const twitterURL = "https://twitter.com/";

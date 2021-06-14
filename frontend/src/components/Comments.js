@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import connection from "../connection";
 import Comment from "./Comment";
 import Pagination from "./Pagination";
 import PropTypes from "prop-types";
@@ -12,8 +12,8 @@ const Comments = ({ slug }) => {
   const maxComments = commentsList.length / commentsPerPage;
 
   useEffect(() => {
-    axios
-      .get(`/api/posts/${slug}/comments`)
+    connection
+      .get(`posts/${slug}/comments`)
       .then((res) => setCommentsList(res.data))
       .catch((err) => console.log(err.message));
   }, []);

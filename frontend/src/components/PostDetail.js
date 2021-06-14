@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import moment from "moment";
 import NotFound from "./errors/NotFound";
 import Tags from "./Tags";
 import CommentForm from "./CommentForm";
 import Comments from "./Comments";
-import PropTypes from "prop-types";
 import connection from "../connection";
 
-const PostDetail = (props) => {
+const PostDetail = () => {
   const [post, setPost] = useState({});
   const [state, setState] = useState("loading");
+  const location = useLocation();
 
-  const slug = props.location.pathname.split("/")[2];
+  const slug = location.pathname.split("/")[2];
+
   useEffect(() => {
     connection
       .get(`posts/${slug}`)
@@ -65,10 +67,6 @@ const PostDetail = (props) => {
       </div>
     </div>
   );
-};
-
-PostDetail.propTypes = {
-  location: PropTypes.object,
 };
 
 export default PostDetail;

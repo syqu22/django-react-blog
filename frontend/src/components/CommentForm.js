@@ -4,7 +4,6 @@ import connection from "../connection";
 
 const CommentForm = ({ slug }) => {
   const initialData = Object.freeze({
-    author: "",
     body: "",
   });
 
@@ -30,10 +29,12 @@ const CommentForm = ({ slug }) => {
   }, [error]);
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value.trim(),
-    });
+    (e.target.style.height = "inherit"),
+      (e.target.style.height = `${e.target.scrollHeight}px`),
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value.trim(),
+      });
   };
 
   useEffect(() => {
@@ -50,7 +51,7 @@ const CommentForm = ({ slug }) => {
     e.preventDefault();
 
     connection
-      .post(`posts/${slug}/comments`, {
+      .post(`posts/${slug}/comments/`, {
         author: formData.author,
         body: formData.body,
       })
@@ -76,23 +77,14 @@ const CommentForm = ({ slug }) => {
           Please wait {countdown} seconds before posting another comment.
         </p>
       )}
-      <form className="comment-form" onSubmit={handleSubmit}>
-        <label htmlFor="author">
-          Author (Optional){" "}
-          <span className="invalid-value">{error.author}</span>
-        </label>
-        <input type="text" id="author" name="author" onChange={handleChange} />
+      <form className="comment-form" onSubmit={handleSubmit} noValidate>
         <label htmlFor="body">
           Content <span className="invalid-value">{error.body}</span>
         </label>
         <textarea
           id="body"
           name="body"
-          onChange={(e) => {
-            e.target.style.height = "inherit";
-            e.target.style.height = `${e.target.scrollHeight}px`;
-            handleChange;
-          }}
+          onChange={handleChange}
           maxLength="255"
           rows={4}
         />

@@ -1,14 +1,19 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import connection from "../connection";
 
-const Signup = () => {
+const SignUp = () => {
   const initialData = Object.freeze({
     username: "",
     email: "",
     password: "",
+    first_name: "",
+    last_name: "",
   });
 
   const [formData, setFormData] = useState(initialData);
+  const [error, setError] = useState({});
+  const history = useHistory();
 
   const handleChange = (e) => {
     setFormData({
@@ -21,41 +26,85 @@ const Signup = () => {
     e.preventDefault();
 
     connection
-      .post("auth/user/register/", {
+      .post("user/register/", {
         username: formData.username,
         email: formData.email,
         password: formData.password,
       })
-      .then((res) => {
-        console.log(res);
-        console.log("TODO");
+      .then(() => {
+        history.push("/login");
       })
       .catch((err) => {
+        setError(err.response.data);
         console.log(err);
       });
   };
 
   return (
-    <form className="signup-form" onSubmit={handleSubmit} noValidate>
-      <input type="text" required onChange={handleChange} name="username" />
-      <input
-        type="email"
-        autoComplete="email"
-        required
-        aria-label="test"
-        name="email"
-        onChange={handleChange}
-      />
-      <input
-        type="password"
-        autoComplete="password"
-        required
-        onChange={handleChange}
-        name="password"
-      />
-      <button type="submit">Test</button>
-    </form>
+    <>
+      <h2>Sign Up</h2>
+      <form className="user-form" onSubmit={handleSubmit} noValidate>
+        <div className="user-form-item">
+          <label htmlFor="username">Username</label>
+          <span className="invalid-value"> {error.username} </span>
+          <input
+            type="text"
+            required
+            onChange={handleChange}
+            id="username"
+            name="username"
+          />
+        </div>
+        <div className="user-form-item">
+          <label htmlFor="email">E-Mail</label>
+          <span className="invalid-value"> {error.email} </span>
+          <input
+            type="email"
+            autoComplete="email"
+            required
+            onChange={handleChange}
+            id="email"
+            name="email"
+          />
+        </div>
+        <div className="user-form-item">
+          <label htmlFor="password">Password</label>
+          <span className="invalid-value"> {error.password} </span>
+          <input
+            type="password"
+            autoComplete="password"
+            required
+            onChange={handleChange}
+            id="password"
+            name="password"
+          />
+        </div>
+        <div className="user-form-item">
+          <label htmlFor="first_name">First Name</label>
+          <span className="invalid-value"> {error.first_name} </span>
+          <input
+            type="text"
+            onChange={handleChange}
+            id="first_name"
+            name="first_name"
+          />
+        </div>
+        <div className="user-form-item">
+          <label htmlFor="last_name">Last Name</label>
+          <span className="invalid-value"> {error.last_name} </span>
+          <input
+            type="text"
+            onChange={handleChange}
+            id="last_name"
+            name="last_name"
+          />
+        </div>
+        <div className="user-form-item">
+          <button type="submit">Sign Up</button>
+        </div>
+      </form>
+    </>
   );
 };
 
-export default Signup;
+export default SignUp;

@@ -55,16 +55,8 @@ const NavBar = () => {
             Log Out
           </NavLink>
         </li>
-
         <Socials />
-
-        {!isMobile && (
-          <li>
-            <a className="navbar-item" href="/admin">
-              Login
-            </a>
-          </li>
-        )}
+        {isMobile & <li>Test</li>}
       </ul>
     </nav>
   );

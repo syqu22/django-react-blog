@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_summernote',
     'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
 
     'users.apps.UsersConfig',
     'api.apps.ApiConfig',
