@@ -2,28 +2,38 @@ from datetime import datetime
 from rest_framework.request import Request
 from api.serializers import CreateCommentSerializer, CommentSerializer, PostSerializer
 from api.models import Comment, Post
-from rest_framework import generics, status, permissions
+from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import BasePermission, SAFE_METHODS
+
+
+class PostWritePermission(BasePermission):
+    message = 'Only authorized staff can write Posts'
+
+    def has_object_permission(self, request, view, obj):
+        if request.method in SAFE_METHODS:
+            return True
+
+        return obj.author == request.user.is_staff
 
 
 class PostsList(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [PostWritePermission]
     serializer_class = PostSerializer
 
     def get_queryset(self):
         recent = self.request.query_params.get('recent')
         if recent == 'true':
-            return Post.objects.filter(is_public=True)[:2]
+            return Post.objects.all()[:2]
 
-        return Post.objects.filter(is_public=True)
+        return Post.objects.all()
 
 
 class PostDetail(APIView):
-    authentication_classes = []
 
     def get(self, request: Request, slug: str, format=None):
-        post = Post.objects.filter(slug=slug).filter(is_public=True)
+        post = Post.objects.filter(slug=slug)
 
         if post.exists():
             data = PostSerializer(post.first()).data
@@ -33,14 +43,13 @@ class PostDetail(APIView):
 
 
 class CommentsList(APIView):
-    authentication_classes = []
 
     def get(self, request: Request, slug: str, format=None):
-        post = Post.objects.filter(slug=slug).filter(is_public=True)
+        post = Post.objects.filter(slug=slug)
 
         if post.exists():
             comments = Comment.objects.filter(
-                post_id=post.first().id).filter(is_confirmed=True)
+                post_id=post.first().id)
             data = CommentSerializer(
                 comments, many=True).data
             return Response(data, status=status.HTTP_200_OK)
@@ -63,7 +72,7 @@ class CommentsList(APIView):
                 self.request.session.pop('comment_posted')
 
         if serializer.is_valid():
-            post = Post.objects.filter(slug=slug).filter(is_public=True)
+            post = Post.objects.filter(slug=slug)
 
             if post.exists():
                 post = post.first()

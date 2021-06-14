@@ -7,7 +7,7 @@ from .models import *
 @admin.register(Post)
 class PostAdmin(SummernoteModelAdmin):
     summernote_fields = ('body',)
-    list_display = ('title', 'is_public', 'slug',
+    list_display = ('title', 'id', 'is_public', 'slug',
                     'author', 'edited_at', 'created_at')
     list_filter = ('is_public', 'created_at', 'edited_at',)
     search_fields = ['title', 'slug', 'author']
@@ -27,7 +27,7 @@ class PostAdmin(SummernoteModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('is_confirmed', 'post',
+    list_display = ('body', 'is_confirmed', 'id', 'post',
                     'author', 'created_at')
     list_filter = ('is_confirmed', 'created_at')
     search_fields = ['author', 'body']

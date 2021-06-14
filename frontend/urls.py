@@ -1,9 +1,7 @@
-from django.urls import path, re_path, include
+from django.urls import path, re_path
 from .views import index
 
 urlpatterns = [
-    path('api/', include('api.urls')),
-    path('api/', include('contact.urls')),
     path('', index),
     re_path(r'^.*/$', index),
 ]

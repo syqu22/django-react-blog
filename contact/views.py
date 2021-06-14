@@ -2,13 +2,12 @@ from datetime import datetime
 from rest_framework.request import Request
 from contact.serializers import MessageSerializer
 from contact.models import Message
-from rest_framework import permissions, status
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
 
 class CreateMessage(APIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def post(self, request: Request, format=None):
         serializer = MessageSerializer(data=request.data)

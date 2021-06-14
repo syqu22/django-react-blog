@@ -68,7 +68,7 @@ const PostDetail = (props) => {
 };
 
 PostDetail.propTypes = {
-  location: PropTypes.string,
+  location: PropTypes.object,
 };
 
 export default PostDetail;
