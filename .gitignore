@@ -6,3 +6,6 @@ __pycache__
 node_modules
 dist
 media
+.env
+.dockerignore
+docker-compose.debug.yml
