@@ -16,7 +16,7 @@ const LogOut = () => {
         connection.defaults.headers["Authorization"] = null;
         history.push("/");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err.message));
   }, []);
 
   return <h3 className="error">Logging Out</h3>;

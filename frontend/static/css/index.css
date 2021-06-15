@@ -9,6 +9,7 @@ body {
   --info: rgb(207, 201, 201);
   --light: rgb(110, 106, 106);
   --success: rgb(29 121 49);
+  --danger: rgb(240, 82, 82);
 }
 
 #root {
@@ -99,38 +100,6 @@ a {
   text-align: center;
 }
 
-.recent-button {
-  padding: 0.6rem;
-  position: relative;
-  background-color: var(--info);
-}
-
-.recent-button::after {
-  position: absolute;
-  content: "";
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 100%;
-  background: var(--secondary);
-  transition: 0.4s ease-out;
-}
-
-.recent-button:hover::after,
-.recent-button:focus::after {
-  width: 100%;
-}
-
-.recent-button:hover,
-.recent-button:focus {
-  color: var(--primary);
-}
-
-.recent-button span {
-  position: relative;
-  z-index: 1;
-}
-
 .container {
   width: 100%;
   display: grid;
@@ -214,6 +183,44 @@ nav {
 .error {
   text-align: center;
   font-size: 2.2rem;
+}
+
+.animated-button {
+  justify-self: center;
+  font: unset;
+  border-radius: 0;
+  padding: 0.6rem;
+  position: relative;
+  background-color: var(--info);
+  text-align: center;
+  border: 1px solid var(--secondary);
+}
+
+.animated-button::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: var(--secondary);
+  transition: 0.4s ease-in-out;
+}
+
+.animated-button:hover::after,
+.animated-button:focus::after {
+  width: 100%;
+}
+
+.animated-button:hover,
+.animated-button:focus {
+  color: var(--primary);
+  outline: none;
+}
+
+.animated-button span {
+  position: relative;
+  z-index: 1;
 }
 
 .tags {
@@ -360,45 +367,6 @@ nav {
   gap: 0.3rem;
 }
 
-.comment-form-button {
-  justify-self: center;
-  font: unset;
-  border-radius: 0;
-  padding: 0.6rem;
-  position: relative;
-  background-color: var(--info);
-  text-align: center;
-  border: 1px solid var(--secondary);
-  margin-top: -3rem;
-}
-
-.comment-form-button::after {
-  position: absolute;
-  content: "";
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 100%;
-  background: var(--secondary);
-  transition: 0.4s ease-in-out;
-}
-
-.comment-form-button:hover::after,
-.comment-form-button:focus::after {
-  width: 100%;
-}
-
-.comment-form-button:hover,
-.comment-form-button:focus {
-  color: var(--primary);
-  outline: none;
-}
-
-.comment-form-button span {
-  position: relative;
-  z-index: 1;
-}
-
 .comment-form input,
 .comment-form textarea {
   border: 1px solid var(--info);
@@ -430,7 +398,7 @@ nav {
 
 .invalid-value {
   float: right;
-  color: var(--light);
+  color: var(--danger);
 }
 
 .comment-countdown {
@@ -482,6 +450,32 @@ nav {
   grid-area: b;
   margin-top: 1rem;
   margin-left: 1rem;
+}
+
+.user-form {
+  display: grid;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.user-form h1 {
+  text-align: center;
+}
+
+.user-form-item {
+  display: grid;
+}
+
+.user-form-item input {
+  padding: 0.3rem;
+  border: 1px solid var(--info);
+  font: unset;
+  border-radius: 0;
+  width: 25rem;
+}
+
+.user-form-item input:focus {
+  outline: 1px solid var(--secondary);
 }
 
 .footer {
@@ -539,10 +533,6 @@ footer {
   .recent-text {
     font-size: small;
     margin-top: 2.5rem;
-  }
-
-  .recent-button {
-    padding: 0.6rem;
   }
 
   .search-bar {

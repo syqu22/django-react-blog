@@ -30,24 +30,43 @@ const SignUp = () => {
         username: formData.username,
         email: formData.email,
         password: formData.password,
+        first_name: formData.first_name,
+        last_name: formData.last_name,
       })
       .then(() => {
-        history.push("/login");
+        connection
+          .post("token/", {
+            username: formData.username,
+            password: formData.password,
+          })
+          .then((res) => {
+            localStorage.setItem("access_token", res.data.access);
+            localStorage.setItem("refresh_token", res.data.refresh);
+            connection.defaults.headers["Authorization"] =
+              "JWT " + localStorage.getItem("access_token");
+            history.push("/");
+          });
       })
       .catch((err) => {
         setError(err.response.data);
-        console.log(err);
+        console.log(err.message);
       });
   };
 
   return (
     <>
-      <h2>Sign Up</h2>
       <form className="user-form" onSubmit={handleSubmit} noValidate>
+        <h1>Sign Up</h1>
         <div className="user-form-item">
-          <label htmlFor="username">Username</label>
-          <span className="invalid-value"> {error.detail} </span>
-          <span className="invalid-value"> {error.username} </span>
+          <label htmlFor="username">
+            Username
+            {error.detail && (
+              <span className="invalid-value"> {error.detail} </span>
+            )}
+            {error.username && (
+              <span className="invalid-value"> {error.username} </span>
+            )}
+          </label>
           <input
             type="text"
             required
@@ -57,8 +76,12 @@ const SignUp = () => {
           />
         </div>
         <div className="user-form-item">
-          <label htmlFor="email">E-Mail</label>
-          <span className="invalid-value"> {error.email} </span>
+          <label htmlFor="email">
+            E-Mail
+            {error.email && (
+              <span className="invalid-value"> {error.email} </span>
+            )}
+          </label>
           <input
             type="email"
             autoComplete="email"
@@ -69,8 +92,12 @@ const SignUp = () => {
           />
         </div>
         <div className="user-form-item">
-          <label htmlFor="password">Password</label>
-          <span className="invalid-value"> {error.password} </span>
+          <label htmlFor="password">
+            Password
+            {error.password && (
+              <span className="invalid-value"> {error.password} </span>
+            )}
+          </label>
           <input
             type="password"
             autoComplete="password"
@@ -81,8 +108,12 @@ const SignUp = () => {
           />
         </div>
         <div className="user-form-item">
-          <label htmlFor="first_name">First Name</label>
-          <span className="invalid-value"> {error.first_name} </span>
+          <label htmlFor="first_name">
+            First Name (Optional)
+            {error.first_name && (
+              <span className="invalid-value"> {error.first_name} </span>
+            )}
+          </label>
           <input
             type="text"
             onChange={handleChange}
@@ -91,8 +122,12 @@ const SignUp = () => {
           />
         </div>
         <div className="user-form-item">
-          <label htmlFor="last_name">Last Name</label>
-          <span className="invalid-value"> {error.last_name} </span>
+          <label htmlFor="last_name">
+            Last Name (Optional)
+            {error.last_name && (
+              <span className="invalid-value"> {error.last_name} </span>
+            )}
+          </label>
           <input
             type="text"
             onChange={handleChange}
@@ -101,7 +136,9 @@ const SignUp = () => {
           />
         </div>
         <div className="user-form-item">
-          <button type="submit">Sign Up</button>
+          <button className="animated-button" type="submit">
+            <span>Confirm</span>
+          </button>
         </div>
       </form>
     </>

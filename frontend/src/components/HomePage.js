@@ -25,7 +25,7 @@ const HomePage = () => {
           <h3 className="recent-text">Recent posts:</h3>
           <div className="container">{postsList.map(showPosts)}</div>
           <div className="recent-text">
-            <Link className="recent-button" to="/posts">
+            <Link className="animated-button" to="/posts">
               <span>See more</span>
             </Link>
           </div>

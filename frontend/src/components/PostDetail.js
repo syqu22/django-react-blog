@@ -55,7 +55,7 @@ const PostDetail = () => {
         <p>
           {post.author.first_name} {post.author.last_name}
         </p>
-        <span>{post.author.title}</span>
+        {post.author.title && <span>{post.author.title}</span>}
         <span>{formatDate(post.created_at)}</span>
         {post.read_time ? <span>Read time: {post.read_time} minutes</span> : ""}
       </div>

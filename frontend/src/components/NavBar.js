@@ -11,9 +11,8 @@ const NavBar = () => {
       .get("user/")
       .then((res) => {
         setUser(res.data);
-        console.log(user);
       })
-      .catch((err) => console.log(err.response.data));
+      .catch((err) => console.log(err.message));
   }, []);
 
   return (

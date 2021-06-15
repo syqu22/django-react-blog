@@ -23,7 +23,7 @@ const Comment = ({ values }) => {
 };
 
 Comment.propTypes = {
-  values: PropTypes.array,
+  values: PropTypes.object,
 };
 
 export default Comment;

@@ -80,11 +80,11 @@ const CommentForm = ({ slug }) => {
       )}
       <form className="comment-form" onSubmit={handleSubmit} noValidate>
         <label htmlFor="body">
-          Content{" "}
-          <span className="invalid-value">
-            {error.body}
-            {error.detail}
-          </span>
+          Content
+          {error.body && <span className="invalid-value">{error.body}</span>}
+          {error.detail && (
+            <span className="invalid-value">{error.detail}</span>
+          )}
         </label>
         <textarea
           id="body"
@@ -94,7 +94,7 @@ const CommentForm = ({ slug }) => {
           rows={4}
         />
         <p className="info">{formData.body.length} / 255</p>
-        <button className="comment-form-button" type="submit">
+        <button className="animated-button" type="submit">
           <span>Comment</span>
         </button>
       </form>

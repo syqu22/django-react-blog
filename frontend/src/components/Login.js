@@ -36,18 +36,24 @@ const LogIn = () => {
       })
       .catch((err) => {
         setError(err.response.data);
-        console.log(err);
+        console.log(err.message);
       });
   };
 
   return (
     <>
-      <h2>Log In</h2>
       <form className="user-form" onSubmit={handleSubmit} noValidate>
+        <h1>Log In</h1>
         <div className="user-form-item">
-          <label htmlFor="username">Username</label>
-          <span className="invalid-value"> {error.detail} </span>
-          <span className="invalid-value"> {error.username} </span>
+          <label htmlFor="username">
+            Username
+            {error.detail && (
+              <span className="invalid-value"> {error.detail} </span>
+            )}
+            {error.username && (
+              <span className="invalid-value"> {error.username} </span>
+            )}
+          </label>
           <input
             type="text"
             required
@@ -57,8 +63,12 @@ const LogIn = () => {
           />
         </div>
         <div className="user-form-item">
-          <label htmlFor="password">Password</label>
-          <span className="invalid-value"> {error.password} </span>
+          <label htmlFor="password">
+            Password
+            {error.password && (
+              <span className="invalid-value"> {error.password} </span>
+            )}
+          </label>
           <input
             type="password"
             autoComplete="password"
@@ -69,7 +79,9 @@ const LogIn = () => {
           />
         </div>
         <div className="user-form-item">
-          <button type="submit">Log In</button>
+          <button className="animated-button" type="submit">
+            <span>Confirm</span>
+          </button>
         </div>
       </form>
     </>

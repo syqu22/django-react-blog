@@ -21,15 +21,6 @@ connection.interceptors.response.use(
   async function (error) {
     const originalRequest = error.config;
 
-    if (typeof error.response === "undefined") {
-      alert(
-        "A server/network error occurred. " +
-          "Looks like CORS might be the problem. " +
-          "Sorry about this - we will get it fixed shortly."
-      );
-      return Promise.reject(error);
-    }
-
     if (
       error.response.status === 401 &&
       originalRequest.url === baseURL + "token/refresh/"
@@ -66,7 +57,7 @@ connection.interceptors.response.use(
               return connection(originalRequest);
             })
             .catch((err) => {
-              console.log(err);
+              console.log(err.message);
             });
         } else {
           console.log("Refresh token is expired", tokenParts.exp, now);

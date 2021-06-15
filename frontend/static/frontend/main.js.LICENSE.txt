@@ -1,3 +1,199 @@
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+
+/*! ../cancel/isCancel */
+
+/*! ../connection */
+
+/*! ../core/buildFullPath */
+
+/*! ../core/createError */
+
+/*! ../defaults */
+
+/*! ../helpers/buildURL */
+
+/*! ../helpers/combineURLs */
+
+/*! ../helpers/isAbsoluteURL */
+
+/*! ../lib */
+
+/*! ../moment */
+
+/*! ../utils */
+
+/*! ./../core/settle */
+
+/*! ./../helpers/buildURL */
+
+/*! ./../helpers/cookies */
+
+/*! ./../helpers/isURLSameOrigin */
+
+/*! ./../helpers/parseHeaders */
+
+/*! ./../utils */
+
+/*! ./Cancel */
+
+/*! ./Comment */
+
+/*! ./CommentForm */
+
+/*! ./Comments */
+
+/*! ./Contact */
+
+/*! ./Footer */
+
+/*! ./Hero */
+
+/*! ./HomePage */
+
+/*! ./InterceptorManager */
+
+/*! ./LogIn */
+
+/*! ./LogOut */
+
+/*! ./MinimalPost */
+
+/*! ./NavBar */
+
+/*! ./Pagination */
+
+/*! ./PostDetail */
+
+/*! ./Posts */
+
+/*! ./SearchBar */
+
+/*! ./SignUp */
+
+/*! ./Socials */
+
+/*! ./Tags */
+
+/*! ./adapters/xhr */
+
+/*! ./cancel/Cancel */
+
+/*! ./cancel/CancelToken */
+
+/*! ./cancel/isCancel */
+
+/*! ./checkPropTypes */
+
+/*! ./cjs/react-dom.development.js */
+
+/*! ./cjs/react-is.development.js */
+
+/*! ./cjs/react.development.js */
+
+/*! ./cjs/scheduler-tracing.development.js */
+
+/*! ./cjs/scheduler.development.js */
+
+/*! ./components/App */
+
+/*! ./core/Axios */
+
+/*! ./core/mergeConfig */
+
+/*! ./createError */
+
+/*! ./defaults */
+
+/*! ./dispatchRequest */
+
+/*! ./enhanceError */
+
+/*! ./errors/InternalServer */
+
+/*! ./errors/NotFound */
+
+/*! ./factoryWithTypeCheckers */
+
+/*! ./helpers/bind */
+
+/*! ./helpers/isAxiosError */
+
+/*! ./helpers/normalizeHeaderName */
+
+/*! ./helpers/spread */
+
+/*! ./iconBase */
+
+/*! ./iconContext */
+
+/*! ./iconsManifest */
+
+/*! ./lib/ReactPropTypesSecret */
+
+/*! ./lib/axios */
+
+/*! ./mergeConfig */
+
+/*! ./setPrototypeOf.js */
+
+/*! ./transformData */
+
+/*! ./utils */
+
+/*! @babel/runtime/helpers/esm/extends */
+
+/*! @babel/runtime/helpers/esm/inheritsLoose */
+
+/*! @babel/runtime/helpers/esm/objectWithoutPropertiesLoose */
+
+/*! axios */
+
+/*! history */
+
+/*! hoist-non-react-statics */
+
+/*! isarray */
+
+/*! mini-create-react-context */
+
+/*! moment */
+
+/*! object-assign */
+
+/*! path-to-regexp */
+
+/*! prop-types */
+
+/*! react */
+
+/*! react-dom */
+
+/*! react-icons/fa */
+
+/*! react-icons/gr */
+
+/*! react-is */
+
+/*! react-router */
+
+/*! react-router-dom */
+
+/*! resolve-pathname */
+
+/*! scheduler */
+
+/*! scheduler/tracing */
+
+/*! tiny-invariant */
+
+/*! tiny-warning */
+
+/*! value-equal */
+
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
@@ -889,3 +1085,66 @@
 /*!**********************************************************************************!*\
   !*** ./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js ***!
   \**********************************************************************************/
+
+/**
+ * Checks if an event is supported in the current execution environment.
+ *
+ * NOTE: This will not work correctly for non-generic events such as `change`,
+ * `reset`, `load`, `error`, and `select`.
+ *
+ * Borrows from Modernizr.
+ *
+ * @param {string} eventNameSuffix Event name, e.g. "click".
+ * @return {boolean} True if the event is supported.
+ * @internal
+ * @license Modernizr 3.0.0pre (Custom Build) | MIT
+ */
+
+/** @license React v0.20.2
+ * scheduler-tracing.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/** @license React v0.20.2
+ * scheduler.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/** @license React v16.13.1
+ * react-is.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/** @license React v17.0.2
+ * react-dom.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/** @license React v17.0.2
+ * react.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+//! moment.js
+
+//! moment.js locale configuration
