@@ -2,10 +2,12 @@ const path = require("path");
 const webpack = require("webpack");
 
 module.exports = {
+  mode: "development",
   entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "./static/frontend"),
     filename: "[name].js",
+    clean: true,
   },
   module: {
     rules: [
@@ -21,6 +23,7 @@ module.exports = {
   optimization: {
     minimize: true,
   },
+  devtool: "inline-source-map",
   plugins: [
     new webpack.DefinePlugin({
       "process.env": {

@@ -30,18 +30,10 @@ class CreateUser(APIView):
         serializer = CreateUserSerializer(data=request.data)
 
         if serializer.is_valid():
-            # username = serializer.data.get('username')
-            # email = serializer.data.get('email')
-            # password = serializer.data.get('password')
-            # first_name = serializer.data.get('fist_name')
-            # last_name = serializer.data.get('last_name')
-
-            # UserManager().create_user(username=username, email=email,
-            #                           first_name=first_name, last_name=last_name, password=password)
             user = serializer.save()
             if user:
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-
+        print("test")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
