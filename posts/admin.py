@@ -1,7 +1,7 @@
 from django.contrib import admin, messages
 from django_summernote.admin import SummernoteModelAdmin
 
-from .models import *
+from posts.models import Post, Comment
 
 
 @admin.register(Post)

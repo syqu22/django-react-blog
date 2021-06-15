@@ -1,7 +1,6 @@
-from django.db.models.fields import CharField
 from rest_framework import serializers
 from users.serializers import UserSerializer
-from .models import *
+from posts.models import Post, Comment
 
 
 class CommentSerializer(serializers.ModelSerializer):

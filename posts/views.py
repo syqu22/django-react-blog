@@ -1,11 +1,10 @@
 from datetime import datetime
 from rest_framework.request import Request
-from api.serializers import CreateCommentSerializer, CommentSerializer, PostSerializer
-from api.models import Comment, Post
+from posts.serializers import CreateCommentSerializer, CommentSerializer, PostSerializer
+from posts.models import Comment, Post
 from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 
 class PostsList(generics.ListCreateAPIView):

@@ -7,6 +7,8 @@ TOPIC_CHOICES = (
 
 
 class Message(models.Model):
+    author = models.ForeignKey(
+        'users.User', on_delete=models.CASCADE, related_name='messages')
     email = models.EmailField(max_length=254)
     title = models.CharField(max_length=150)
     topic = models.CharField(

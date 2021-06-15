@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
 
     'users.apps.UsersConfig',
-    'api.apps.ApiConfig',
+    'posts.apps.PostsConfig',
     'contact.apps.ContactConfig',
     'frontend.apps.FrontendConfig',
 ]

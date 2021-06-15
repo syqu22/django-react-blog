@@ -1,4 +1,4 @@
-from api.views import *
+from posts.views import PostsList, PostDetail, CommentsList, CreateComment
 from django.urls import path
 
 urlpatterns = [

@@ -1,4 +1,4 @@
-from contact.views import *
+from contact.views import CreateMessage
 from django.urls import path
 
 urlpatterns = [

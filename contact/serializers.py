@@ -1,6 +1,5 @@
-from django.db.models import fields
 from rest_framework import serializers
-from .models import *
+from contact.models import Message
 
 
 class MessageSerializer(serializers.ModelSerializer):

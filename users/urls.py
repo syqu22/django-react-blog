@@ -1,4 +1,4 @@
-from users.views import *
+from users.views import CurrentUser, CreateUser, BlacklistToken
 from django.urls import path
 
 urlpatterns = [

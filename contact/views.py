@@ -1,7 +1,6 @@
 from datetime import datetime
 from rest_framework.request import Request
 from contact.serializers import MessageSerializer
-from contact.models import Message
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -25,6 +24,7 @@ class CreateMessage(APIView):
                 self.request.session.pop('message_sent')
 
         if serializer.is_valid():
+            # TODO
             pass
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

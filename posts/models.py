@@ -37,7 +37,7 @@ class Comment(models.Model):
             return super().get_queryset().filter(is_confirmed=True)
 
     post = models.ForeignKey(
-        "api.Post", on_delete=models.CASCADE, related_name='comments')
+        "posts.Post", on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(
         'users.User', on_delete=models.CASCADE, related_name='comments')
     body = models.CharField(max_length=255)
