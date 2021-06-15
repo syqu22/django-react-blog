@@ -52,7 +52,7 @@ const CommentForm = ({ slug }) => {
     e.preventDefault();
 
     connection
-      .post(`posts/${slug}/comments/send/`, {
+      .post(`${slug}/send/`, {
         body: formData.body,
       })
       .then(() => setCommentCreated(true))

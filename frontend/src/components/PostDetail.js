@@ -16,7 +16,7 @@ const PostDetail = () => {
 
   useEffect(() => {
     connection
-      .get(`posts/${slug}`)
+      .get(`posts/${slug}/`)
       .then((res) => {
         setPost(res.data);
         setState("loaded");

@@ -13,7 +13,7 @@ const Comments = ({ slug }) => {
 
   useEffect(() => {
     connection
-      .get(`posts/${slug}/comments`)
+      .get(`comments/${slug}/`)
       .then((res) => setCommentsList(res.data))
       .catch((err) => console.log(err.message));
   }, []);

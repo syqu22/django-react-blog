@@ -14,7 +14,7 @@ const Posts = () => {
 
   useEffect(() => {
     connection
-      .get("posts")
+      .get("posts/")
       .then((res) => {
         setPostsList(res.data);
         setMaxPages(Math.ceil(res.data.length / postsPerPage));

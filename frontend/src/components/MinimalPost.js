@@ -14,7 +14,7 @@ const MinimalPost = ({
   const date = new Date(created_at).toLocaleDateString();
 
   return (
-    <Link to={`/post/${slug}`} className="item">
+    <Link to={`/post/${slug}/`} className="item">
       <img src={thumbnail_url} />
       <span>{date}</span>
       <h2>{title}</h2>
