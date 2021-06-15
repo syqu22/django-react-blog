@@ -4,14 +4,15 @@ body {
   margin: 0;
   min-height: 100%;
   font-family: "Open Sans", sans-serif;
-}
-
-#root {
-  --primary: rgb(255, 255, 255);
+  --primary: rgb(255, 253, 253);
   --secondary: rgb(26, 23, 23);
   --info: rgb(207, 201, 201);
   --light: rgb(110, 106, 106);
   --success: rgb(29 121 49);
+}
+
+#root {
+  background-color: var(--primary);
   position: absolute;
   width: 100%;
   height: 100%;

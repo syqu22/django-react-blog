@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import connection from "../connection";
 import Socials from "./Socials";
 
 const NavBar = () => {
-  const [windowDimension, setWindowDimension] = useState(null);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
-    setWindowDimension(window.innerWidth);
+    connection
+      .get("user/")
+      .then((res) => {
+        setUser(res.data);
+        console.log(user);
+      })
+      .catch((err) => console.log(err.response.data));
   }, []);
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowDimension(window.innerWidth);
-    }
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const isMobile = windowDimension <= 600;
 
   return (
     <nav>
@@ -55,8 +51,8 @@ const NavBar = () => {
             Log Out
           </NavLink>
         </li>
+        <li>{user.username}</li>
         <Socials />
-        {isMobile & <li>Test</li>}
       </ul>
     </nav>
   );

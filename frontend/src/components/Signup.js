@@ -46,6 +46,7 @@ const SignUp = () => {
       <form className="user-form" onSubmit={handleSubmit} noValidate>
         <div className="user-form-item">
           <label htmlFor="username">Username</label>
+          <span className="invalid-value"> {error.detail} </span>
           <span className="invalid-value"> {error.username} </span>
           <input
             type="text"

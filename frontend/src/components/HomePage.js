@@ -9,7 +9,7 @@ const HomePage = () => {
 
   useEffect(() => {
     connection
-      .get("posts?recent=true")
+      .get("posts/?recent=true")
       .then((res) => setPostsList(res.data))
       .catch((err) => console.log(err.message));
   }, []);

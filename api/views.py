@@ -8,18 +8,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 
-class PostWritePermission(BasePermission):
-    message = 'Only authorized staff can write Posts'
-
-    def has_object_permission(self, request, view, obj):
-        if request.method in SAFE_METHODS:
-            return True
-
-        return obj.author == request.user.is_staff
-
-
 class PostsList(generics.ListCreateAPIView):
-    permission_classes = [PostWritePermission]
     serializer_class = PostSerializer
 
     def get_queryset(self):
@@ -78,7 +67,8 @@ class CreateComment(APIView):
                 post = post.first()
                 body = serializer.data.get('body')
 
-                comment = Comment(post=post, body=body)
+                comment = Comment(author_id=request.user.id,
+                                  post=post, body=body)
                 comment.save()
 
                 self.request.session['comment_posted'] = datetime.now(

@@ -1,4 +1,3 @@
-from blog.settings import DATABASES
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
@@ -7,14 +6,13 @@ class UserManager(BaseUserManager):
 
     def create_user(self, username: str, email: str, first_name: str, last_name: str, password: str):
         if not username:
-            raise TypeError('User needs to have an username')
+            raise ValueError('User needs to have an username')
         if not email:
-            raise TypeError('User needs to have an email')
-        if not password:
-            raise TypeError('User password cannot be empty')
+            raise ValueError('User needs to have an email')
 
-        user = self.model(username=username, email=self.normalize_email(
-            email), first_name=first_name, last_name=last_name)
+        email = self.normalize_email(email)
+        user = self.model(username=username, email=email,
+                          first_name=first_name, last_name=last_name)
         user.set_password(password)
         user.save()
 
@@ -22,13 +20,11 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, username: str, email: str, first_name: str, last_name: str, password: str):
         if not username:
-            raise TypeError('Superuser needs to have an username')
+            raise ValueError('Superuser needs to have an username')
         if not email:
-            raise TypeError('Superuser needs to have an email')
-        if not password:
-            raise TypeError('Superuser password cannot be empty')
+            raise ValueError('Superuser needs to have an email')
 
-        user = self.create_user(username=username, email=email,
+        user = self.create_user(username=username, email=self.normalize_email(email),
                                 first_name=first_name, last_name=last_name, password=password)
         user.is_staff = True
         user.is_superuser = True
@@ -43,8 +39,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=254, unique=True)
     first_name = models.CharField(max_length=150, blank=True, null=True)
     last_name = models.CharField(max_length=150, blank=True, null=True)
-    avatar = models.FileField(
-        upload_to=None, max_length=100, blank=True, null=True)
     title = models.CharField(max_length=50, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
