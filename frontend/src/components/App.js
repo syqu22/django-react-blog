@@ -8,9 +8,9 @@ import NavBar from "./NavBar";
 import NotFound from "./errors/NotFound";
 import InternalServer from "./errors/InternalServer";
 import Footer from "./Footer";
-import SignUp from "./auth/SignUp";
-import LogIn from "./auth/LogIn";
-import LogOut from "./auth/LogOut";
+import Signup from "./auth/Signup";
+import Login from "./auth/Login";
+import Logout from "./auth/Logout";
 
 const App = () => {
   return (
@@ -21,9 +21,9 @@ const App = () => {
           <Route exact path="/" component={HomePage} />
           <Route path="/posts" component={Posts} />
           <Route path="/contact" component={Contact} />
-          <Route path="/signup" component={SignUp} />
-          <Route path="/login" component={LogIn} />
-          <Route path="/logout" component={LogOut} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/login" component={Login} />
+          <Route path="/logout" component={Logout} />
           <Route path="/post/:slug" component={PostDetail} />
 
           <Route path="/500" component={InternalServer} />

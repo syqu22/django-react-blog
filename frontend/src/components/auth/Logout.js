@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import connection from "../../connection";
 
-const LogOut = () => {
+const Logout = () => {
   const history = useHistory();
 
   useEffect(() => {
@@ -22,4 +22,4 @@ const LogOut = () => {
   return <h3 className="error">Logging Out</h3>;
 };
 
-export default LogOut;
+export default Logout;

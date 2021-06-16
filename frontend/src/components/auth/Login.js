@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import connection from "../../connection";
 
-const LogIn = () => {
+const Login = () => {
   const initialData = Object.freeze({
     username: "",
     password: "",
@@ -98,4 +98,4 @@ const LogIn = () => {
   );
 };
 
-export default LogIn;
+export default Login;

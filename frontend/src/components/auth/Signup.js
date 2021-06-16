@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import connection from "../../connection";
 
-const SignUp = () => {
+const Signup = () => {
   const initialData = Object.freeze({
     username: "",
     email: "",
@@ -170,4 +170,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Signup;
