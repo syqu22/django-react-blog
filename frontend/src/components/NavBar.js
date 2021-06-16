@@ -38,11 +38,6 @@ const NavBar = () => {
             Log Out
           </NavLink>
         </li>
-        <li>
-          <NavLink className="navbar-item" to="/user">
-            User
-          </NavLink>
-        </li>
         <Socials />
       </ul>
     </nav>

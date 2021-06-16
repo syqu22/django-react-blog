@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import UserContext from "./UserContext";
+import UserContext from "./auth/UserContext";
 import HomePage from "./HomePage";
 import PostDetail from "./posts/PostDetail";
 import Posts from "./posts/Posts";
@@ -16,16 +16,17 @@ import User from "./auth/User";
 
 const App = () => {
   const [user, setUser] = useState({});
+
   return (
     <Router>
       <div className="App">
         <UserContext.Provider value={{ user, setUser }}>
           <NavBar />
+          <User />
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route path="/posts" component={Posts} />
             <Route path="/contact" component={Contact} />
-            <Route path="/user" component={User} />
             <Route path="/signup" component={Signup} />
             <Route path="/login" component={Login} />
             <Route path="/logout" component={Logout} />

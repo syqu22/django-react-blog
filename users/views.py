@@ -13,7 +13,6 @@ class CurrentUser(APIView):
 
     def get(self, request: Request, format=None):
         user = request.user
-
         return Response({'username': user.username,
                          'email': user.email,
                          'first_name': user.first_name,

@@ -1,27 +1,23 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useContext } from "react";
+import { useLocation } from "react-router";
 import connection from "../../connection";
-import UserContext from "../UserContext";
+import UserContext from "./UserContext";
 
 const User = () => {
-  const [test, setTest] = useState({});
+  const userContext = useContext(UserContext);
+  const location = useLocation();
 
   useEffect(() => {
     connection
       .get("user/")
-      .then((res) => setTest(res.data))
+      .then((res) => {
+        userContext.setUser(res.data);
+        console.log(userContext.user);
+      })
       .catch((err) => console.log(err.message));
-  }, []);
+  }, [location]);
 
-  return (
-    <UserContext.Consumer>
-      {({ user, setUser }) => {
-        console.log(user);
-        {
-          setUser(test);
-        }
-      }}
-    </UserContext.Consumer>
-  );
+  return null;
 };
 
 export default User;
