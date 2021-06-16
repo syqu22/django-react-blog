@@ -1,16 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "./HomePage";
-import PostDetail from "./PostDetail";
-import Posts from "./Posts";
+import PostDetail from "./posts/PostDetail";
+import Posts from "./posts/Posts";
 import Contact from "./Contact";
 import NavBar from "./NavBar";
 import NotFound from "./errors/NotFound";
 import InternalServer from "./errors/InternalServer";
 import Footer from "./Footer";
-import SignUp from "./SignUp";
-import LogIn from "./LogIn";
-import LogOut from "./LogOut";
+import SignUp from "./auth/SignUp";
+import LogIn from "./auth/LogIn";
+import LogOut from "./auth/LogOut";
 
 const App = () => {
   return (

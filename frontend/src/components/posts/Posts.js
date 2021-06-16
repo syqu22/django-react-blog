@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import MinimalPost from "./MinimalPost";
-import SearchBar from "./SearchBar";
-import Pagination from "./Pagination";
-import connection from "../connection";
+import SearchBar from "../SearchBar";
+import Pagination from "../Pagination";
+import connection from "../../connection";
 
 const Posts = () => {
   const [postsList, setPostsList] = useState([]);

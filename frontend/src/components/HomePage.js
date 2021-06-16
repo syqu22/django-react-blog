@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import connection from "../connection";
 import Hero from "./Hero";
-import MinimalPost from "./MinimalPost";
+import MinimalPost from "./posts/MinimalPost";
 
 const HomePage = () => {
   const [postsList, setPostsList] = useState([]);

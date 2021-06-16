@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import connection from "../connection";
+import connection from "../../connection";
 import Comment from "./Comment";
-import Pagination from "./Pagination";
+import Pagination from "../Pagination";
 import PropTypes from "prop-types";
 
 const Comments = ({ slug }) => {

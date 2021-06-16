@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import connection from "../connection";
+import connection from "../../connection";
 
 const CommentForm = ({ slug }) => {
   const initialData = Object.freeze({

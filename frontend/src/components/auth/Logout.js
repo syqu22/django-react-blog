@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import connection from "../connection";
+import connection from "../../connection";
 
 const LogOut = () => {
   const history = useHistory();

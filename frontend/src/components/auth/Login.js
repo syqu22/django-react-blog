@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import connection from "../connection";
+import connection from "../../connection";
 
 const LogIn = () => {
   const initialData = Object.freeze({
