@@ -60,6 +60,11 @@ const LogIn = () => {
             onChange={handleChange}
             id="username"
             name="username"
+            style={
+              error.username
+                ? { borderColor: "var(--danger)" }
+                : { borderColor: "var(--info)" }
+            }
           />
         </div>
         <div className="user-form-item">
@@ -76,6 +81,11 @@ const LogIn = () => {
             onChange={handleChange}
             id="password"
             name="password"
+            style={
+              error.password
+                ? { borderColor: "var(--danger)" }
+                : { borderColor: "var(--info)" }
+            }
           />
         </div>
         <div className="user-form-item">

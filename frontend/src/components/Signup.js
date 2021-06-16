@@ -73,6 +73,11 @@ const SignUp = () => {
             onChange={handleChange}
             id="username"
             name="username"
+            style={
+              error.username
+                ? { borderColor: "var(--danger)" }
+                : { borderColor: "var(--info)" }
+            }
           />
         </div>
         <div className="user-form-item">
@@ -89,6 +94,11 @@ const SignUp = () => {
             onChange={handleChange}
             id="email"
             name="email"
+            style={
+              error.email
+                ? { borderColor: "var(--danger)" }
+                : { borderColor: "var(--info)" }
+            }
           />
         </div>
         <div className="user-form-item">
@@ -105,6 +115,11 @@ const SignUp = () => {
             onChange={handleChange}
             id="password"
             name="password"
+            style={
+              error.password
+                ? { borderColor: "var(--danger)" }
+                : { borderColor: "var(--info)" }
+            }
           />
         </div>
         <div className="user-form-item">
@@ -119,6 +134,11 @@ const SignUp = () => {
             onChange={handleChange}
             id="first_name"
             name="first_name"
+            style={
+              error.first_name
+                ? { borderColor: "var(--danger)" }
+                : { borderColor: "var(--info)" }
+            }
           />
         </div>
         <div className="user-form-item">
@@ -133,6 +153,11 @@ const SignUp = () => {
             onChange={handleChange}
             id="last_name"
             name="last_name"
+            style={
+              error.last_name
+                ? { borderColor: "var(--danger)" }
+                : { borderColor: "var(--info)" }
+            }
           />
         </div>
         <div className="user-form-item">
