@@ -1,20 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
-import connection from "../connection";
 import Socials from "./Socials";
 
 const NavBar = () => {
-  const [user, setUser] = useState({});
-
-  useEffect(() => {
-    connection
-      .get("user/")
-      .then((res) => {
-        setUser(res.data);
-      })
-      .catch((err) => console.log(err.message));
-  }, []);
-
   return (
     <nav>
       <ul className="navbar">
@@ -50,7 +38,11 @@ const NavBar = () => {
             Log Out
           </NavLink>
         </li>
-        <li>{user.username}</li>
+        <li>
+          <NavLink className="navbar-item" to="/user">
+            User
+          </NavLink>
+        </li>
         <Socials />
       </ul>
     </nav>

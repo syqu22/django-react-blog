@@ -15,10 +15,8 @@ const connection = axios.create({
 });
 
 connection.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  async function (error) {
+  (response) => response,
+  async (error) => {
     const originalRequest = error.config;
 
     if (
@@ -43,22 +41,21 @@ connection.interceptors.response.use(
         const now = Math.ceil(Date.now() / 1000);
 
         if (tokenParts.exp > now) {
-          return connection
-            .post("token/refresh/", { refresh: refreshToken })
-            .then((response) => {
-              localStorage.setItem("access_token", response.data.access);
-              localStorage.setItem("refresh_token", response.data.refresh);
-
-              connection.defaults.headers["Authorization"] =
-                "JWT " + response.data.access;
-              originalRequest.headers["Authorization"] =
-                "JWT " + response.data.access;
-
-              return connection(originalRequest);
-            })
-            .catch((err) => {
-              console.log(err.message);
+          try {
+            const response = await connection.post("token/refresh/", {
+              refresh: refreshToken,
             });
+            localStorage.setItem("access_token", response.data.access);
+            localStorage.setItem("refresh_token", response.data.refresh);
+
+            connection.defaults.headers["Authorization"] =
+              "JWT " + response.data.access;
+            originalRequest.headers["Authorization"] =
+              "JWT " + response.data.access;
+            return await connection(originalRequest);
+          } catch (err) {
+            console.log(err.message);
+          }
         } else {
           console.log("Refresh token is expired", tokenParts.exp, now);
           window.location.href = "login/";
@@ -69,7 +66,6 @@ connection.interceptors.response.use(
       }
     }
 
-    // specific error handling done elsewhere
     return Promise.reject(error);
   }
 );

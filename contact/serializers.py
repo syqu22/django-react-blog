@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from contact.models import Message
+from contact.models import Message, Topic
 
 
 class MessageSerializer(serializers.ModelSerializer):
@@ -8,3 +8,10 @@ class MessageSerializer(serializers.ModelSerializer):
         model = Message
         fields = ['id', 'email', 'title', 'topic',
                   'author', 'body', 'created_at']
+
+
+class TopicSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Topic
+        fields = ['id', 'name']

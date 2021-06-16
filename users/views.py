@@ -33,7 +33,7 @@ class CreateUser(APIView):
             user = serializer.save()
             if user:
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-        print("test")
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
