@@ -32,6 +32,10 @@ const HomePage = () => {
         </>
       )}
       <Hero />
+      <Hero />
+      <Hero />
+      <Hero />
+      <Hero />
     </>
   );
 };

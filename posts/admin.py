@@ -1,7 +1,7 @@
 from django.contrib import admin, messages
 from django_summernote.admin import SummernoteModelAdmin
 
-from posts.models import Post
+from posts.models import Post, Tag
 
 
 @admin.register(Post)
@@ -23,3 +23,10 @@ class PostAdmin(SummernoteModelAdmin):
         queryset.update(is_public=False)
         messages.success(
             request, 'Selected Post(s) are no longer public!')
+
+
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ('name', 'id')
+    list_filter = ('name',)
+    search_fields = ('name',)

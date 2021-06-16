@@ -1,8 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
 
+html {
+  height: 100%;
+}
+
 body {
   margin: 0;
   min-height: 100%;
+  background-color: var(--primary);
+  position: relative;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+#root {
   font-family: "Open Sans", sans-serif;
   --primary: rgb(255, 253, 253);
   --secondary: rgb(26, 23, 23);
@@ -10,21 +21,6 @@ body {
   --light: rgb(110, 106, 106);
   --success: rgb(29 121 49);
   --danger: rgb(240, 82, 82);
-}
-
-#root {
-  background-color: var(--primary);
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  box-sizing: border-box;
-  overflow: auto;
-}
-
-#App {
-  margin-bottom: 100rem;
 }
 
 a {
@@ -483,6 +479,9 @@ nav {
   background-color: var(--info);
   display: grid;
   grid-template-columns: 1fr auto;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 
 .footer a:focus {

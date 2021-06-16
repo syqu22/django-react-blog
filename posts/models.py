@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.postgres.fields import ArrayField
 
 from users.models import User
 
@@ -17,8 +16,7 @@ class Post(models.Model):
     thumbnail_url = models.URLField(max_length=400, null=True, blank=True)
     body = models.TextField()
     read_time = models.IntegerField(null=True, blank=True)
-    tags = ArrayField(models.CharField(max_length=15),
-                      max_length=10, null=True, blank=True, default=None)
+    tags = models.ManyToManyField('posts.Tag')
     created_at = models.DateTimeField(auto_now_add=True)
     edited_at = models.DateTimeField(auto_now=True)
     is_public = models.BooleanField(default=False)
@@ -27,4 +25,14 @@ class Post(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f'{self.id}. {self.title} '
+        return f'{self.id}. {self.title} - {self.author}'
+
+
+class Tag(models.Model):
+    name = models.CharField(max_length=20, unique=True)
+
+    class Meta:
+        ordering = ['name']
+
+    def __str__(self):
+        return f'{self.id}. {self.title}'
