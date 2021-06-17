@@ -30,9 +30,9 @@ const NavBar = () => {
         {user !== null ? (
           <>
             <li>
-              <div>
+              <NavLink className="navbar-item" to="/user">
                 Logged as <b>{user.username}</b>
-              </div>
+              </NavLink>
             </li>
             <li>
               <NavLink className="navbar-item" to="/logout">

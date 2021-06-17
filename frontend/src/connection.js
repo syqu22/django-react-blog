@@ -16,7 +16,7 @@ const connection = axios.create({
 
 connection.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
     const originalRequest = error.config;
 
     if (
@@ -26,22 +26,21 @@ connection.interceptors.response.use(
     ) {
       const refresh_token = localStorage.getItem("refresh_token");
 
-      return connection
-        .post("/token/refresh/", { refresh: refresh_token })
-        .then((response) => {
-          localStorage.setItem("access_token", response.data.access);
-          localStorage.setItem("refresh_token", response.data.refresh);
-
-          connection.defaults.headers["Authorization"] =
-            "JWT " + response.data.access;
-          originalRequest.headers["Authorization"] =
-            "JWT " + response.data.access;
-
-          return connection(originalRequest);
-        })
-        .catch((err) => {
-          console.log(err.message);
+      try {
+        const response = await connection.post("/token/refresh/", {
+          refresh: refresh_token,
         });
+        localStorage.setItem("access_token", response.data.access);
+        localStorage.setItem("refresh_token", response.data.refresh);
+
+        connection.defaults.headers["Authorization"] =
+          "JWT " + response.data.access;
+        originalRequest.headers["Authorization"] =
+          "JWT " + response.data.access;
+        return await connection(originalRequest);
+      } catch (err) {
+        console.log(err.message);
+      }
     }
     return Promise.reject({ ...error });
   }
