@@ -38,6 +38,8 @@ class CreateComment(APIView):
             else:
                 self.request.session.pop('comment_posted')
 
+        print('create comment')
+
         if serializer.is_valid():
             post = Post.objects.filter(slug=slug)
 

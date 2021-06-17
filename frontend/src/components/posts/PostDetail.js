@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
 import NotFound from "../errors/NotFound";
-import Tags from "../Tags";
+import Tags from "./Tags";
 import CommentForm from "../comments/CommentForm";
 import Comments from "../comments/Comments";
 import connection from "../../connection";

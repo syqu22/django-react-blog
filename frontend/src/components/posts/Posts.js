@@ -33,8 +33,7 @@ const Posts = () => {
     return (
       value.title.toLowerCase().match(search) ||
       value.author.first_name.toLowerCase().match(search) ||
-      value.author.last_name.toLowerCase().match(search) ||
-      value.tags.includes(search)
+      value.author.last_name.toLowerCase().match(search)
     );
   };
 

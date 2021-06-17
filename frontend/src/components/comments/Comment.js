@@ -14,7 +14,7 @@ const Comment = ({ values }) => {
           src="https://www.w3schools.com/howto/img_avatar.png"
           className="avatar"
         />
-        <span>{values.author}</span>
+        <span>{values.author.username}</span>
         <p>{formatDate(values.created_at)}</p>
       </div>
       <div className="right-item">{values.body}</div>

@@ -52,13 +52,12 @@ const CommentForm = ({ slug }) => {
     e.preventDefault();
 
     connection
-      .post(`${slug}/send/`, {
+      .post(`comments/${slug}/send/`, {
         body: formData.body,
       })
       .then(() => setCommentCreated(true))
       .catch((err) => {
         setError(err.response.data);
-        console.log(err.message);
       });
   };
 
@@ -66,10 +65,7 @@ const CommentForm = ({ slug }) => {
     <>
       {commentCreated && (
         <>
-          <p className="new-comment">
-            Comment successfully created! Waiting for verification, It might
-            take some time.
-          </p>
+          <p className="new-comment">Comment successfully created!</p>
         </>
       )}
 
@@ -80,7 +76,6 @@ const CommentForm = ({ slug }) => {
       )}
       <form className="comment-form" onSubmit={handleSubmit} noValidate>
         <label htmlFor="body">
-          Content
           {error.body && <span className="invalid-value">{error.body}</span>}
           {error.detail && (
             <span className="invalid-value">{error.detail}</span>
@@ -90,6 +85,7 @@ const CommentForm = ({ slug }) => {
           id="body"
           name="body"
           onChange={handleChange}
+          placeholder="Write your own comment here..."
           maxLength="255"
           rows={4}
         />

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Tags from "../Tags";
+import Tags from "./Tags";
 import PropTypes from "prop-types";
 
 const MinimalPost = ({

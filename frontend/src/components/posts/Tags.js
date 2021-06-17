@@ -6,8 +6,8 @@ const Tags = ({ values }) => {
     <div className="tags">
       {values.map((value) => {
         return (
-          <p className="tag" key={value}>
-            {value}
+          <p className="tag" key={value.id}>
+            {value.name}
           </p>
         );
       })}

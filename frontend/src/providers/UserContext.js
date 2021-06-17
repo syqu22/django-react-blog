@@ -17,9 +17,8 @@ export const UserProvider = ({ children }) => {
       .then((res) => {
         setUser(res.data);
       })
-      .catch((err) => {
+      .catch(() => {
         setUser(null);
-        console.log(err.message);
       });
   };
 

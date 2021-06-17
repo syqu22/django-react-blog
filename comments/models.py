@@ -13,7 +13,6 @@ class Comment(models.Model):
         'users.User', on_delete=models.CASCADE, related_name='comments')
     body = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
-    is_confirmed = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['-created_at']
