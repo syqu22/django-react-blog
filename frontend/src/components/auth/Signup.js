@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../../providers/UserContext";
 import { useHistory } from "react-router-dom";
 import connection from "../../connection";
 
-const Signup = () => {
-  const initialData = Object.freeze({
-    username: "",
-    email: "",
-    password: "",
-    first_name: "",
-    last_name: "",
-  });
+const initialData = Object.freeze({
+  username: "",
+  email: "",
+  password: "",
+  first_name: "",
+  last_name: "",
+});
 
+const Signup = () => {
+  const { fetchUser } = useContext(UserContext);
   const [formData, setFormData] = useState(initialData);
   const [error, setError] = useState({});
   const history = useHistory();
@@ -44,6 +46,7 @@ const Signup = () => {
             localStorage.setItem("refresh_token", res.data.refresh);
             connection.defaults.headers["Authorization"] =
               "JWT " + localStorage.getItem("access_token");
+            fetchUser();
             history.push("/");
           });
       })

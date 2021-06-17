@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
+import { UserContext } from "../../providers/UserContext";
 import { useHistory } from "react-router-dom";
 import connection from "../../connection";
 
 const Logout = () => {
+  const { fetchUser } = useContext(UserContext);
   const history = useHistory();
 
   useEffect(() => {
@@ -14,6 +16,7 @@ const Logout = () => {
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
         connection.defaults.headers["Authorization"] = null;
+        fetchUser();
         history.push("/");
       })
       .catch((err) => console.log(err.message));

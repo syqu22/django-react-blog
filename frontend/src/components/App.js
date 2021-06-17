@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import UserContext from "./auth/UserContext";
+import { UserProvider } from "../providers/UserContext";
 import HomePage from "./HomePage";
 import PostDetail from "./posts/PostDetail";
 import Posts from "./posts/Posts";
@@ -12,17 +12,14 @@ import Footer from "./Footer";
 import Signup from "./auth/Signup";
 import Login from "./auth/Login";
 import Logout from "./auth/Logout";
-import User from "./auth/User";
+import User from "./User";
 
 const App = () => {
-  const [user, setUser] = useState({});
-
   return (
     <Router>
       <div className="App">
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserProvider>
           <NavBar />
-          <User />
           <Switch>
             <Route exact path="/" component={HomePage} />
             <Route path="/posts" component={Posts} />
@@ -31,12 +28,13 @@ const App = () => {
             <Route path="/login" component={Login} />
             <Route path="/logout" component={Logout} />
             <Route path="/post/:slug" component={PostDetail} />
+            <Route path="/user" component={User} />
 
             <Route path="/500" component={InternalServer} />
             <Route path="*" component={NotFound} />
           </Switch>
           <Footer />
-        </UserContext.Provider>
+        </UserProvider>
       </div>
     </Router>
   );

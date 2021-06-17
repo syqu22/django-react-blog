@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import connection from "../../connection";
 
-const CommentForm = ({ slug }) => {
-  const initialData = Object.freeze({
-    body: "",
-  });
+const initialData = Object.freeze({
+  body: "",
+});
 
+const CommentForm = ({ slug }) => {
   const [formData, setFormData] = useState(initialData);
   const [commentCreated, setCommentCreated] = useState(false);
   const [countdown, setCountdown] = useState(0);
