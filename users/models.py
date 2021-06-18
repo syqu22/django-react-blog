@@ -4,11 +4,13 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 
 class UserManager(BaseUserManager):
 
-    def create_user(self, username: str, email: str, first_name: str, last_name: str, password: str):
+    def create_user(self, username: str, email: str,  password: str, first_name: str = None, last_name: str = None):
         if not username:
             raise ValueError('User needs to have an username')
         if not email:
             raise ValueError('User needs to have an email')
+        if not password:
+            raise ValueError('User needs to have a password')
 
         email = self.normalize_email(email)
         user = self.model(username=username, email=email,
@@ -18,11 +20,13 @@ class UserManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, username: str, email: str, first_name: str, last_name: str, password: str):
+    def create_superuser(self, username: str, email: str,  password: str, first_name: str = None, last_name: str = None):
         if not username:
             raise ValueError('Superuser needs to have an username')
         if not email:
             raise ValueError('Superuser needs to have an email')
+        if not password:
+            raise ValueError('Superuser needs to have a password')
 
         user = self.create_user(username=username, email=self.normalize_email(email),
                                 first_name=first_name, last_name=last_name, password=password)

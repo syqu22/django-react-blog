@@ -8,7 +8,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
-class CurrentUser(APIView):
+class GetCurrentUser(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request: Request, format=None):

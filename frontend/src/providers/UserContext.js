@@ -7,6 +7,11 @@ export const UserContext = createContext(null);
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
+  useEffect(() => {
+    // Timeout to fix circular input in Django JWT (?)
+    setTimeout(() => fetchUser(), 200);
+  }, []);
+
   const fetchUser = () => {
     connection
       .get("user/")
@@ -17,10 +22,6 @@ export const UserProvider = ({ children }) => {
         setUser(null);
       });
   };
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
 
   return (
     <UserContext.Provider value={{ user, fetchUser }}>
