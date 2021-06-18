@@ -2,6 +2,21 @@ import axios from "axios";
 
 const baseURL = "/api/";
 
+let isRefreshing = false;
+let failedQueue = [];
+
+const processQueue = (error, token = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  });
+
+  failedQueue = [];
+};
+
 const connection = axios.create({
   baseURL: baseURL,
   timeout: 5000,
@@ -15,34 +30,55 @@ const connection = axios.create({
 });
 
 connection.interceptors.response.use(
-  (response) => response,
-  async (error) => {
+  function (response) {
+    return response;
+  },
+  async function (error) {
     const originalRequest = error.config;
 
     if (
-      localStorage.getItem("refresh_token") &&
       error.response.status === 401 &&
-      error.response.statusText === "Unauthorized"
+      !originalRequest._retry &&
+      localStorage.getItem("refresh_token")
     ) {
-      const refresh_token = localStorage.getItem("refresh_token");
-
-      try {
-        const response = await connection.post("/token/refresh/", {
-          refresh: refresh_token,
-        });
-        localStorage.setItem("access_token", response.data.access);
-        localStorage.setItem("refresh_token", response.data.refresh);
-
-        connection.defaults.headers["Authorization"] =
-          "JWT " + response.data.access;
-        originalRequest.headers["Authorization"] =
-          "JWT " + response.data.access;
-        return await connection(originalRequest);
-      } catch (err) {
-        console.log(err.message);
+      if (isRefreshing) {
+        try {
+          const token = await new Promise(function (resolve, reject) {
+            failedQueue.push({ resolve, reject });
+          });
+          originalRequest.headers["Authorization"] = "JWT " + token;
+          return await connection(originalRequest);
+        } catch (err) {
+          return await Promise.reject(err);
+        }
       }
+
+      originalRequest._retry = true;
+      isRefreshing = true;
+
+      const refresh = window.localStorage.getItem("refresh_token");
+      return new Promise(function (resolve, reject) {
+        connection
+          .post("token/refresh/", { refresh })
+          .then(({ data }) => {
+            window.localStorage.setItem("access_token", data.access);
+            window.localStorage.setItem("refresh_token", data.refresh);
+            connection.defaults.headers["Authorization"] = "JWT " + data.access;
+            originalRequest.headers["Authorization"] = "JWT " + data.access;
+            processQueue(null, data.access);
+            resolve(connection(originalRequest));
+          })
+          .catch((err) => {
+            processQueue(err, null);
+            reject(err);
+          })
+          .finally(() => {
+            isRefreshing = false;
+          });
+      });
     }
-    return Promise.reject({ ...error });
+
+    return Promise.reject(error);
   }
 );
 

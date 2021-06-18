@@ -7,11 +7,7 @@ export const UserContext = createContext(null);
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
-  const fetchUser = async () => {
+  const fetchUser = () => {
     connection
       .get("user/")
       .then((res) => {
@@ -21,6 +17,10 @@ export const UserProvider = ({ children }) => {
         setUser(null);
       });
   };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   return (
     <UserContext.Provider value={{ user, fetchUser }}>
