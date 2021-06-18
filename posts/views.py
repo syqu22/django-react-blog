@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 
 
 class PostsList(ListAPIView):
@@ -20,10 +21,7 @@ class PostsList(ListAPIView):
 
 class PostDetail(APIView):
     def get(self, request: Request, slug: str, format=None):
-        post = Post.objects.get(slug=slug)
+        post = get_object_or_404(Post, slug=slug)
 
-        if post:
-            data = PostSerializer(post).data
-            return Response(data, status=status.HTTP_200_OK)
-
-        return Response({'Post not found': f'Cannot find post with slug: {slug}'}, status=status.HTTP_404_NOT_FOUND)
+        data = PostSerializer(post).data
+        return Response(data, status=status.HTTP_200_OK)
