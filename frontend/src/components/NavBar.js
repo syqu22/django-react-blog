@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { UserContext } from "../providers/UserContext";
 import { NavLink } from "react-router-dom";
-import Socials from "./Socials";
 
 const NavBar = () => {
   const { user } = useContext(UserContext);
@@ -20,13 +19,6 @@ const NavBar = () => {
             Posts
           </NavLink>
         </li>
-
-        <li>
-          <NavLink className="navbar-item" to="/contact">
-            Contact
-          </NavLink>
-        </li>
-        <Socials />
         {user !== null ? (
           <>
             <li>

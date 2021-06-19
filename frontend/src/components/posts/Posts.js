@@ -42,7 +42,7 @@ const Posts = () => {
   }
 
   return (
-    <>
+    <div className="full-height">
       <SearchBar callback={setSearch} />
       <Pagination
         page={currentPage}
@@ -60,7 +60,7 @@ const Posts = () => {
             <MinimalPost key={post.slug} {...post} />
           ))}
       </div>
-    </>
+    </div>
   );
 };
 

@@ -9,7 +9,7 @@ const HomePage = () => {
 
   useEffect(() => {
     connection
-      .get("posts/?recent=true/")
+      .get("posts/", { params: { recent: true } })
       .then((res) => setPostsList(res.data))
       .catch((err) => console.log(err.message));
   }, []);
@@ -20,8 +20,9 @@ const HomePage = () => {
 
   return (
     <>
+      <Hero />
       {postsList.length > 0 && (
-        <>
+        <div>
           <h3 className="recent-text">Recent posts:</h3>
           <div className="container">{postsList.map(showPosts)}</div>
           <div className="recent-text">
@@ -29,13 +30,8 @@ const HomePage = () => {
               <span>See more</span>
             </Link>
           </div>
-        </>
+        </div>
       )}
-      <Hero />
-      <Hero />
-      <Hero />
-      <Hero />
-      <Hero />
     </>
   );
 };

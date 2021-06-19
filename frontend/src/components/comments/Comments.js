@@ -4,27 +4,107 @@ import Comment from "./Comment";
 import Pagination from "../Pagination";
 import PropTypes from "prop-types";
 
+const initialData = Object.freeze({
+  body: "",
+});
+
 const Comments = ({ slug }) => {
   const [commentsList, setCommentsList] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [formData, setFormData] = useState(initialData);
+  const [commentCreated, setCommentCreated] = useState(false);
+  const [countdown, setCountdown] = useState(0);
+  const [error, setError] = useState({});
 
   const commentsPerPage = 6;
   const maxComments = commentsList.length / commentsPerPage;
 
   useEffect(() => {
+    clearState();
+    setError({});
+    setCommentCreated(false);
     connection
       .get(`comments/${slug}/`)
       .then((res) => setCommentsList(res.data))
       .catch((err) => console.log(err.message));
-  }, []);
+  }, [commentCreated]);
 
-  if (!commentsList) {
-    return <h1 className="error">No comments</h1>;
-  }
+  useEffect(() => {
+    const tooManyRequests = error["Too Many Requests"];
+
+    if (tooManyRequests) {
+      setCountdown(tooManyRequests.split(" ")[2]);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    let timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+    countdown > 0 && timer;
+
+    return () => clearTimeout(timer);
+  }, [countdown]);
+
+  const clearState = () => {
+    setFormData(initialData);
+  };
+
+  // Make textarea bigger with big enough text
+  const handleChange = (e) => {
+    (e.target.style.height = "inherit"),
+      (e.target.style.height = `${e.target.scrollHeight}px`),
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value.trim(),
+      });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    connection
+      .post(`comments/${slug}/send/`, {
+        body: formData.body,
+      })
+      .then(() => setCommentCreated(true))
+      .catch((err) => {
+        setError(err.response.data);
+      });
+  };
 
   return (
     <>
+      {countdown > 0 && (
+        <p className="comment-countdown">
+          Please wait {countdown} seconds before posting another comment.
+        </p>
+      )}
+      <>
+        <form className="comment-form" onSubmit={handleSubmit} noValidate>
+          <label htmlFor="body">
+            {error.body && <span className="invalid-value">{error.body}</span>}
+            {error.detail && (
+              <span className="invalid-value">{error.detail}</span>
+            )}
+          </label>
+          <textarea
+            id="body"
+            name="body"
+            onChange={handleChange}
+            placeholder="Write your own comment here..."
+            maxLength="255"
+            rows={4}
+          />
+          <p className="info">{formData.body.length} / 255</p>
+          <button className="animated-button" type="submit">
+            <span>Comment</span>
+          </button>
+        </form>
+      </>
+
       <div className="comments">
+        {commentsList.length === 0 && (
+          <h1 className="error">No comments yet</h1>
+        )}
         {commentsList
           .slice(
             currentPage * commentsPerPage,

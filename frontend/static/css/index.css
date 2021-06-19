@@ -1,14 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
 
-html {
-  height: 100%;
-}
-
+html,
 body {
   margin: 0;
-  min-height: 100%;
   background-color: var(--primary);
-  position: relative;
   box-sizing: border-box;
   overflow: auto;
 }
@@ -21,16 +16,21 @@ body {
   --light: rgb(110, 106, 106);
   --success: rgb(29 121 49);
   --danger: rgb(240, 82, 82);
+  --hero-image: url("https://i2.wp.com/files.123freevectors.com/wp-content/original/131249-dark-grey-low-poly-abstract-background-design-vector.jpg?w=1980&q=100");
+}
+
+.main {
+  min-height: 95vh;
 }
 
 a {
   outline: none;
   color: var(--secondary);
   text-decoration: none;
+  cursor: pointer;
 }
 
 .social {
-  margin-top: 0.6rem;
   display: inline-flex;
 }
 
@@ -39,33 +39,37 @@ a {
   border: none;
   font-size: 1.6rem;
   transition: 0.2s ease-out;
-  margin-right: 1.5rem;
+  margin: auto;
 }
 
 .social-button:hover,
 .social-button:focus {
-  transform: scale(1.2);
   cursor: pointer;
 }
 
 .hero-image {
-  margin-top: 5rem;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
   background-image: linear-gradient(
       rgba(0, 0, 0, 0.4),
       rgba(0, 0, 0, 0.5),
       rgba(0, 0, 0, 0.6)
     ),
-    url("https://wallpaperaccess.com/full/138728.jpg");
+    var(--hero-image);
   height: 500px;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   text-align: center;
+  display: grid;
+  align-content: center;
 }
 
 .hero-text {
   color: var(--primary);
+  margin-bottom: 4.5rem;
+  padding: 2rem;
 }
 
 .arrow-button {
@@ -187,9 +191,9 @@ nav {
   border-radius: 0;
   padding: 0.6rem;
   position: relative;
-  background-color: var(--info);
   text-align: center;
-  border: 1px solid var(--secondary);
+  font-weight: 900;
+  border: 2px solid var(--secondary);
 }
 
 .animated-button::after {
@@ -200,7 +204,7 @@ nav {
   width: 0;
   height: 100%;
   background: var(--secondary);
-  transition: 0.4s ease-in-out;
+  transition: 0.4s;
 }
 
 .animated-button:hover::after,
@@ -475,13 +479,8 @@ nav {
 }
 
 .footer {
-  margin-top: 3rem;
+  margin-top: 10rem;
   background-color: var(--info);
-  display: grid;
-  grid-template-columns: 1fr auto;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
 }
 
 .footer a:focus {
@@ -490,8 +489,11 @@ nav {
 
 footer {
   color: var(--light);
-  padding: 0.6rem;
-  margin-left: 2rem;
+  padding: 0.5rem 2rem 0.5rem 2rem;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  align-items: center;
+  text-align: center;
 }
 
 @media screen and (max-width: 600px) {

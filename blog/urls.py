@@ -26,7 +26,6 @@ urlpatterns = [
     # Apps
     path('api/posts/', include('posts.urls')),
     path('api/comments/', include('comments.urls')),
-    path('api/contact/', include('contact.urls')),
     path('api/user/', include('users.urls')),
     # Tokens
     path('api/token/', TokenObtainPairView.as_view()),
