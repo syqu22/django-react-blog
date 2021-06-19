@@ -1,6 +1,6 @@
-from rest_framework.test import APITestCase
-from django.urls import resolve
 from comments.views import CommentsList, CreateComment
+from django.urls import resolve
+from rest_framework.test import APITestCase
 
 
 class TestUrls(APITestCase):

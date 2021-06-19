@@ -1,5 +1,5 @@
-from rest_framework.test import APITestCase
 from posts.models import Post, Tag
+from rest_framework.test import APITestCase
 from users.models import User
 
 

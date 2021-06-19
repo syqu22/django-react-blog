@@ -1,9 +1,11 @@
 from datetime import datetime
-from rest_framework.request import Request
-from contact.serializers import MessageSerializer
+
 from rest_framework import status
-from rest_framework.views import APIView
+from rest_framework.request import Request
 from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from contact.serializers import MessageSerializer
 
 
 class CreateMessage(APIView):

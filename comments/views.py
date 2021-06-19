@@ -1,12 +1,14 @@
 from datetime import datetime
-from rest_framework.request import Request
-from comments.serializers import CreateCommentSerializer, CommentSerializer
-from comments.models import Comment
+
+from django.shortcuts import get_object_or_404
 from posts.models import Post
 from rest_framework import status
-from rest_framework.views import APIView
+from rest_framework.request import Request
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404
+from rest_framework.views import APIView
+
+from comments.models import Comment
+from comments.serializers import CommentSerializer, CreateCommentSerializer
 
 
 class CommentsList(APIView):

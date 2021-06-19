@@ -1,6 +1,6 @@
-from rest_framework.test import APITestCase
 from django.urls import resolve
 from posts.views import PostDetail, PostsList
+from rest_framework.test import APITestCase
 
 
 class TestUrls(APITestCase):

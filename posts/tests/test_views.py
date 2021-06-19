@@ -1,7 +1,7 @@
+from posts.models import Post
 from rest_framework import status
 from rest_framework.test import APITestCase
 from users.models import User
-from posts.models import Post
 
 
 class TestViews(APITestCase):

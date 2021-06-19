@@ -1,6 +1,6 @@
-from rest_framework.test import APITestCase
 from django.urls import resolve
-from users.views import GetCurrentUser, CreateUser, BlacklistToken
+from rest_framework.test import APITestCase
+from users.views import BlacklistToken, CreateUser, GetCurrentUser
 
 
 class TestUrls(APITestCase):
