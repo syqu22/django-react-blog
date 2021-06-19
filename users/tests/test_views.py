@@ -1,5 +1,6 @@
 from rest_framework import status
-from rest_framework.test import APITestCase
+from rest_framework.test import APITestCase, APIClient
+from rest_framework_simplejwt.tokens import RefreshToken
 from users.models import User
 
 
@@ -66,6 +67,22 @@ class TestViews(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
         self.assertFalse(User.objects.filter(username='othertest').first())
 
+    def test_logout(self):
+        """
+        Unauthenticated user cannot logout
+        """
+        res = self.client.post('/api/user/logout/', data={
+            'refresh_token': 'test',
+        })
+
+        self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_logout_as_auth_user(self):
+        """
+        Authenticated user can logout
+        TODO
+        """
+
     def test_create_user_with_the_same_username(self):
         """
         Create user with existing username
@@ -101,3 +118,40 @@ class TestViews(APITestCase):
         })
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_login(self):
+        """
+        Login user with correct credentials then Log him off
+        """
+        res = self.client.post('/api/token/', data={
+            'username': 'test',
+            'password': 'strongpassword'
+        })
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertTrue(res.data['refresh'])
+        self.assertTrue(res.data['access'])
+
+    def test_login_with_wrong_username(self):
+        """
+        Login user with wrong username
+        """
+        res = self.client.post('/api/token/', data={
+            'username': 'wrongusername',
+            'password': 'strongpassword'
+        })
+
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_login_with_wrong_password(self):
+        """
+        Login user with wrong password
+        """
+        res = self.client.post('/api/token/', data={
+            'username': 'test',
+            'password': 'wrongpassword'
+        })
+
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    # TODO more JWT token tests

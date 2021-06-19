@@ -45,7 +45,7 @@ class CreateComment(APIView):
 
             body = serializer.data.get('body')
 
-            comment = Comment(author_id=request.user.id, post=post, body=body)
+            comment = Comment(author=request.user, post=post, body=body)
             comment.save()
 
             self.request.session['comment_posted'] = datetime.now().timestamp()
