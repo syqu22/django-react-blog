@@ -19,6 +19,8 @@ class Post(models.Model):
     edited_at = models.DateTimeField(auto_now=True)
     is_public = models.BooleanField(default=False)
 
+    objects = PostObjects()
+
     class Meta:
         ordering = ['-created_at']
 

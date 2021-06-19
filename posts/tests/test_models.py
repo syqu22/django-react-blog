@@ -6,32 +6,31 @@ from users.models import User
 class TestModels(APITestCase):
 
     def setUp(self):
-        User.objects.create_user(
+        self.user = User.objects.create_user(
             username='test', email='test@test.com', password='strongpassword')
+
+        self.tag1 = Tag.objects.create(name='Tag 1')
+        self.tag2 = Tag.objects.create(name='Tag 2')
 
     def test_tag_model(self):
         """ 
-        Check if the new Tag does not change instance and is saved correctly
+        New Tag does not change instance and is saved to Database
         """
         tag = Tag.objects.create(name='Test tag')
 
         self.assertIsInstance(tag, Tag)
-        self.assertEqual(Tag.objects.first(), tag)
+        self.assertEqual(Tag.objects.get(name='Test tag'), tag)
 
     def test_post_model(self):
         """ 
-        Check if the new Post does not change instance and is saved correctly
+        New Post does not change instance and is saved to Database
         """
-        user = User.objects.first()
-
-        tag1 = Tag.objects.create(name='Tag 1')
-        tag2 = Tag.objects.create(name='Tag 2')
-
-        post = Post.objects.create(title='Test Post', slug='test-post', thumbnail_url='https://www.test.example.com', author=user,
+        post = Post.objects.create(title='Test Post', slug='test-post', thumbnail_url='https://www.test.example.com', author=self.user,
                                    body='Test content of the post', read_time=5, is_public=True)
-        post.tags.add(tag1)
-        post.tags.add(tag2)
+        post.tags.add(self.tag1)
+        post.tags.add(self.tag2)
 
         self.assertIsInstance(post, Post)
-        self.assertEqual(Post.objects.first().tags.first(), tag1)
-        self.assertEqual(Post.objects.first(), post)
+        self.assertEqual(Post.objects.get(
+            slug='test-post').tags.get(name='Tag 1'), self.tag1)
+        self.assertEqual(Post.objects.get(slug='test-post'), post)

@@ -26,6 +26,7 @@ class CreateComment(APIView):
         if not self.request.session.exists(self.request.session.session_key):
             self.request.session.create()
 
+        # Stop user from spamming comments
         if self.request.session.has_key('comment_posted'):
             delta = round((self.request.session['comment_posted'] +
                            60) - datetime.now().timestamp())
@@ -36,7 +37,7 @@ class CreateComment(APIView):
                 self.request.session.pop('comment_posted')
 
         if serializer.is_valid():
-            post = get_object_or_404(Post, slug=slug)
+            post = get_object_or_404(Post, slug=slug, is_public=True)
 
             body = serializer.data.get('body')
 

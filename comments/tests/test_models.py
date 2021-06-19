@@ -6,20 +6,17 @@ from posts.models import Post
 
 class TestModels(APITestCase):
     def setUp(self):
-        user = User.objects.create_user(
+        self.user = User.objects.create_user(
             username='test', email='test@test.com', password='strongpassword')
-        Post.objects.create(title='Test Post', slug='test-post', thumbnail_url='https://www.test.example.com', author=user,
-                            body='Test content of the post', read_time=5, is_public=True)
+        self.post = Post.objects.create(title='Test Post', slug='test-post', thumbnail_url='https://www.test.example.com', author=self.user,
+                                        body='Test content of the post', read_time=5, is_public=True)
 
     def test_comment_model(self):
         """ 
-        Check if the new Comment does not change instance and is saved correctly
+        New Comment does not change instance and is saved to Database
         """
-        post = Post.objects.first()
-        author = User.objects.first()
-
         comment = Comment.objects.create(
-            post=post, author=author, body='Test comment body')
+            post=self.post, author=self.user, body='Test comment body')
 
         self.assertIsInstance(comment, Comment)
-        self.assertEqual(Comment.objects.first(), comment)
+        self.assertEqual(Comment.objects.get(pk=1), comment)

@@ -26,14 +26,18 @@ class CreateUser(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request: Request, format=None):
-        serializer = CreateUserSerializer(data=request.data)
 
-        if serializer.is_valid():
-            user = serializer.save()
-            if user:
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+        if not request.user.is_authenticated:
+            serializer = CreateUserSerializer(data=request.data)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            if serializer.is_valid():
+                user = serializer.save()
+                if user:
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({'Forbidden': 'Cannot register user when logged in.'}, status.HTTP_403_FORBIDDEN)
 
 
 class BlacklistToken(APIView):
@@ -41,10 +45,11 @@ class BlacklistToken(APIView):
     authentication_classes = ()
 
     def post(self, request: Request, format=None):
+
         try:
             refresh_token = request.data["refresh_token"]
             token = RefreshToken(refresh_token)
             token.blacklist()
-            return Response(status=status.HTTP_205_RESET_CONTENT)
+            return Response(status=status.HTTP_200_OK)
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)

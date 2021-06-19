@@ -3,10 +3,6 @@ from django.db import models
 
 class Comment(models.Model):
 
-    class CommentObjects(models.Manager):
-        def get_queryset(self):
-            return super().get_queryset().filter(is_confirmed=True)
-
     post = models.ForeignKey(
         'posts.Post', on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(
