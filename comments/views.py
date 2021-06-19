@@ -12,6 +12,7 @@ from comments.serializers import CommentSerializer, CreateCommentSerializer
 
 
 class CommentsList(APIView):
+
     def get(self, request: Request, slug: str, format=None):
         post = get_object_or_404(Post, slug=slug)
 
@@ -22,6 +23,7 @@ class CommentsList(APIView):
 
 
 class CreateComment(APIView):
+
     def post(self, request: Request, slug: str, format=None):
         serializer = CreateCommentSerializer(data=request.data)
 

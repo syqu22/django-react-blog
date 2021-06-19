@@ -22,20 +22,20 @@ const App = () => {
         <UserProvider>
           <NavBar />
           <Switch>
-            <Route exact path="/" component={HomePage} />
+            <Route exact path="/" render={HomePage} />
             {/* Only logged in user can enter */}
-            <ProtectedRoute path="/logout" component={Logout} />
-            <ProtectedRoute path="/user" component={User} />
+            <ProtectedRoute path="/logout" render={Logout} />
+            <ProtectedRoute path="/user" render={User} />
             {/* Everyone except logged in user can enter */}
-            <NoAuthRoute path="/signup" component={Signup} />
-            <NoAuthRoute path="/login" component={Login} />
+            <NoAuthRoute path="/signup" render={Signup} />
+            <NoAuthRoute path="/login" render={Login} />
             {/* Everyone can enter*/}
-            <Route path="/contact" component={Contact} />
-            <Route path="/posts" component={Posts} />
-            <Route path="/post/:slug" component={PostDetail} />
+            <Route path="/contact" render={Contact} />
+            <Route path="/posts" render={Posts} />
+            <Route path="/post/:slug" render={PostDetail} />
             {/* Error pages */}
-            <Route path="/500" component={InternalServer} />
-            <Route path="*" component={NotFound} />
+            <Route path="/500" render={InternalServer} />
+            <Route path="*" render={NotFound} />
           </Switch>
           <Footer />
         </UserProvider>
