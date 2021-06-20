@@ -143,6 +143,14 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('JWT',),
 }
 
+# Mail
+EMAIL_BACKEND = os.environ['django.core.mail.backends.smtp.EmailBackend']
+EMAIL_HOST = os.environ['EMAIL_HOST']
+EMAIL_PORT = os.environ['EMAIL_PORT']
+EMAIL_HOST_USER = os.environ['EMAIL_USER']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_PASSWORD']
+EMAIL_USE_TLS = os.environ['EMAIL_TLS']
+EMAIL_USE_SSL = os.environ['EMAIL_SSL']
 
 # Media settings
 MEDIA_URL = '/media/'

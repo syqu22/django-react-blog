@@ -15,7 +15,7 @@ class TestViews(APITestCase):
 
     def test_send_message(self):
         """
-        Unathenticated user cannot send messages
+        Unathenticated user cannot send message
         """
         res = self.client.post('/api/contact/messages/', data={
             'title': 'Test title',
@@ -25,7 +25,7 @@ class TestViews(APITestCase):
 
     def test_send_message_as_auth_user(self):
         """
-        Unathenticated user cannot send messages
+        Authenticated user can send message
         """
         self.authenticate_user()
 
