@@ -33,7 +33,7 @@ class UserManager(BaseUserManager):
                                 first_name=first_name, last_name=last_name, password=password)
         user.is_staff = True
         user.is_superuser = True
-        user.is_active = True
+        user.is_verified = True
         user.save()
 
         return user
@@ -49,7 +49,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
 
     is_staff = models.BooleanField(default=False)
-    # Change later to false
+    is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
     objects = UserManager()

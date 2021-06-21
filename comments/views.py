@@ -41,15 +41,19 @@ class CreateComment(APIView):
                 self.request.session.pop('comment_posted')
 
         if serializer.is_valid():
-            post = get_object_or_404(Post, slug=slug, is_public=True)
+            if request.user.is_verified:
+                post = get_object_or_404(Post, slug=slug, is_public=True)
 
-            body = serializer.data.get('body')
+                body = serializer.data.get('body')
 
-            comment = Comment(author=request.user, post=post, body=body)
-            comment.save()
+                comment = Comment(author=request.user, post=post, body=body)
+                comment.save()
 
-            self.request.session['comment_posted'] = datetime.now().timestamp()
+                self.request.session['comment_posted'] = datetime.now(
+                ).timestamp()
 
-            return Response(CommentSerializer(comment).data, status=status.HTTP_201_CREATED)
+                return Response(CommentSerializer(comment).data, status=status.HTTP_201_CREATED)
+
+            return Response({'detail': 'Please activate your account first.'}, status=status.HTTP_403_FORBIDDEN)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

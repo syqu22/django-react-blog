@@ -10,6 +10,7 @@ class TestViews(APITestCase):
             username='test', email='test@test.com', password='strongpassword')
 
     def authenticate_user(self):
+        self.user.is_verified = True
         self.client.force_login(self.user)
         self.client.force_authenticate(user=self.user)
 

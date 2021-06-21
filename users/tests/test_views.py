@@ -1,6 +1,6 @@
+from django.core.mail import send_mail
 from rest_framework import status
-from rest_framework.test import APITestCase, APIClient
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.test import APITestCase
 from users.models import User
 
 
@@ -11,6 +11,7 @@ class TestViews(APITestCase):
             username='test', email='test@test.com', password='strongpassword')
 
     def authenticate_user(self):
+        self.user.is_verified = True
         self.client.force_login(self.user)
         self.client.force_authenticate(user=self.user)
 
@@ -37,7 +38,7 @@ class TestViews(APITestCase):
         self.assertEqual(res.data.get('last_name'), self.user.last_name)
         self.assertEqual(res.data.get('title'), self.user.title)
         self.assertEqual(res.data.get('is_staff'), self.user.is_staff)
-        self.assertEqual(res.data.get('is_active'), self.user.is_active)
+        self.assertEqual(res.data.get('is_verified'), self.user.is_verified)
 
     def test_create_user(self):
         """
@@ -45,7 +46,7 @@ class TestViews(APITestCase):
         """
         res = self.client.post('/api/user/register/', data={
             'username': 'othertest',
-            'email': 'test@othermail.com',
+            'email': 'aleklejawa@gmail.com',
             'password': 'verystrongpassword'
         })
 
@@ -121,7 +122,7 @@ class TestViews(APITestCase):
 
     def test_login(self):
         """
-        Login user with correct credentials then Log him off
+        Login user with correct credentials
         """
         res = self.client.post('/api/token/', data={
             'username': 'test',

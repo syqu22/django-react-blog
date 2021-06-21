@@ -15,6 +15,7 @@ class TestViews(APITestCase):
                                                 body='Test content of the post', read_time=5, is_public=False)
 
     def authenticate_user(self):
+        self.user.is_verified = True
         self.client.force_login(self.user)
         self.client.force_authenticate(user=self.user)
 
