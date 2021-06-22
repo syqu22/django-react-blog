@@ -19,6 +19,8 @@ schema_view = get_schema_view(
 
 
 urlpatterns = [
+    # Admin
+    path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
     # API Docs
     path('api/docs/', schema_view.with_ui('redoc',
