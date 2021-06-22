@@ -1,12 +1,18 @@
 
+from django.conf import settings
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import send_mail
+from jwt import decode as jwt_decode
+from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.core.mail import send_mail
+from django.shortcuts import redirect
 
+from users.models import User
 from users.serializers import CreateUserSerializer
 
 
@@ -35,6 +41,16 @@ class CreateUser(APIView):
             if serializer.is_valid():
                 user = serializer.save()
                 if user:
+                    token = RefreshToken.for_user(user).access_token
+                    domain = get_current_site(request).domain
+                    link = f'http://{domain}/api/user/activate/{token}/'
+
+                    send_mail(subject='Personal Blog - Activate your account',
+                              message=f"Hello {user.username}, please activate your account by clicking on the link below. \n{link}\n\n\nIf it's not you, please ignore this e-mail.",
+                              from_email=None,
+                              recipient_list=[user.email],
+                              fail_silently=False)
+
                     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -43,14 +59,27 @@ class CreateUser(APIView):
 
 
 class ActivateUser(APIView):
-    def get(self, request: Request, token: str, uid: str, format=None):
-        # TODO activate user email
-        return Response(status=status.HTTP_200_OK)
+    def get(self, request: Request, token: str, format=None):
+        try:
+            token_model = jwt_decode(
+                token, settings.SECRET_KEY, algorithms='HS256')
+            user = User.objects.get(id=token_model['user_id'])
+
+            if not user.is_verified:
+                user.is_verified = True
+                user.save()
+                return Response({'Verified': 'Successfully verified user.'}, status=status.HTTP_200_OK)
+
+            return Response({'Bad Request': 'User is already verified.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        except ExpiredSignatureError:
+            return Response({'Token Expired': 'Token already expired'}, status=status.HTTP_400_BAD_REQUEST)
+        except InvalidTokenError:
+            return Response({'Invalid Token': 'Token is not valid'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class BlacklistToken(APIView):
     permission_classes = [AllowAny]
-    authentication_classes = ()
 
     def post(self, request: Request, format=None):
 

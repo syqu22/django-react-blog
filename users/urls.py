@@ -7,5 +7,5 @@ urlpatterns = [
     path('', GetCurrentUser.as_view()),
     path('register/', CreateUser.as_view()),
     path('logout/', BlacklistToken.as_view()),
-    path('activate/<token>/<uid>/', ActivateUser.as_view())
+    path('activate/<str:token>/', ActivateUser.as_view())
 ]

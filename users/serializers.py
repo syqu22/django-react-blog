@@ -1,4 +1,3 @@
-from django.core.mail import send_mail
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
@@ -34,15 +33,6 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         password = validated_data.pop('password', None)
-        username = validated_data.get('username', None)
-        email = validated_data.get('email', None)
-        link = 'TODO'  # TODO
-
-        send_mail(subject='Personal Blog - Activate your account',
-                  message=f"Hello {username}, please activate your account by clicking on the link below. \n{link}\nIf it's not you, please ignore this e-mail.",
-                  from_email=None,
-                  recipient_list=[email],
-                  fail_silently=False)
 
         user = self.Meta.model(**validated_data)
 
