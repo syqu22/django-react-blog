@@ -135,6 +135,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# JWT settings
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
@@ -143,6 +144,9 @@ SIMPLE_JWT = {
     'SIGNING_KEY': SECRET_KEY,
     'AUTH_HEADER_TYPES': ('JWT',),
 }
+
+# Password token settings
+PASSWORD_RESET_TIMEOUT = 300
 
 # E-Mail settings
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

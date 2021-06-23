@@ -1,10 +1,10 @@
 from comments.models import Comment
+from django.test import TestCase
 from posts.models import Post
-from rest_framework.test import APITestCase
 from users.models import User
 
 
-class TestModels(APITestCase):
+class TestModels(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
             username='test', email='test@test.com', password='strongpassword')

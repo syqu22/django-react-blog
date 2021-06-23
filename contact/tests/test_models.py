@@ -1,9 +1,9 @@
 from contact.models import Message
-from rest_framework.test import APITestCase
+from django.test import TestCase
 from users.models import User
 
 
-class TestModels(APITestCase):
+class TestModels(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
             username='test', email='test@test.com', password='strongpassword')

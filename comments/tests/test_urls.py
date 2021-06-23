@@ -1,9 +1,9 @@
 from comments.views import CommentsList, CreateComment
+from django.test import TestCase
 from django.urls import resolve
-from rest_framework.test import APITestCase
 
 
-class TestUrls(APITestCase):
+class TestUrls(TestCase):
 
     def test_comments_list_url(self):
         """

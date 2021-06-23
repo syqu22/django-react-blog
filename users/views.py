@@ -52,14 +52,14 @@ class CreateUser(APIView):
 class SendEmailVerification(APIView):
     permission_classes = [AllowAny]
 
-    def get(self, request: Request, email: str, format=None):
+    def post(self, request: Request, email: str, format=None):
         if not self.request.session.exists(self.request.session.session_key):
             self.request.session.create()
 
         # Stop user from spamming email verification
         if self.request.session.has_key('verification_email_sent'):
             delta = round((self.request.session['verification_email_sent'] +
-                           180) - datetime.now().timestamp())
+                           300) - datetime.now().timestamp())
 
             if delta > 0:
                 return Response({'Too Many Requests': f'Please wait {delta} more seconds before posting another request.'}, status=status.HTTP_429_TOO_MANY_REQUESTS)
@@ -71,13 +71,15 @@ class SendEmailVerification(APIView):
         if not user.is_verified:
             send_email_verification(request, user)
 
+            return Response(status=status.HTTP_200_OK)
+
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class ActivateUser(APIView):
     permission_classes = [AllowAny]
 
-    def get(self, request: Request, token: str, uid: str, format=None):
+    def post(self, request: Request, token: str, uid: str, format=None):
         uidb64 = force_text(urlsafe_base64_decode(uid))
 
         user = get_object_or_404(User, id=uidb64)

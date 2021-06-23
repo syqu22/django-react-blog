@@ -1,9 +1,9 @@
+from django.test import TestCase
 from django.urls import resolve
-from rest_framework.test import APITestCase
 from users.views import BlacklistToken, CreateUser, GetCurrentUser
 
 
-class TestUrls(APITestCase):
+class TestUrls(TestCase):
 
     def test_get_current_user_url(self):
         """

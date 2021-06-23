@@ -1,8 +1,8 @@
-from rest_framework.test import APITestCase
+from django.test import TestCase
 from users.models import User
 
 
-class TestModels(APITestCase):
+class TestModels(TestCase):
 
     def test_user_model(self):
         """ 

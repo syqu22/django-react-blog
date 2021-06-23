@@ -1,7 +1,9 @@
-from django.core.mail import send_mail
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 from rest_framework import status
 from rest_framework.test import APITestCase
 from users.models import User
+from users.utils import email_token_generator
 
 
 class TestViews(APITestCase):
@@ -10,8 +12,10 @@ class TestViews(APITestCase):
         self.user = User.objects.create_user(
             username='test', email='test@test.com', password='strongpassword')
 
+        self.uid = urlsafe_base64_encode(force_bytes(self.user.id))
+        self.token = email_token_generator.make_token(self.user)
+
     def authenticate_user(self):
-        self.user.is_verified = True
         self.client.force_login(self.user)
         self.client.force_authenticate(user=self.user)
 
@@ -155,4 +159,58 @@ class TestViews(APITestCase):
 
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
-    # TODO more JWT token tests
+    def test_send_email_verification(self):
+        """
+        Send E-Mail verification
+        """
+        res = self.client.post(
+            f'/api/user/verify/{self.user.email}/', follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_send_email_verification_with_wrong_email(self):
+        """
+        Send E-Mail verification with wrong User E-Mail
+        """
+        res = self.client.post(
+            '/api/user/verify/wrongemail@test.com/', follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_activate_user(self):
+        """
+        Activate User
+        """
+        res = self.client.post(
+            f'/api/user/activate/{self.uid}/{self.token}/', follow=True)
+
+        user = User.objects.first()
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertTrue(user.is_verified)
+
+    def test_activate_user_with_wrong_uid(self):
+        """
+        Activate User with wrong UID
+        """
+        uid = urlsafe_base64_encode(force_bytes(5343))
+        res = self.client.post(
+            f'/api/user/activate/{uid}/{self.token}/', follow=True)
+
+        user = User.objects.first()
+
+        self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertFalse(user.is_verified)
+
+    def test_activate_user_with_wrong_token(self):
+        """
+        Activate User with wrong Token
+        """
+        token = 'randomtoken'
+        res = self.client.post(
+            f'/api/user/activate/{self.uid}/{token}/', follow=True)
+
+        user = User.objects.first()
+
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertFalse(user.is_verified)
