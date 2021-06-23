@@ -1,19 +1,18 @@
+from datetime import datetime
 
-from django.conf import settings
-from django.contrib.sites.shortcuts import get_current_site
-from django.core.mail import send_mail
-from jwt import decode as jwt_decode
-from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
+from django.shortcuts import get_object_or_404
+from django.utils.encoding import force_text
+from django.utils.http import urlsafe_base64_decode
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.shortcuts import redirect
 
 from users.models import User
 from users.serializers import CreateUserSerializer
+from users.utils import email_token_generator, send_email_verification
 
 
 class GetCurrentUser(APIView):
@@ -41,15 +40,7 @@ class CreateUser(APIView):
             if serializer.is_valid():
                 user = serializer.save()
                 if user:
-                    token = RefreshToken.for_user(user).access_token
-                    domain = get_current_site(request).domain
-                    link = f'http://{domain}/api/user/activate/{token}/'
-
-                    send_mail(subject='Personal Blog - Activate your account',
-                              message=f"Hello {user.username}, please activate your account by clicking on the link below. \n{link}\n\n\nIf it's not you, please ignore this e-mail.",
-                              from_email=None,
-                              recipient_list=[user.email],
-                              fail_silently=False)
+                    send_email_verification(request, user)
 
                     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -58,13 +49,41 @@ class CreateUser(APIView):
         return Response({'Forbidden': 'Cannot register user when already logged in.'}, status.HTTP_403_FORBIDDEN)
 
 
-class ActivateUser(APIView):
-    def get(self, request: Request, token: str, format=None):
-        try:
-            token_model = jwt_decode(
-                token, settings.SECRET_KEY, algorithms='HS256')
-            user = User.objects.get(id=token_model['user_id'])
+class SendEmailVerification(APIView):
+    permission_classes = [AllowAny]
 
+    def get(self, request: Request, email: str, format=None):
+        if not self.request.session.exists(self.request.session.session_key):
+            self.request.session.create()
+
+        # Stop user from spamming email verification
+        if self.request.session.has_key('verification_email_sent'):
+            delta = round((self.request.session['verification_email_sent'] +
+                           180) - datetime.now().timestamp())
+
+            if delta > 0:
+                return Response({'Too Many Requests': f'Please wait {delta} more seconds before posting another request.'}, status=status.HTTP_429_TOO_MANY_REQUESTS)
+            else:
+                self.request.session.pop('verification_email_sent')
+
+        user = get_object_or_404(User, email=email)
+
+        if not user.is_verified:
+            send_email_verification(request, user)
+
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class ActivateUser(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request: Request, token: str, uid: str, format=None):
+        uidb64 = force_text(urlsafe_base64_decode(uid))
+
+        user = get_object_or_404(User, id=uidb64)
+        token = email_token_generator.check_token(user, token)
+
+        if token:
             if not user.is_verified:
                 user.is_verified = True
                 user.save()
@@ -72,10 +91,7 @@ class ActivateUser(APIView):
 
             return Response({'Bad Request': 'User is already verified.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        except ExpiredSignatureError:
-            return Response({'Token Expired': 'Token already expired'}, status=status.HTTP_400_BAD_REQUEST)
-        except InvalidTokenError:
-            return Response({'Invalid Token': 'Token is not valid'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'Invalid Token': 'Given token is not valid'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class BlacklistToken(APIView):
