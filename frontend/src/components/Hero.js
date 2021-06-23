@@ -1,23 +1,22 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const Hero = () => {
+const Hero = ({ children, image_url }) => {
   return (
-    <div className="hero-image">
-      <div className="hero-text">
-        <h1>Welcome to my Blog</h1>
-        <span>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-          semper eu est eget consectetur. Cras tristique nec nisi ac auctor.
-          Cras ligula eros, sagittis et ultrices ut, cursus vitae erat. Aenean
-          tempus elit ut auctor viverra. Pellentesque habitant morbi tristique
-          senectus et netus et malesuada fames ac turpis egestas. Mauris quis
-          diam lectus. Nulla maximus interdum nunc. Phasellus vitae erat
-          egestas, pulvinar felis ac, semper lectus. Ut venenatis velit elit, at
-          vestibulum eros ultricies laoreet.
-        </span>
-      </div>
+    <div
+      className="hero-image"
+      style={{
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4),rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.6)),url(${image_url})`,
+      }}
+    >
+      <div className="hero-text">{children}</div>
     </div>
   );
+};
+
+Hero.propTypes = {
+  children: PropTypes.array,
+  image_url: PropTypes.string,
 };
 
 export default Hero;

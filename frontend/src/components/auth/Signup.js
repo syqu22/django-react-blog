@@ -79,7 +79,7 @@ const Signup = () => {
             style={
               error.username
                 ? { borderColor: "var(--danger)" }
-                : { borderColor: "var(--info)" }
+                : { borderColor: "var(--secondary)" }
             }
           />
         </div>
@@ -100,7 +100,7 @@ const Signup = () => {
             style={
               error.email
                 ? { borderColor: "var(--danger)" }
-                : { borderColor: "var(--info)" }
+                : { borderColor: "var(--secondary)" }
             }
           />
         </div>
@@ -121,7 +121,7 @@ const Signup = () => {
             style={
               error.password
                 ? { borderColor: "var(--danger)" }
-                : { borderColor: "var(--info)" }
+                : { borderColor: "var(--secondary)" }
             }
           />
         </div>
@@ -140,7 +140,7 @@ const Signup = () => {
             style={
               error.first_name
                 ? { borderColor: "var(--danger)" }
-                : { borderColor: "var(--info)" }
+                : { borderColor: "var(--secondary)" }
             }
           />
         </div>
@@ -159,7 +159,7 @@ const Signup = () => {
             style={
               error.last_name
                 ? { borderColor: "var(--danger)" }
-                : { borderColor: "var(--info)" }
+                : { borderColor: "var(--secondary)" }
             }
           />
         </div>

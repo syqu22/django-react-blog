@@ -66,7 +66,7 @@ const Login = () => {
             style={
               error.username
                 ? { borderColor: "var(--danger)" }
-                : { borderColor: "var(--info)" }
+                : { borderColor: "var(--secondary)" }
             }
           />
         </div>
@@ -87,7 +87,7 @@ const Login = () => {
             style={
               error.password
                 ? { borderColor: "var(--danger)" }
-                : { borderColor: "var(--info)" }
+                : { borderColor: "var(--secondary)" }
             }
           />
         </div>

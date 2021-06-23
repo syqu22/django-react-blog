@@ -13,12 +13,18 @@ import Signup from "./auth/Signup";
 import Login from "./auth/Login";
 import Logout from "./auth/Logout";
 import User from "./User";
+import SiteMap from "./Sitemap";
+import Privacy from "./Privacy";
+import Terms from "./Terms";
+import Contact from "./Contact";
+import ScrollToTop from "./ScrollToTop";
 
 const App = () => {
   return (
     <Router>
       <div className="main">
         <UserProvider>
+          <ScrollToTop />
           <NavBar />
           <Switch>
             <Route exact path="/" component={HomePage} />
@@ -31,6 +37,10 @@ const App = () => {
             {/* Everyone can enter*/}
             <Route path="/posts" component={Posts} />
             <Route path="/post/:slug" component={PostDetail} />
+            <Route path="/sitemap" component={SiteMap} />
+            <Route path="/privacy" component={Privacy} />
+            <Route path="/terms" component={Terms} />
+            <Route path="/contact" component={Contact} />
             {/* Error pages */}
             <Route path="/500" component={InternalServer} />
             <Route path="*" component={NotFound} />

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { Suspense, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
 import NotFound from "../errors/NotFound";
 import Tags from "./Tags";
-import Comments from "../comments/Comments";
 import connection from "../../connection";
+const Comments = React.lazy(() => import("../comments/Comments"));
 
 const PostDetail = () => {
   const [post, setPost] = useState({});
@@ -63,8 +63,10 @@ const PostDetail = () => {
         dangerouslySetInnerHTML={{ __html: `${post.body}` }}
       ></div>
       <div className="post-comments">
-        <h2>Comments</h2>
-        <Comments slug={slug} />
+        <Suspense fallback={<h2>Loading comments...</h2>}>
+          <h2>Comments</h2>
+          <Comments slug={slug} />
+        </Suspense>
       </div>
     </div>
   );

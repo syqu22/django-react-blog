@@ -16,15 +16,12 @@ const Footer = () => {
           <Link to="/privacy">Privacy Policy</Link>
         </div>
         <div>
-          <Link to="/privacy">Terms of Use</Link>
+          <Link to="/terms">Terms of Use</Link>
         </div>
         <div>
           <Link to="/contact">Contact</Link>
         </div>
         <Socials />
-        <div>
-          <a href="/admin">Admin</a>
-        </div>
       </footer>
     </div>
   );

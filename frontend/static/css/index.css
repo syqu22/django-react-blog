@@ -16,7 +16,6 @@ body {
   --light: rgb(110, 106, 106);
   --success: rgb(29 121 49);
   --danger: rgb(240, 82, 82);
-  --hero-image: url("https://i2.wp.com/files.123freevectors.com/wp-content/original/131249-dark-grey-low-poly-abstract-background-design-vector.jpg?w=1980&q=100");
 }
 
 .main {
@@ -49,13 +48,6 @@ a {
 
 .hero-image {
   margin-top: 1rem;
-  margin-bottom: 3rem;
-  background-image: linear-gradient(
-      rgba(0, 0, 0, 0.4),
-      rgba(0, 0, 0, 0.5),
-      rgba(0, 0, 0, 0.6)
-    ),
-    var(--hero-image);
   height: 500px;
   background-attachment: fixed;
   background-position: center;
@@ -94,6 +86,11 @@ a {
 .arrow-button:hover,
 .arrow-button:focus {
   transform: scale(1.2);
+}
+
+.recent {
+  margin-top: 5rem;
+  margin-bottom: 7rem;
 }
 
 .recent-text {
@@ -182,7 +179,7 @@ nav {
 
 .error {
   text-align: center;
-  font-size: 2.2rem;
+  font-size: 1.9rem;
 }
 
 .animated-button {
@@ -468,7 +465,7 @@ nav {
 
 .user-form-item input {
   padding: 0.3rem;
-  border: 1px solid var(--info);
+  border: 2px solid var(--secondary);
   font: unset;
   border-radius: 0;
   width: 25rem;
@@ -479,7 +476,6 @@ nav {
 }
 
 .footer {
-  margin-top: 10rem;
   background-color: var(--info);
 }
 
@@ -491,7 +487,7 @@ footer {
   color: var(--light);
   padding: 0.5rem 2rem 0.5rem 2rem;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   align-items: center;
   text-align: center;
 }
@@ -554,5 +550,14 @@ footer {
 
   .post-info {
     justify-content: center;
+  }
+
+  .user-form-item input {
+    width: auto;
+  }
+
+  footer {
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 }
