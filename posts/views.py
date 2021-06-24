@@ -10,6 +10,14 @@ from posts.serializers import PostSerializer
 
 
 class PostsList(ListAPIView):
+    """
+    List of Posts
+
+    Return a list of all **Posts** from database.
+
+    Optional parameters:\n
+    ``recent`` - Return only the **2** most recent **Posts**.
+    """
     serializer_class = PostSerializer
 
     def get_queryset(self):
@@ -21,6 +29,12 @@ class PostsList(ListAPIView):
 
 
 class PostDetail(APIView):
+    """
+    Detailed Post
+
+    Return a detailed information about a **Post** with given slug.
+    """
+
     def get(self, request: Request, slug: str, format=None):
         post = get_object_or_404(Post, slug=slug)
 

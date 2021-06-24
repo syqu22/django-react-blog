@@ -366,7 +366,7 @@ nav {
 
 .comment-form input,
 .comment-form textarea {
-  border: 1px solid var(--info);
+  border: 2px solid var(--secondary);
   font: unset;
   border-radius: 0;
 }
@@ -426,7 +426,7 @@ nav {
     "a b"
     "a b";
   overflow-wrap: anywhere;
-  box-shadow: 0 2px 4px var(--secondary);
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
 }
 
 .left-item {

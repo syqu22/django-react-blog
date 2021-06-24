@@ -3,6 +3,8 @@ from datetime import datetime
 from django.shortcuts import get_object_or_404
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.request import Request
@@ -16,8 +18,39 @@ from users.utils import email_token_generator, send_email_verification
 
 
 class GetCurrentUser(APIView):
+    """
+    Current User
+
+    Return an information about the current logged in user.\n
+    """
+
+    response_schema_dict = {
+        '200': openapi.Response(
+            description='Ok',
+            examples={
+                'application/json': {
+                    'username': 'test_user',
+                    'email': 'test@example.com',
+                    'first_name': 'Foo',
+                    'last_name': 'Bar',
+                    'title': 'HTML Specialist',
+                    'is_staff': True,
+                    'is_verified': True}
+            }
+        ),
+        '403': openapi.Response(
+            description='Unauthorized',
+            examples={
+                'application/json': {
+                    "detail": 'Authentication credentials were not provided.',
+                }
+            }
+        ),
+    }
+
     permission_classes = [IsAuthenticated]
 
+    @swagger_auto_schema(responses=response_schema_dict)
     def get(self, request: Request, format=None):
         user = request.user
         return Response({'username': user.username,

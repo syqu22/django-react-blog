@@ -33,15 +33,15 @@ const Comments = ({ slug }) => {
     const tooManyRequests = error["Too Many Requests"];
 
     if (tooManyRequests) {
-      setCountdown(tooManyRequests.split(" ")[2]);
+      setCountdown(parseInt(tooManyRequests.split(" ")[2], 10));
     }
   }, [error]);
 
   useEffect(() => {
-    let timer = setTimeout(() => setCountdown(countdown - 1), 1000);
-    countdown > 0 && timer;
-
-    return () => clearTimeout(timer);
+    if (countdown > 0) {
+      let timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    }
   }, [countdown]);
 
   const clearState = () => {
@@ -93,6 +93,11 @@ const Comments = ({ slug }) => {
             placeholder="Write your own comment here..."
             maxLength="255"
             rows={4}
+            style={
+              error.body || countdown
+                ? { borderColor: "var(--danger)" }
+                : { borderColor: "var(--secondary)" }
+            }
           />
           <p className="info">{formData.body.length} / 255</p>
           <button className="animated-button" type="submit">

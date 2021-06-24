@@ -42,8 +42,8 @@ const App = () => {
             <Route path="/terms" component={Terms} />
             <Route path="/contact" component={Contact} />
             {/* Error pages */}
-            <Route path="/500" component={InternalServer} />
-            <Route path="*" component={NotFound} />
+            <Route path="/500" component={InternalServer} status={500} />
+            <Route path="*" component={NotFound} status={404} />
           </Switch>
         </UserProvider>
       </div>
