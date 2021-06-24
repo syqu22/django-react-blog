@@ -1,4 +1,6 @@
 from django.shortcuts import get_object_or_404
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.generics import ListAPIView
 from rest_framework.request import Request
@@ -15,8 +17,8 @@ class PostsList(ListAPIView):
 
     Return a list of all **Posts** from database.
 
-    Optional parameters:\n
-    ``recent`` - Return only the **2** most recent **Posts**.
+    Optional query parameters:\n
+    ``recent`` - If ``true`` return only the **2** most recent **Posts**.
     """
     serializer_class = PostSerializer
 
@@ -27,14 +29,19 @@ class PostsList(ListAPIView):
 
         return Post.objects.all()
 
+    @swagger_auto_schema(responses={200: PostSerializer(many=True), 404: openapi.Response(description='Not Found')})
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
 
 class PostDetail(APIView):
     """
     Detailed Post
 
-    Return a detailed information about a **Post** with given slug.
+    Return a detailed information about a **Post** with given ``slug``.
     """
 
+    @swagger_auto_schema(responses={200: PostSerializer(), 404: openapi.Response(description='Not Found')})
     def get(self, request: Request, slug: str, format=None):
         post = get_object_or_404(Post, slug=slug)
 

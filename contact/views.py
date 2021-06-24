@@ -10,7 +10,13 @@ from contact.serializers import MessageSerializer
 
 
 class CreateMessage(APIView):
+    """
+    Create Message
 
+    .
+    """
+
+    # Add schema
     def post(self, request: Request, format=None):
         serializer = MessageSerializer(data=request.data)
 

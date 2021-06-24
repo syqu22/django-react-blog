@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from users.models import User
-from users.serializers import CreateUserSerializer
+from users.serializers import CreateUserSerializer, UserSerializer
 from users.utils import email_token_generator, send_email_verification
 
 
@@ -24,33 +24,9 @@ class GetCurrentUser(APIView):
     Return an information about the current logged in user.\n
     """
 
-    response_schema_dict = {
-        '200': openapi.Response(
-            description='Ok',
-            examples={
-                'application/json': {
-                    'username': 'test_user',
-                    'email': 'test@example.com',
-                    'first_name': 'Foo',
-                    'last_name': 'Bar',
-                    'title': 'HTML Specialist',
-                    'is_staff': True,
-                    'is_verified': True}
-            }
-        ),
-        '403': openapi.Response(
-            description='Unauthorized',
-            examples={
-                'application/json': {
-                    "detail": 'Authentication credentials were not provided.',
-                }
-            }
-        ),
-    }
-
     permission_classes = [IsAuthenticated]
 
-    @swagger_auto_schema(responses=response_schema_dict)
+    @swagger_auto_schema(responses={200: UserSerializer()})
     def get(self, request: Request, format=None):
         user = request.user
         return Response({'username': user.username,
@@ -63,8 +39,14 @@ class GetCurrentUser(APIView):
 
 
 class CreateUser(APIView):
+    """
+    Create User
+
+    Create user then send him an e-mail with link to verification.
+    """
     permission_classes = [AllowAny]
 
+    @swagger_auto_schema(request_body=CreateUserSerializer(), responses={200: UserSerializer(), 400: openapi.Response(description='Serializer error', examples={'application/json': CreateUserSerializer().error_messages}), 403: openapi.Response(description='Forbidden')})
     def post(self, request: Request, format=None):
 
         if not request.user.is_authenticated:
@@ -75,7 +57,7 @@ class CreateUser(APIView):
                 if user:
                     send_email_verification(request, user)
 
-                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+                    return Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -83,8 +65,14 @@ class CreateUser(APIView):
 
 
 class SendEmailVerification(APIView):
+    """
+    Send Email Verification
+
+    Send an verification E-Mail to given User's ``email``.
+    """
     permission_classes = [AllowAny]
 
+    @swagger_auto_schema(responses={200: openapi.Response(description='Ok'), 400: openapi.Response(description="Bad Request"), 404: openapi.Response(description='Not Found'), 429: openapi.Response(description="Too many Requests")})
     def post(self, request: Request, email: str, format=None):
         if not self.request.session.exists(self.request.session.session_key):
             self.request.session.create()
@@ -110,8 +98,14 @@ class SendEmailVerification(APIView):
 
 
 class ActivateUser(APIView):
+    """
+    Activate User
+
+    Activate a User with given ``UID`` and ``Token``.
+    """
     permission_classes = [AllowAny]
 
+    @swagger_auto_schema(responses={200: openapi.Response(description='Ok'), 400: openapi.Response(description="Bad Request"), 404: openapi.Response(description='Not Found'), 406: openapi.Response(description="Invalid Token")})
     def post(self, request: Request, token: str, uid: str, format=None):
         uidb64 = force_text(urlsafe_base64_decode(uid))
 
@@ -126,12 +120,18 @@ class ActivateUser(APIView):
 
             return Response({'Bad Request': 'User is already verified.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        return Response({'Invalid Token': 'Given token is not valid'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'Invalid Token': 'Given token is not valid'}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
 
 class BlacklistToken(APIView):
+    """
+    Logout User
+
+    Logout current User and blacklist his JWT ``token``.
+    """
     permission_classes = [AllowAny]
 
+    @swagger_auto_schema(responses={200: openapi.Response(description='Ok'), 400: openapi.Response(description="Bad Request"), 403: openapi.Response(description="Forbidden")})
     def post(self, request: Request, format=None):
 
         if request.user.is_authenticated:
@@ -140,7 +140,7 @@ class BlacklistToken(APIView):
                 token = RefreshToken(refresh_token)
                 token.blacklist()
                 return Response(status=status.HTTP_200_OK)
-            except Exception as e:
+            except:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
 
         return Response(status=status.HTTP_403_FORBIDDEN)

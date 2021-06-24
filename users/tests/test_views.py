@@ -212,5 +212,5 @@ class TestViews(APITestCase):
 
         user = User.objects.first()
 
-        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(res.status_code, status.HTTP_406_NOT_ACCEPTABLE)
         self.assertFalse(user.is_verified)
