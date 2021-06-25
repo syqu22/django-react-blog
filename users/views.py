@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from users.models import User
-from users.serializers import CreateUserSerializer, UserSerializer
+from users.serializers import AvatarSerializer, CreateUserSerializer, UserSerializer
 from users.utils import email_token_generator, send_email_verification
 
 
@@ -37,6 +37,28 @@ class GetCurrentUser(APIView):
                          'avatar': user.avatar.url,
                          'is_staff': user.is_staff,
                          'is_verified': user.is_verified})
+
+
+class UploadUserAvatar(APIView):
+    """
+    Upload Avatar
+
+    Upload an Avatar for current User
+    """
+
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request: Request, format=None):
+        serializer = AvatarSerializer(data=request.data)
+
+        if serializer.is_valid():
+
+            user = request.user
+            user.avatar = request.data.get('avatar')
+            user.save()
+            return Response(status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CreateUser(APIView):

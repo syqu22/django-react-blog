@@ -33,6 +33,10 @@ a {
   display: inline-flex;
 }
 
+.center {
+  justify-items: center;
+}
+
 .social-button {
   background: none;
   border: none;
@@ -510,8 +514,21 @@ nav {
   width: 25rem;
 }
 
+.user-item input[type="file"] {
+  display: none;
+}
+
 .user-item input:focus {
   outline: 1px solid var(--secondary);
+}
+
+.user-item h1 {
+  text-align: center;
+}
+
+.file-input {
+  cursor: pointer;
+  border: 1px solid var(--secondary);
 }
 
 .user-form {
@@ -550,7 +567,7 @@ nav {
 
 footer {
   color: var(--light);
-  padding: 0.5rem 2rem 0.5rem 2rem;
+  padding: 0.4rem 2rem 0.5rem 2rem;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   align-items: center;

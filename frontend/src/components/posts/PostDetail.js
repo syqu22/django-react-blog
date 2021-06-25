@@ -42,7 +42,7 @@ const PostDetail = () => {
     <div className="post">
       <div
         className="post-header"
-        style={{ backgroundImage: `url("${post.thumbnail_url}")` }}
+        style={{ backgroundImage: `url("${post.thumbnail}")` }}
       />
       <h1>{post.title}</h1>
       <Tags values={post.tags} />

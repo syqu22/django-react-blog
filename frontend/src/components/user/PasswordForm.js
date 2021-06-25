@@ -24,7 +24,7 @@ const PasswordForm = () => {
         autoComplete="new-password"
       />
       <button className="animated-button" type="submit">
-        <span>Update password</span>
+        <span>Change password</span>
       </button>
     </form>
   );

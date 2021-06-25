@@ -1,20 +1,62 @@
-import React, { useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { UserContext } from "../../providers/UserContext";
+import connection from "../../connection";
 
 const AvatarForm = () => {
   const { user } = useContext(UserContext);
+  const [error, setError] = useState({});
+  const [avatar, setAvatar] = useState({});
+  const fileInput = useRef();
+
+  useEffect(() => {
+    setAvatar({ name: "", url: user.avatar });
+  }, []);
+
+  const handleChange = () => {
+    const file = fileInput.current.files[0];
+    setAvatar({ name: file.name, url: URL.createObjectURL(file) });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const file = fileInput.current.files[0];
+
+    if (file.size > 5120) {
+      setError({ detail: "Image cannot exceed 5MB." });
+    } else {
+      let formData = new FormData();
+      formData.append("avatar", file);
+      connection.post("user/avatar/", formData).catch((err) => {
+        setError(err.response.data);
+        console.log(err.message);
+      });
+    }
   };
 
   return (
-    <form className="user-item" onSubmit={handleSubmit} noValidate>
+    <form className="user-item center" onSubmit={handleSubmit} noValidate>
       <h1>Avatar</h1>
-      <img src={user.avatar} />
-      <input type="file" accept="image/png, image/jpeg" />
+      {error.detail && <span className="invalid-value">{error.detail}</span>}
+      {error.avatar && <span className="invalid-value">{error.avatar}</span>}
+
+      <span>Preview</span>
+      <img src={avatar.url} className="avatar" />
+      <label htmlFor="file" className="file-input">
+        Upload Avatar
+      </label>
+      {avatar.name ? <p>File name: {avatar.name}</p> : <p>No file choosen.</p>}
+      <input
+        type="file"
+        name="file"
+        id="file"
+        value=""
+        title=""
+        accept="image/png, image/jpeg"
+        ref={fileInput}
+        onChange={handleChange}
+      />
       <button className="animated-button" type="submit">
-        <span>Upload Avatar</span>
+        <span>Confirm</span>
       </button>
     </form>
   );

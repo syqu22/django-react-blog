@@ -15,7 +15,7 @@ const MinimalPost = ({
 
   return (
     <Link to={`/post/${slug}/`} className="item">
-      <img src={thumbnail_url} />
+      <img src={thumbnail} />
       <span>{date}</span>
       <h2>{title}</h2>
       <span>

@@ -13,7 +13,7 @@ class UserAdmin(UserAdmin):
     actions = ['desactivate', 'activate']
 
     fieldsets = (
-        (None, {'fields': ('email', 'username',)}),
+        (None, {'fields': ('email', 'username', 'avatar')}),
         ('Permissions', {'fields': ('is_verified', 'is_staff')}),
         ('Personal informations', {
          'fields': ('first_name', 'last_name', 'title')}),
