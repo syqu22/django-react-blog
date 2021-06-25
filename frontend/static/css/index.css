@@ -183,6 +183,7 @@ nav {
 }
 
 .animated-button {
+  margin-top: 1rem;
   justify-self: center;
   font: unset;
   border-radius: 0;
@@ -190,7 +191,7 @@ nav {
   position: relative;
   text-align: center;
   font-weight: 900;
-  border: 2px solid var(--secondary);
+  border: 1px solid var(--secondary);
 }
 
 .animated-button::after {
@@ -218,6 +219,18 @@ nav {
 .animated-button span {
   position: relative;
   z-index: 1;
+}
+
+.privacy {
+  padding: 3rem;
+}
+
+.terms {
+  padding: 3rem;
+}
+
+.license {
+  padding: 2.5rem;
 }
 
 .tags {
@@ -290,10 +303,10 @@ nav {
 }
 
 .avatar {
-  vertical-align: middle;
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  border: 2px solid var(--secondary);
 }
 
 .pagination {
@@ -344,7 +357,6 @@ nav {
   padding: 0.5rem;
   outline: none;
   border: solid 2px var(--secondary);
-  border-radius: 35px;
   transition: 0.45s ease-in-out;
 }
 
@@ -352,7 +364,6 @@ nav {
 .search-bar:focus {
   transform: scale(1.5);
   background-color: var(--secondary);
-  border-color: var(--primary);
   color: var(--primary);
 }
 
@@ -366,7 +377,7 @@ nav {
 
 .comment-form input,
 .comment-form textarea {
-  border: 2px solid var(--secondary);
+  border: 1px solid var(--secondary);
   font: unset;
   border-radius: 0;
 }
@@ -391,6 +402,11 @@ nav {
   position: relative;
   bottom: 1rem;
   text-align: right;
+}
+
+.danger {
+  color: var(--danger);
+  margin-top: 5rem;
 }
 
 .invalid-value {
@@ -435,6 +451,8 @@ nav {
 }
 
 .left-item span {
+  position: relative;
+  bottom: 1rem;
   font-weight: bold;
   margin-left: 1rem;
 }
@@ -443,10 +461,57 @@ nav {
   color: var(--light);
 }
 
+.left-item img {
+  position: relative;
+  top: 0.5rem;
+}
+
 .right-item {
   grid-area: b;
   margin-top: 1rem;
   margin-left: 1rem;
+}
+
+.user-container {
+  display: grid;
+  grid-template-columns: 20% 1fr;
+  align-items: center;
+  justify-items: center;
+}
+
+.user-menu {
+  border-right: 1px solid var(--secondary);
+  padding-right: 2rem;
+  height: 50rem;
+  list-style-type: none;
+}
+
+.user-menu li {
+  padding: 0.5rem;
+}
+
+.user-menu li:focus,
+.user-menu li:hover {
+  cursor: pointer;
+  outline: 1px solid var(--secondary);
+}
+
+.user-item {
+  display: grid;
+}
+
+.user-item input[type="text"],
+.user-item input[type="email"],
+.user-item input[type="password"] {
+  padding: 0.3rem;
+  border: 1px solid var(--secondary);
+  font: unset;
+  border-radius: 0;
+  width: 25rem;
+}
+
+.user-item input:focus {
+  outline: 1px solid var(--secondary);
 }
 
 .user-form {
@@ -465,7 +530,7 @@ nav {
 
 .user-form-item input {
   padding: 0.3rem;
-  border: 2px solid var(--secondary);
+  border: 1px solid var(--secondary);
   font: unset;
   border-radius: 0;
   width: 25rem;
@@ -487,7 +552,7 @@ footer {
   color: var(--light);
   padding: 0.5rem 2rem 0.5rem 2rem;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   align-items: center;
   text-align: center;
 }

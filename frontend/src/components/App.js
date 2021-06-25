@@ -12,9 +12,10 @@ import Footer from "./Footer";
 import Signup from "./auth/Signup";
 import Login from "./auth/Login";
 import Logout from "./auth/Logout";
-import User from "./User";
+import User from "./user/User";
 import SiteMap from "./Sitemap";
 import Privacy from "./Privacy";
+import License from "./License";
 import Terms from "./Terms";
 import Contact from "./Contact";
 import ScrollToTop from "./ScrollToTop";
@@ -38,6 +39,7 @@ const App = () => {
             <Route path="/posts" component={Posts} />
             <Route path="/post/:slug" component={PostDetail} />
             <Route path="/sitemap" component={SiteMap} />
+            <Route path="/license" component={License} />
             <Route path="/privacy" component={Privacy} />
             <Route path="/terms" component={Terms} />
             <Route path="/contact" component={Contact} />
