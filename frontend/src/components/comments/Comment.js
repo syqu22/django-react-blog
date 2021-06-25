@@ -10,10 +10,7 @@ const Comment = ({ values }) => {
   return (
     <div className="comment">
       <div className="left-item">
-        <img
-          src="https://www.w3schools.com/howto/img_avatar.png"
-          className="avatar"
-        />
+        <img src={values.author.avatar} className="avatar" />
         <span>{values.author.username}</span>
         <p>{formatDate(values.created_at)}</p>
       </div>

@@ -21,7 +21,7 @@ class GetCurrentUser(APIView):
     """
     Current User
 
-    Return an information about the current logged in user.\n
+    Return an information about the current logged in user.
     """
 
     permission_classes = [IsAuthenticated]
@@ -34,6 +34,7 @@ class GetCurrentUser(APIView):
                          'first_name': user.first_name,
                          'last_name': user.last_name,
                          'title': user.title,
+                         'avatar': user.avatar.url,
                          'is_staff': user.is_staff,
                          'is_verified': user.is_verified})
 

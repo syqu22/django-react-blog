@@ -29,7 +29,7 @@ class PostsList(ListAPIView):
 
         return Post.objects.all()
 
-    @swagger_auto_schema(responses={200: PostSerializer(many=True), 404: openapi.Response(description='Not Found')})
+    @swagger_auto_schema(responses={200: PostSerializer(many=True)})
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
 

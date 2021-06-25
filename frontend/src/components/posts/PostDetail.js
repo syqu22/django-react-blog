@@ -47,10 +47,7 @@ const PostDetail = () => {
       <h1>{post.title}</h1>
       <Tags values={post.tags} />
       <div className="post-info">
-        <img
-          src="https://www.w3schools.com/howto/img_avatar.png"
-          className="avatar"
-        />
+        <img src={post.author.avatar} className="avatar" />
         <p>
           {post.author.first_name} {post.author.last_name}
         </p>
