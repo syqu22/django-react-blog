@@ -29,6 +29,10 @@ a {
   cursor: pointer;
 }
 
+.logo {
+  width: 12rem;
+}
+
 .social {
   display: inline-flex;
 }
@@ -110,7 +114,7 @@ a {
 }
 
 .item {
-  width: 80%;
+  width: 30rem;
   margin: 1rem auto 1rem;
   overflow: hidden;
   transition: 0.3s ease-out;
@@ -133,6 +137,7 @@ a {
 
 nav {
   overflow: hidden;
+  padding: 0.5rem;
 }
 
 .navbar {
@@ -581,6 +586,10 @@ footer {
 }
 
 @media screen and (max-width: 600px) {
+  .logo {
+    width: 5rem;
+  }
+
   .social-button {
     font-size: 1.2rem;
     margin-right: auto;
@@ -603,6 +612,7 @@ footer {
   }
 
   .item {
+    width: 15rem;
     font-size: 0.7rem;
     height: autp;
   }
@@ -644,7 +654,12 @@ footer {
     width: auto;
   }
 
+  .user-item input {
+    width: auto;
+  }
+
   footer {
+    gap: 1rem;
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 1fr;
   }

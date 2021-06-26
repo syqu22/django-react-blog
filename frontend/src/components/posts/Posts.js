@@ -30,11 +30,7 @@ const Posts = () => {
   }, [search]);
 
   const queryFilter = (value) => {
-    return (
-      value.title.toLowerCase().match(search) ||
-      value.author.first_name.toLowerCase().match(search) ||
-      value.author.last_name.toLowerCase().match(search)
-    );
+    return value.title.toLowerCase().match(search);
   };
 
   if (postsList.length === 0) {

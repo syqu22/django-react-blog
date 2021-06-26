@@ -9,6 +9,12 @@ const NavBar = () => {
     <nav>
       <ul className="navbar">
         <li>
+          <img
+            className="logo"
+            src={window.location.origin + "/media/logo.png"}
+          />
+        </li>
+        <li>
           <NavLink className="navbar-item navbar-home" exact to="/">
             Home
           </NavLink>

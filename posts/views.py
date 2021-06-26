@@ -18,14 +18,14 @@ class PostsList(ListAPIView):
     Return a list of all **Posts** from database.
 
     Optional query parameters:\n
-    ``recent`` - If ``true`` return only the **2** most recent **Posts**.
+    ``recent`` - If ``true`` return only the **4** most recent **Posts**.
     """
     serializer_class = PostSerializer
 
     def get_queryset(self):
         recent = self.request.query_params.get('recent')
         if recent == 'true':
-            return Post.objects.all()[:2]
+            return Post.objects.all()[:4]
 
         return Post.objects.all()
 
