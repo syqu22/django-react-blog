@@ -8,7 +8,9 @@ function DisableForm() {
   return (
     <form className="user-item" onSubmit={handleSubmit} noValidate>
       <button className="animated-button" type="submit">
-        <span>Disable Account</span>
+        <span>
+          <strong>Disable Account</strong>
+        </span>
       </button>
     </form>
   );

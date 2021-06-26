@@ -35,7 +35,9 @@ const PersonalForm = () => {
         placeholder={user.last_name}
       />
       <button className="animated-button" type="submit">
-        <span>Update</span>
+        <span>
+          <strong>Update</strong>
+        </span>
       </button>
     </form>
   );

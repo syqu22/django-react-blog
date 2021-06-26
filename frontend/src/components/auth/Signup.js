@@ -165,7 +165,9 @@ const Signup = () => {
         </div>
         <div className="user-form-item">
           <button className="animated-button" type="submit">
-            <span>Confirm</span>
+            <span>
+              <strong>Confirm</strong>
+            </span>
           </button>
         </div>
       </form>

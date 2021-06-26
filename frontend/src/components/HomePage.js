@@ -45,7 +45,9 @@ const HomePage = () => {
           <div className="container">{postsList.map(showPosts)}</div>
           <div className="recent-text">
             <Link className="animated-button" to="/posts">
-              <span>See more</span>
+              <span>
+                <strong>See more</strong>
+              </span>
             </Link>
           </div>
         </div>

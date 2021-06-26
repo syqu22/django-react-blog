@@ -5,7 +5,7 @@ body {
   margin: 0;
   background-color: var(--primary);
   box-sizing: border-box;
-  overflow: auto;
+  overflow: overlay;
 }
 
 #root {
@@ -135,11 +135,6 @@ a {
   object-fit: cover;
 }
 
-nav {
-  overflow: hidden;
-  padding: 0.5rem;
-}
-
 .navbar {
   list-style-type: none;
   display: flex;
@@ -171,6 +166,46 @@ nav {
   width: 80%;
 }
 
+.navbar-hamburger {
+  font-size: 1.5rem;
+  border: none;
+  background: none;
+  position: relative;
+  left: 3rem;
+  z-index: 6;
+  transition: all 0.5s linear;
+}
+
+.navbar-mobile {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 5;
+  color: var(--primary);
+  background-color: var(--secondary);
+  transition: all 0.3s linear;
+}
+
+.navbar-mobile-items {
+  flex-direction: column;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  gap: 3rem;
+  padding-inline-start: 0;
+}
+
+.mobile-link {
+  color: var(--primary);
+}
+
 .active::before {
   text-align: center;
   position: absolute;
@@ -180,10 +215,6 @@ nav {
   width: 80%;
   height: 0.2em;
   background-color: var(--secondary);
-}
-
-.navbar-home {
-  font-weight: 600;
 }
 
 .error {
@@ -199,7 +230,6 @@ nav {
   padding: 0.6rem;
   position: relative;
   text-align: center;
-  font-weight: 900;
   border: 1px solid var(--secondary);
 }
 
@@ -462,7 +492,6 @@ nav {
 .left-item span {
   position: relative;
   bottom: 1rem;
-  font-weight: bold;
   margin-left: 1rem;
 }
 

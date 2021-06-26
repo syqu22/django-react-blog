@@ -10,6 +10,7 @@ import NotFound from "./errors/NotFound";
 import InternalServer from "./errors/InternalServer";
 import PasswordReset from "./user/PasswordReset";
 import PasswordResetEmail from "./user/PasswordResetEmail";
+import EmailVerification from "./user/EmailVerification";
 import Footer from "./Footer";
 import Signup from "./auth/Signup";
 import Login from "./auth/Login";
@@ -47,6 +48,7 @@ const App = () => {
               path="/password/reset/:uid/:token"
               component={PasswordReset}
             />
+            <Route path="/verify/:uid/:token" component={EmailVerification} />
             <Route path="/posts" component={Posts} />
             <Route path="/post/:slug" component={PostDetail} />
             <Route path="/sitemap" component={SiteMap} />

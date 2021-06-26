@@ -19,8 +19,7 @@ def send_email_verification(request: Request, user: User):
     uid = urlsafe_base64_encode(force_bytes(user.id))
     token = email_token_generator.make_token(user)
     domain = get_current_site(request).domain
-
-    link = f'http://{domain}/api/user/activate/{uid}/{token}/'
+    link = f'http://{domain}/verify/{uid}/{token}/'
 
     try:
         send_mail(subject='Personal Blog - Activate your account',

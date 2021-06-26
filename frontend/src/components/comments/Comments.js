@@ -101,7 +101,9 @@ const Comments = ({ slug }) => {
           />
           <p className="info">{formData.body.length} / 255</p>
           <button className="animated-button" type="submit">
-            <span>Comment</span>
+            <span>
+              <strong>Comment</strong>
+            </span>
           </button>
         </form>
       </>

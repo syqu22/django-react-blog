@@ -88,7 +88,9 @@ const PasswordReset = () => {
           }
         />
         <button className="animated-button" type="submit">
-          <span>Confirm</span>
+          <span>
+            <strong>Confirm</strong>
+          </span>
         </button>
       </form>
     </div>

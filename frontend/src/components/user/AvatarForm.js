@@ -56,7 +56,9 @@ const AvatarForm = () => {
         onChange={handleChange}
       />
       <button className="animated-button" type="submit">
-        <span>Confirm</span>
+        <span>
+          <strong>Confirm</strong>
+        </span>
       </button>
     </form>
   );

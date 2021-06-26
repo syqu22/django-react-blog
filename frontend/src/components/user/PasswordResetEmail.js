@@ -52,7 +52,9 @@ const PasswordResetEmail = () => {
           }
         />
         <button className="animated-button" type="submit">
-          <span>Send email</span>
+          <span>
+            <strong>Send email</strong>
+          </span>
         </button>
       </form>
     </div>
