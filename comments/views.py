@@ -50,7 +50,7 @@ class CreateComment(APIView):
                            60) - datetime.now().timestamp())
 
             if delta > 0:
-                return Response({'Too Many Requests': f'Please wait {delta} more seconds before posting another comment.'}, status=status.HTTP_429_TOO_MANY_REQUESTS)
+                return Response({'Too Many Requests': f'Please wait {delta} more seconds before sending another comment.'}, status=status.HTTP_429_TOO_MANY_REQUESTS)
             else:
                 self.request.session.pop('comment_posted')
 

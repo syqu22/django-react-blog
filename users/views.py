@@ -15,8 +15,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from users.models import User
 from users.serializers import (AvatarSerializer, CreateUserSerializer,
                                UserPasswordSerializer, UserSerializer)
-from users.utils import (email_token_generator, password_reset_token_generator, send_email_password_reset,
-                         send_email_verification)
+from users.utils import (email_token_generator, password_reset_token_generator,
+                         send_email_password_reset, send_email_verification)
 
 
 class GetCurrentUser(APIView):
@@ -108,13 +108,16 @@ class SendEmailPasswordReset(APIView):
                            600) - datetime.now().timestamp())
 
             if delta > 0:
-                return Response({'Too Many Requests': f'Please wait {delta} more seconds before posting another request.'}, status=status.HTTP_429_TOO_MANY_REQUESTS)
+                return Response({'Too Many Requests': f'Please wait {delta} more seconds before doing another request.'}, status=status.HTTP_429_TOO_MANY_REQUESTS)
             else:
                 self.request.session.pop('password_reset_email_sent')
 
         user = get_object_or_404(User, email=email)
 
         send_email_password_reset(request, user)
+        self.request.session['password_reset_email_sent'] = datetime.now(
+        ).timestamp()
+
         return Response(status=status.HTTP_200_OK)
 
 
@@ -137,7 +140,7 @@ class SendEmailVerification(APIView):
                            600) - datetime.now().timestamp())
 
             if delta > 0:
-                return Response({'Too Many Requests': f'Please wait {delta} more seconds before posting another request.'}, status=status.HTTP_429_TOO_MANY_REQUESTS)
+                return Response({'Too Many Requests': f'Please wait {delta} more seconds before doing another request.'}, status=status.HTTP_429_TOO_MANY_REQUESTS)
             else:
                 self.request.session.pop('verification_email_sent')
 
@@ -145,6 +148,8 @@ class SendEmailVerification(APIView):
 
         if not user.is_verified:
             send_email_verification(request, user)
+            self.request.session['verification_email_sent'] = datetime.now(
+            ).timestamp()
 
             return Response(status=status.HTTP_200_OK)
 

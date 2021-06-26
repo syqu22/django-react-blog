@@ -8,7 +8,6 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from users.models import User
 from users.utils import email_token_generator, password_reset_token_generator
-from django.core.files.images import ImageFile
 
 
 @override_settings(MEDIA_ROOT=tempfile.mkdtemp())
@@ -197,6 +196,20 @@ class TestViews(APITestCase):
 
         self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
 
+    def test_send_many_email_verifications(self):
+        """
+        Send many E-Mail verifications
+        """
+        res = self.client.post(
+            f'/api/user/verify/{self.user.email}/', follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+        res = self.client.post(
+            f'/api/user/verify/{self.user.email}/', follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_429_TOO_MANY_REQUESTS)
+
     def test_activate_user(self):
         """
         Activate User
@@ -252,6 +265,20 @@ class TestViews(APITestCase):
             '/api/user/password/reset/wrongemail@test.com/', follow=True)
 
         self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_send_many_email_password_resets(self):
+        """
+        Send many password reset E-Mails
+        """
+        res = self.client.post(
+            f'/api/user/password/reset/{self.user.email}/', follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+        res = self.client.post(
+            f'/api/user/password/reset/{self.user.email}/', follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_429_TOO_MANY_REQUESTS)
 
     def test_change_user_password(self):
         """

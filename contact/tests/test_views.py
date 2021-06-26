@@ -35,3 +35,21 @@ class TestViews(APITestCase):
             'body': 'Test message'}, follow=True)
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+
+    def test_send_many_messages_as_auth_user(self):
+        """
+        Send many messages as auth user
+        """
+        self.authenticate_user()
+
+        res = self.client.post('/api/contact/messages/', data={
+            'title': 'Test title',
+            'body': 'Test message'}, follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+
+        res = self.client.post('/api/contact/messages/', data={
+            'title': 'Test title2',
+            'body': 'Test message2'}, follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_429_TOO_MANY_REQUESTS)

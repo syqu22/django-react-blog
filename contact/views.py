@@ -16,7 +16,7 @@ class CreateMessage(APIView):
     .
     """
 
-    # Add schema
+    # TODO Add schema
     def post(self, request: Request, format=None):
         serializer = MessageSerializer(data=request.data)
 
@@ -29,7 +29,7 @@ class CreateMessage(APIView):
                            300) - datetime.now().timestamp())
 
             if delta > 0:
-                return Response({'Too Many Requests': f'Please wait {delta} more seconds before sending another message.'}, status=status.HTTP_429_TOO_MANY_REQUESTS)
+                return Response({'Too Many Requests': f'Please wait {delta} more seconds before sending message.'}, status=status.HTTP_429_TOO_MANY_REQUESTS)
             else:
                 self.request.session.pop('message_sent')
 
