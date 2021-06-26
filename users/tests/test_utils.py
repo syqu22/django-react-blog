@@ -3,7 +3,8 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from rest_framework.test import APIRequestFactory, APITestCase
 from users.models import User
-from users.utils import email_token_generator, send_email_verification
+from users.utils import (email_token_generator, password_reset_token_generator,
+                         send_email_password_reset, send_email_verification)
 
 
 class TestUtils(APITestCase):
@@ -15,16 +16,26 @@ class TestUtils(APITestCase):
 
     def test_email_token_generator(self):
         """
-        Token is encoded and decoded
+        Email Token stays the same after It's decoded
         """
         token = email_token_generator.make_token(self.user)
         token_decoded = email_token_generator.check_token(self.user, token)
 
         self.assertTrue(token_decoded)
 
+    def test_password_reset_token_generator(self):
+        """
+        Password Reset Token stays the same after It's decoded
+        """
+        token = password_reset_token_generator.make_token(self.user)
+        token_decoded = password_reset_token_generator.check_token(
+            self.user, token)
+
+        self.assertTrue(token_decoded)
+
     def test_send_email_verification(self):
         """
-        E-mail is sent with every important information
+        E-mail with email verification is sent with every important information
         """
         send_email_verification(self.request, self.user)
 
@@ -36,6 +47,24 @@ class TestUtils(APITestCase):
         self.assertEqual(email.to[0], self.user.email)
         self.assertEqual(
             email.subject, 'Personal Blog - Activate your account')
+        self.assertIn(self.user.username, email.body)
+        self.assertIn(uid, email.body)
+        self.assertIn(token, email.body)
+
+    def test_send_email_password_reset(self):
+        """
+        E-mail with password reset is sent with every important information
+        """
+        send_email_password_reset(self.request, self.user)
+
+        email = mail.outbox[0]
+        uid = urlsafe_base64_encode(force_bytes(self.user.id))
+        token = password_reset_token_generator.make_token(self.user)
+
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(email.to[0], self.user.email)
+        self.assertEqual(
+            email.subject, 'Personal Blog - Reset your password')
         self.assertIn(self.user.username, email.body)
         self.assertIn(uid, email.body)
         self.assertIn(token, email.body)

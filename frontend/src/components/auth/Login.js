@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import { UserContext } from "../../providers/UserContext";
 import { useHistory } from "react-router-dom";
 import connection from "../../connection";
@@ -90,6 +91,10 @@ const Login = () => {
                 : { borderColor: "var(--secondary)" }
             }
           />
+          <span>
+            Don&apos;t remember password?
+            <Link to="/password/reset"> Click here</Link>
+          </span>
         </div>
         <div className="user-form-item">
           <button className="animated-button" type="submit">

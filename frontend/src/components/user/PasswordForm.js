@@ -8,8 +8,8 @@ const PasswordForm = () => {
   return (
     <form className="user-item" onSubmit={handleSubmit} noValidate>
       <input type="text" autoComplete="username" hidden />
-      <h1>Password</h1>
-      <label htmlFor="password">Password</label>
+      <h1>Change Password</h1>
+      <label htmlFor="password">Old Password</label>
       <input
         type="password"
         id="password"
@@ -24,7 +24,7 @@ const PasswordForm = () => {
         autoComplete="new-password"
       />
       <button className="animated-button" type="submit">
-        <span>Change password</span>
+        <span>Change</span>
       </button>
     </form>
   );

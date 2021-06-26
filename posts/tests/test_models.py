@@ -25,7 +25,7 @@ class TestModels(TestCase):
         """ 
         New Post does not change instance and is saved to Database
         """
-        post = Post.objects.create(title='Test Post', slug='test-post', thumbnail_url='https://www.test.example.com', author=self.user,
+        post = Post.objects.create(title='Test Post', slug='test-post', thumbnail='https://www.test.example.com', author=self.user,
                                    body='Test content of the post', read_time=5, is_public=True)
         post.tags.add(self.tag1)
         post.tags.add(self.tag2)

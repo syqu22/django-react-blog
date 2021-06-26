@@ -8,7 +8,7 @@ class TestModels(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
             username='test', email='test@test.com', password='strongpassword')
-        self.post = Post.objects.create(title='Test Post', slug='test-post', thumbnail_url='https://www.test.example.com', author=self.user,
+        self.post = Post.objects.create(title='Test Post', slug='test-post', thumbnail='https://www.test.example.com', author=self.user,
                                         body='Test content of the post', read_time=5, is_public=True)
 
     def test_comment_model(self):

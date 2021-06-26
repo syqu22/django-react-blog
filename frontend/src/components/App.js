@@ -8,6 +8,8 @@ import Posts from "./posts/Posts";
 import NavBar from "./NavBar";
 import NotFound from "./errors/NotFound";
 import InternalServer from "./errors/InternalServer";
+import PasswordReset from "./user/PasswordReset";
+import PasswordResetEmail from "./user/PasswordResetEmail";
 import Footer from "./Footer";
 import Signup from "./auth/Signup";
 import Login from "./auth/Login";
@@ -36,6 +38,15 @@ const App = () => {
             <NoAuthRoute path="/signup" component={Signup} />
             <NoAuthRoute path="/login" component={Login} />
             {/* Everyone can enter*/}
+            <Route
+              exact
+              path="/password/reset"
+              component={PasswordResetEmail}
+            />
+            <Route
+              path="/password/reset/:uid/:token"
+              component={PasswordReset}
+            />
             <Route path="/posts" component={Posts} />
             <Route path="/post/:slug" component={PostDetail} />
             <Route path="/sitemap" component={SiteMap} />

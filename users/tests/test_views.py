@@ -1,11 +1,17 @@
+import tempfile
+
+from django.test.utils import override_settings
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
+from PIL import Image
 from rest_framework import status
 from rest_framework.test import APITestCase
 from users.models import User
-from users.utils import email_token_generator
+from users.utils import email_token_generator, password_reset_token_generator
+from django.core.files.images import ImageFile
 
 
+@override_settings(MEDIA_ROOT=tempfile.mkdtemp())
 class TestViews(APITestCase):
 
     def setUp(self):
@@ -13,11 +19,25 @@ class TestViews(APITestCase):
             username='test', email='test@test.com', password='strongpassword')
 
         self.uid = urlsafe_base64_encode(force_bytes(self.user.id))
-        self.token = email_token_generator.make_token(self.user)
+        self.email_token = email_token_generator.make_token(self.user)
+        self.password_reset_token = password_reset_token_generator.make_token(
+            self.user)
 
     def authenticate_user(self):
         self.client.force_login(self.user)
         self.client.force_authenticate(user=self.user)
+
+    def generate_image_file(self):
+        with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as f:
+            image = Image.new('RGBA', (200, 200), (255, 255, 255, 0))
+            image.save(f, 'png')
+
+        return open(f.name, mode='rb')
+
+    def generate_wrong_file(self):
+        with tempfile.NamedTemporaryFile(suffix='.txt', delete=False) as f:
+            f.write(b'Hello world')
+        return open(f.name, mode='rb')
 
     def test_user_info(self):
         """
@@ -182,11 +202,11 @@ class TestViews(APITestCase):
         Activate User
         """
         res = self.client.post(
-            f'/api/user/activate/{self.uid}/{self.token}/', follow=True)
+            f'/api/user/activate/{self.uid}/{self.email_token}/', follow=True)
 
         user = User.objects.first()
 
-        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         self.assertTrue(user.is_verified)
 
     def test_activate_user_with_wrong_uid(self):
@@ -195,7 +215,7 @@ class TestViews(APITestCase):
         """
         uid = urlsafe_base64_encode(force_bytes(5343))
         res = self.client.post(
-            f'/api/user/activate/{uid}/{self.token}/', follow=True)
+            f'/api/user/activate/{uid}/{self.email_token}/', follow=True)
 
         user = User.objects.first()
 
@@ -214,3 +234,85 @@ class TestViews(APITestCase):
 
         self.assertEqual(res.status_code, status.HTTP_406_NOT_ACCEPTABLE)
         self.assertFalse(user.is_verified)
+
+    def test_send_email_password_reset(self):
+        """
+        Send password reset E-Mail
+        """
+        res = self.client.post(
+            f'/api/user/password/reset/{self.user.email}/', follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_send_email_password_reset_with_wrong_email(self):
+        """
+        Send password reset E-Mail with wrong User E-Mail
+        """
+        res = self.client.post(
+            '/api/user/password/reset/wrongemail@test.com/', follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_change_user_password(self):
+        """
+        Change User password
+        """
+        res = self.client.post(
+            f'/api/user/password/reset/{self.uid}/{self.password_reset_token}/', data={'password': 'strongpassword', 'new_password': 'newstrongpassword'}, follow=True)
+
+        user = User.objects.first()
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(user.check_password('newstrongpassword'))
+
+    def test_change_user_password_with_wrong_uid(self):
+        """
+        Change User password with wrong UID
+        """
+        uid = urlsafe_base64_encode(force_bytes(5343))
+        res = self.client.post(
+            f'/api/user/password/reset/{uid}/{self.password_reset_token}/', data={'password': 'strongpassword', 'new_password': 'newstrongpassword'}, follow=True)
+
+        user = User.objects.first()
+
+        self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertFalse(user.check_password('newstrongpassword'))
+
+    def test_change_user_password_with_wrong_token(self):
+        """
+        Change User password with wrong Token
+        """
+        token = 'randomtoken'
+        res = self.client.post(
+            f'/api/user/password/reset/{self.uid}/{token}/', data={'password': 'strongpassword', 'new_password': 'newstrongpassword'}, follow=True)
+
+        user = User.objects.first()
+
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertFalse(user.check_password('newstrongpassword'))
+
+    def test_upload_user_avatar(self):
+        """
+        Upload and change user avatar
+        """
+        self.authenticate_user()
+
+        avatar = self.generate_image_file()
+
+        res = self.client.post(
+            f'/api/user/avatar/', data={'avatar': avatar}, follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+
+    def test_upload_user_avatar_with_wrong_file(self):
+        """
+        Upload file with wrong format
+        """
+        self.authenticate_user()
+
+        wrong_file = self.generate_wrong_file()
+
+        res = self.client.post(
+            f'/api/user/avatar/', data={'avatar': wrong_file}, follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)

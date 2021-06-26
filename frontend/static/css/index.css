@@ -483,6 +483,12 @@ nav {
   justify-items: center;
 }
 
+.user-container-single {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+}
+
 .user-menu {
   border-right: 1px solid var(--secondary);
   padding-right: 2rem;

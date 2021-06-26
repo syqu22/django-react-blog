@@ -9,9 +9,9 @@ class TestViews(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(
             username='test', email='test@test.com', password='strongpassword')
-        self.post = Post.objects.create(title='Test Post', slug='test-post', thumbnail_url='https://www.test.example.com', author=self.user,
+        self.post = Post.objects.create(title='Test Post', slug='test-post', thumbnail='https://www.test.example.com', author=self.user,
                                         body='Test content of the post', read_time=5, is_public=True)
-        self.private_post = Post.objects.create(title='Private Post', slug='private-post', thumbnail_url='https://www.test.example.com', author=self.user,
+        self.private_post = Post.objects.create(title='Private Post', slug='private-post', thumbnail='https://www.test.example.com', author=self.user,
                                                 body='Test content of the post', read_time=5, is_public=False)
 
     def authenticate_user(self):

@@ -31,4 +31,22 @@ def send_email_verification(request: Request, user: User):
         print(err)
 
 
+def send_email_password_reset(request: Request, user: User):
+    uid = urlsafe_base64_encode(force_bytes(user.id))
+    token = password_reset_token_generator.make_token(user)
+    domain = get_current_site(request).domain
+
+    link = f'http://{domain}/password/reset/{uid}/{token}/'
+
+    try:
+        send_mail(subject='Personal Blog - Reset your password',
+                  message=f"Hello {user.username}, you can reset your password by clicking on the link below. \n{link}\n\n\n"
+                  "If it's not you, immediately change password, your account might be in thief's hands.",
+                  from_email=None, recipient_list=[user.email],
+                  fail_silently=False)
+    except Exception as err:
+        print(err)
+
+
 email_token_generator = EmailTokenGenerator()
+password_reset_token_generator = PasswordResetTokenGenerator()

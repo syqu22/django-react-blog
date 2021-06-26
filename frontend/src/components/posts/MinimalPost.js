@@ -3,32 +3,25 @@ import { Link } from "react-router-dom";
 import Tags from "./Tags";
 import PropTypes from "prop-types";
 
-const MinimalPost = ({
-  slug,
-  thumbnail_url,
-  title,
-  created_at,
-  tags,
-  author,
-}) => {
-  const date = new Date(created_at).toLocaleDateString();
+const MinimalPost = (props) => {
+  const date = new Date(props.created_at).toLocaleDateString();
 
   return (
-    <Link to={`/post/${slug}/`} className="item">
-      <img src={thumbnail} />
+    <Link to={`/post/${props.slug}/`} className="item">
+      <img src={props.thumbnail} />
       <span>{date}</span>
-      <h2>{title}</h2>
+      <h2>{props.title}</h2>
       <span>
-        by {author.first_name} {author.last_name}
+        by {props.author.first_name} {props.author.last_name}
       </span>
-      <Tags values={tags} />
+      <Tags values={props.tags} />
     </Link>
   );
 };
 
 MinimalPost.propTypes = {
   slug: PropTypes.string,
-  thumbnail_url: PropTypes.string,
+  thumbnail: PropTypes.string,
   title: PropTypes.string,
   created_at: PropTypes.string,
   tags: PropTypes.array,

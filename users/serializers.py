@@ -50,6 +50,15 @@ class AvatarSerializer(serializers.ModelSerializer):
         fields = ['avatar']
 
 
+class UserPasswordSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+
+    class Meta:
+        model = User
+        fields = ['password', 'new_password']
+
+
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
