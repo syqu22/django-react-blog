@@ -14,7 +14,7 @@ const User = () => {
       case 1:
         return <AvatarForm />;
       case 2:
-        return <PasswordForm />;
+        return <PasswordForm setTab={setTab} />;
       case 3:
         return <DisableForm />;
     }

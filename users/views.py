@@ -63,9 +63,9 @@ class UploadUserAvatar(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ChangeUserPassword(APIView):
+class ResetUserPassword(APIView):
     """
-    ChangeUserPassword
+    ResetUserPassword
 
     .
     """
@@ -154,6 +154,46 @@ class SendEmailVerification(APIView):
             return Response(status=status.HTTP_200_OK)
 
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class ChangeUserPassword(APIView):
+    """
+    Change user password
+
+    .
+    """
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request: Request, format=None):
+        serializer = UserPasswordSerializer(data=request.data)
+
+        if not self.request.session.exists(self.request.session.session_key):
+            self.request.session.create()
+
+        # Stop user from spamming email verification
+        if self.request.session.has_key('password_change'):
+            delta = round((self.request.session['password_change'] +
+                           120) - datetime.now().timestamp())
+
+            if delta > 0:
+                return Response({'Too Many Requests': f'Please wait {delta} more seconds before doing another request.'}, status=status.HTTP_429_TOO_MANY_REQUESTS)
+            else:
+                self.request.session.pop('password_change')
+
+        if serializer.is_valid():
+            user = request.user
+            if user.check_password(serializer.data.get('password')):
+                password = serializer.data.get('new_password')
+                user.set_password(password)
+                user.save()
+                self.request.session['password_change'] = datetime.now(
+                ).timestamp()
+
+                return Response(status=status.HTTP_201_CREATED)
+
+            return Response({'detail': 'Password is not correct'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ActivateUser(APIView):

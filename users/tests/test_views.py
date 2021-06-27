@@ -210,6 +210,43 @@ class TestViews(APITestCase):
 
         self.assertEqual(res.status_code, status.HTTP_429_TOO_MANY_REQUESTS)
 
+    def test_change_user_password(self):
+        """
+        Unauthenticated user cannot change password
+        """
+        res = self.client.post(
+            f'/api/user/password/change/', follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_change_user_password_as_auth_user(self):
+        """
+        Authenticated user can change password
+        """
+        self.authenticate_user()
+
+        res = self.client.post(
+            f'/api/user/password/change/', data={'password': 'strongpassword', 'new_password': 'evenstrongerpassword'}, follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+
+    def test_many_change_user_password_as_auth_user(self):
+        """
+        Authenticated user cannot change password many times
+        """
+        self.authenticate_user()
+        new_password = 'evenstrongerpassword'
+
+        res = self.client.post(f'/api/user/password/change/', data={
+                               'password': 'strongpassword', 'new_password': new_password}, follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+
+        res = self.client.post(f'/api/user/password/change/', data={
+                               'password': new_password, 'new_password': 'strongpassword'}, follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_429_TOO_MANY_REQUESTS)
+
     def test_activate_user(self):
         """
         Activate User

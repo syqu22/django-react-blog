@@ -31,6 +31,13 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
         return value
 
+    def validate_password(self, value):
+        password = self.get_initial().get('password')
+
+        if len(password) < 6:
+            raise ValidationError(
+                'Password needs to be at least 6 characters long.')
+
     def create(self, validated_data):
         password = validated_data.pop('password', None)
 
@@ -57,6 +64,25 @@ class UserPasswordSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['password', 'new_password']
+
+    def validate_password(self, value):
+        password = self.get_initial().get('password')
+        new_password = self.get_initial().get('new_password')
+
+        if password == new_password:
+            raise ValidationError(
+                'Passwords cannot be the same.')
+
+        return value
+
+    def validate_new_password(self, value):
+        new_password = self.get_initial().get('new_password')
+
+        if len(new_password) < 6:
+            raise ValidationError(
+                'Password needs to be at least 6 characters long.')
+
+        return value
 
 
 class UserSerializer(serializers.ModelSerializer):
