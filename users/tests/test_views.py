@@ -1,5 +1,7 @@
 import tempfile
+from io import BytesIO
 
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test.utils import override_settings
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
@@ -8,6 +10,22 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from users.models import User
 from users.utils import email_token_generator, password_reset_token_generator
+
+
+def generate_image_file():
+    image = BytesIO()
+    Image.new('RGB', (200, 200)).save(image, 'png')
+    image.seek(0)
+
+    return SimpleUploadedFile('test_avatar.png', image.getvalue())
+
+
+def generate_wrong_file():
+    text = BytesIO()
+    text.write(b'test content')
+    text.seek(0)
+
+    return SimpleUploadedFile('test_file.txt', text.getvalue())
 
 
 @override_settings(MEDIA_ROOT=tempfile.mkdtemp())
@@ -25,18 +43,6 @@ class TestViews(APITestCase):
     def authenticate_user(self):
         self.client.force_login(self.user)
         self.client.force_authenticate(user=self.user)
-
-    def generate_image_file(self):
-        with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as f:
-            image = Image.new('RGBA', (200, 200), (255, 255, 255, 0))
-            image.save(f, 'png')
-
-        return open(f.name, mode='rb')
-
-    def generate_wrong_file(self):
-        with tempfile.NamedTemporaryFile(suffix='.txt', delete=False) as f:
-            f.write(b'Hello world')
-        return open(f.name, mode='rb')
 
     def test_user_info(self):
         """
@@ -361,7 +367,7 @@ class TestViews(APITestCase):
         """
         self.authenticate_user()
 
-        avatar = self.generate_image_file()
+        avatar = generate_image_file()
 
         res = self.client.post(
             f'/api/user/avatar/', data={'avatar': avatar}, follow=True)
@@ -374,7 +380,7 @@ class TestViews(APITestCase):
         """
         self.authenticate_user()
 
-        wrong_file = self.generate_wrong_file()
+        wrong_file = generate_wrong_file()
 
         res = self.client.post(
             f'/api/user/avatar/', data={'avatar': wrong_file}, follow=True)

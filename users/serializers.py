@@ -5,8 +5,8 @@ from users.models import User
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(required=True)
     username = serializers.CharField(required=True)
+    email = serializers.EmailField(required=True)
     password = serializers.CharField(min_length=6, write_only=True)
     first_name = serializers.CharField(required=False, allow_blank=True)
     last_name = serializers.CharField(required=False, allow_blank=True)
@@ -80,7 +80,7 @@ class UserPasswordSerializer(serializers.ModelSerializer):
 
         if len(new_password) < 6:
             raise ValidationError(
-                'Password needs to be at least 6 characters long.')
+                'New password needs to be at least 6 characters long.')
 
         return value
 
