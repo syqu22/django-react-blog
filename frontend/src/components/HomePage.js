@@ -4,11 +4,6 @@ import connection from "../connection";
 import Hero from "./Hero";
 import MinimalPost from "./posts/MinimalPost";
 
-const image1_url =
-  "https://i2.wp.com/files.123freevectors.com/wp-content/original/131249-dark-grey-low-poly-abstract-background-design-vector.jpg?w=1980&q=100";
-const image2_url =
-  "https://img.wallpapersafari.com/desktop/1920/1080/18/57/wAt1gI.jpg";
-
 const HomePage = () => {
   const [postsList, setPostsList] = useState([]);
 
@@ -25,7 +20,7 @@ const HomePage = () => {
 
   return (
     <>
-      <Hero image_url={image1_url}>
+      <Hero image_url={"/media/images/hero1.jpg"}>
         <h1>Welcome to my Blog</h1>
         <span>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
@@ -53,7 +48,7 @@ const HomePage = () => {
         </div>
       )}
 
-      <Hero image_url={image2_url}>
+      <Hero image_url={"/media/images/hero2.jpg"}>
         <h1>About Me</h1>
         <span>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import connection from "../../connection";
 import Comment from "./Comment";
 import Pagination from "../Pagination";
@@ -15,12 +15,12 @@ const Comments = ({ slug }) => {
   const [commentCreated, setCommentCreated] = useState(false);
   const [countdown, setCountdown] = useState(0);
   const [error, setError] = useState({});
+  const textarea = useRef();
 
   const commentsPerPage = 6;
   const maxComments = commentsList.length / commentsPerPage;
 
   useEffect(() => {
-    clearState();
     setError({});
     setCommentCreated(false);
     connection
@@ -44,10 +44,6 @@ const Comments = ({ slug }) => {
     }
   }, [countdown]);
 
-  const clearState = () => {
-    setFormData(initialData);
-  };
-
   // Make textarea bigger with big enough text
   const handleChange = (e) => {
     (e.target.style.height = "inherit"),
@@ -65,7 +61,11 @@ const Comments = ({ slug }) => {
       .post(`comments/${slug}/send/`, {
         body: formData.body,
       })
-      .then(() => setCommentCreated(true))
+      .then(() => {
+        setCommentCreated(true);
+        setFormData(initialData);
+        textarea.current.value = "";
+      })
       .catch((err) => {
         setError(err.response.data);
       });
@@ -89,6 +89,7 @@ const Comments = ({ slug }) => {
           <textarea
             id="body"
             name="body"
+            ref={textarea}
             onChange={handleChange}
             placeholder="Write your own comment here..."
             maxLength="255"
