@@ -20,7 +20,6 @@ import SiteMap from "./Sitemap";
 import Privacy from "./Privacy";
 import License from "./License";
 import Terms from "./Terms";
-import Contact from "./Contact";
 import ScrollToTop from "./ScrollToTop";
 
 const App = () => {
@@ -55,7 +54,6 @@ const App = () => {
             <Route path="/license" component={License} />
             <Route path="/privacy" component={Privacy} />
             <Route path="/terms" component={Terms} />
-            <Route path="/contact" component={Contact} />
             {/* Error pages */}
             <Route path="/500" component={InternalServer} status={500} />
             <Route path="*" component={NotFound} status={404} />

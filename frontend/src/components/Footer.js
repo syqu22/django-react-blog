@@ -21,9 +21,6 @@ const Footer = () => {
         <div>
           <Link to="/license">License</Link>
         </div>
-        <div>
-          <Link to="/contact">Contact</Link>
-        </div>
         <Socials />
       </footer>
     </div>
