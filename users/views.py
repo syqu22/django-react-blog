@@ -31,6 +31,7 @@ class GetCurrentUser(APIView):
     @swagger_auto_schema(responses={200: UserSerializer()})
     def get(self, request: Request, format=None):
         user = request.user
+
         return Response({'username': user.username,
                          'email': user.email,
                          'first_name': user.first_name,
@@ -58,6 +59,7 @@ class UploadUserAvatar(APIView):
             user = request.user
             user.avatar = request.data.get('avatar')
             user.save()
+
             return Response(status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -83,6 +85,7 @@ class ResetUserPassword(APIView):
                     new_password = serializer.data.get('new_password')
                     user.set_password(new_password)
                     user.save()
+
                     return Response(status=status.HTTP_201_CREATED)
 
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -196,6 +199,44 @@ class ChangeUserPassword(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class ChangeUserDetails(APIView):
+    """
+    Change User personal details
+
+    .
+    """
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request: Request, format=None):
+        serializer = UserSerializer(data=request.data)
+
+        if not self.request.session.exists(self.request.session.session_key):
+            self.request.session.create()
+
+        # Stop user from changing personal details too often
+        if self.request.session.has_key('details_change'):
+            delta = round((self.request.session['details_change'] +
+                           60) - datetime.now().timestamp())
+
+            if delta > 0:
+                return Response({'Too Many Requests': f'Please wait {delta} more seconds before doing another request.'}, status=status.HTTP_429_TOO_MANY_REQUESTS)
+            else:
+                self.request.session.pop('details_change')
+
+        if serializer.is_valid():
+            user = request.user
+            user.username = serializer.data.get('username')
+            user.first_name = serializer.data.get('first_name')
+            user.last_name = serializer.data.get('last_name')
+            user.save()
+            self.request.session['details_change'] = datetime.now(
+            ).timestamp()
+
+            return Response(status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class ActivateUser(APIView):
     """
     Activate User
@@ -215,6 +256,7 @@ class ActivateUser(APIView):
             if not user.is_verified:
                 user.is_verified = True
                 user.save()
+
                 return Response({'Verified': 'Successfully verified user.'}, status=status.HTTP_201_CREATED)
 
             return Response({'Bad Request': 'User is already verified.'}, status=status.HTTP_400_BAD_REQUEST)

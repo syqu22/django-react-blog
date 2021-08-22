@@ -253,6 +253,38 @@ class TestViews(APITestCase):
 
         self.assertEqual(res.status_code, status.HTTP_429_TOO_MANY_REQUESTS)
 
+    def test_change_user_details(self):
+        """
+        Not authenticated user cannot change his personal details
+        TODO
+        """
+
+        res = self.client.post(
+            f'/api/user/details/', data={'username': '', 'first_name': '', 'last_name': ''}, follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_change_user_details_as_auth_user(self):
+        """
+        Authenticated user can change his personal details
+        TODO
+        """
+
+        res = self.client.post(
+            f'/api/user/details/', data={'username': '', 'first_name': '', 'last_name': ''}, follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+
+    def test_change_user_details_with_wrong_details(self):
+        """
+        User cannot change his personal details with wrong values
+        """
+
+        res = self.client.post(
+            f'/api/user/details/', data={'username': '', 'first_name': '', 'last_name': ''}, follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
     def test_activate_user(self):
         """
         Activate User
