@@ -238,7 +238,7 @@ class TestViews(APITestCase):
 
     def test_many_change_user_password_as_auth_user(self):
         """
-        Authenticated user cannot change password many times
+        Authenticated user cannot change password many times in short time window
         """
         self.authenticate_user()
         new_password = 'evenstrongerpassword'
@@ -256,7 +256,6 @@ class TestViews(APITestCase):
     def test_change_user_details(self):
         """
         Not authenticated user cannot change his personal details
-        TODO
         """
 
         res = self.client.post(
@@ -267,23 +266,51 @@ class TestViews(APITestCase):
     def test_change_user_details_as_auth_user(self):
         """
         Authenticated user can change his personal details
-        TODO
         """
+        self.authenticate_user()
 
         res = self.client.post(
-            f'/api/user/details/', data={'username': '', 'first_name': '', 'last_name': ''}, follow=True)
+            f'/api/user/details/', data={'username': 'admintest', 'email': 'admin@email.com', 'first_name': 'Ad min', 'last_name': 'Nim da'}, follow=True)
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
-    def test_change_user_details_with_wrong_details(self):
+    def test_change_only_specific_user_details_as_auth_user(self):
         """
-        User cannot change his personal details with wrong values
+        Authenticated user can change only specific detail
         """
+        self.authenticate_user()
 
         res = self.client.post(
-            f'/api/user/details/', data={'username': '', 'first_name': '', 'last_name': ''}, follow=True)
+            f'/api/user/details/', data={'username': 'admintest', 'email': '', 'first_name': '', 'last_name': 'Nim da'}, follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+
+    def test_change_user_details_with_wrong_details_as_auth_user(self):
+        """
+        Authenticated user cannot change his personal details with wrong values
+        """
+        self.authenticate_user()
+
+        res = self.client.post(
+            f'/api/user/details/', data={'username': 'sh', 'first_name': 'o', 'last_name': 'rt'}, follow=True)
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_many_change_user_details_as_auth_user(self):
+        """
+        Authenticated user cannot change personal details too many times in short time window
+        """
+        self.authenticate_user()
+
+        res = self.client.post(
+            f'/api/user/details/', data={'username': 'adminbob', 'email': '', 'first_name': 'Ad min', 'last_name': 'Nim da'}, follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+
+        res = self.client.post(
+            f'/api/user/details/', data={'username': 'bobadmin', 'email': 'bobadmin@test.com', 'first_name': '', 'last_name': ''}, follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_429_TOO_MANY_REQUESTS)
 
     def test_activate_user(self):
         """

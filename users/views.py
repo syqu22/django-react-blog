@@ -14,7 +14,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from users.models import User
 from users.serializers import (AvatarSerializer, CreateUserSerializer,
-                               UserPasswordSerializer, UserSerializer)
+                               UserPasswordSerializer, UserPersonalDetailsSerializer,
+                               UserSerializer)
 from users.utils import (email_token_generator, password_reset_token_generator,
                          send_email_password_reset, send_email_verification)
 
@@ -208,7 +209,7 @@ class ChangeUserDetails(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request: Request, format=None):
-        serializer = UserSerializer(data=request.data)
+        serializer = UserPersonalDetailsSerializer(data=request.data)
 
         if not self.request.session.exists(self.request.session.session_key):
             self.request.session.create()
@@ -224,15 +225,29 @@ class ChangeUserDetails(APIView):
                 self.request.session.pop('details_change')
 
         if serializer.is_valid():
+            is_changed = False
             user = request.user
-            user.username = serializer.data.get('username')
-            user.first_name = serializer.data.get('first_name')
-            user.last_name = serializer.data.get('last_name')
-            user.save()
-            self.request.session['details_change'] = datetime.now(
-            ).timestamp()
+            if serializer.data.get('username'):
+                user.username = serializer.data.get('username')
+                is_changed = True
+            if serializer.data.get('email'):
+                user.email = serializer.data.get('email')
+                is_changed = True
+            if serializer.data.get('first_name'):
+                user.first_name = serializer.data.get('first_name')
+                is_changed = True
+            if serializer.data.get('last_name'):
+                user.last_name = serializer.data.get('last_name')
+                is_changed = True
 
-            return Response(status=status.HTTP_201_CREATED)
+            if is_changed:
+                user.save()
+                self.request.session['details_change'] = datetime.now(
+                ).timestamp()
+
+                return Response(status=status.HTTP_201_CREATED)
+
+            return Response({'detail': 'You need to change at least 1 of the values.'}, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

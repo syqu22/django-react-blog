@@ -7,7 +7,8 @@ from django.test.utils import override_settings
 from PIL import Image
 from users.models import User
 from users.serializers import (AvatarSerializer, CreateUserSerializer,
-                               UserPasswordSerializer, UserSerializer)
+                               UserPasswordSerializer,
+                               UserPersonalDetailsSerializer, UserSerializer)
 
 
 def generate_image_file():
@@ -32,6 +33,9 @@ class TestSerializers(TestCase):
             data={'avatar': self.avatar})
         self.create_user_serializer = CreateUserSerializer(
             data={'username': 'testusername', 'email': 'testemail@example.com', 'password': 'strongpassword', 'first_name': 'Test', 'last_name': 'Tested'})
+        self.user_personal_details_serializer = UserPersonalDetailsSerializer(
+            data={'username': 'testusername', 'email': 'testemail@example.com',
+                  'first_name': 'Test', 'last_name': 'Tested'})
 
     def test_user_serializer(self):
         """
@@ -154,3 +158,21 @@ class TestSerializers(TestCase):
 
         self.assertTrue(query_user.exists())
         self.assertEqual(user, query_user.first())
+
+    def test_user_personal_details_serializer(self):
+        """
+        User Personal Details serializer
+        """
+        serializer = self.user_personal_details_serializer
+
+        self.assertTrue(serializer.is_valid())
+
+        data = serializer.data
+
+        self.assertCountEqual(
+            data.keys(), ['username', 'email', 'first_name', 'last_name']
+        )
+        self.assertEqual(data['username'], 'testusername')
+        self.assertEqual(data['email'], 'testemail@example.com')
+        self.assertEqual(data['first_name'], 'Test')
+        self.assertEqual(data['last_name'], 'Tested')

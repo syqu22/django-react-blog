@@ -44,7 +44,7 @@ const Comments = ({ slug }) => {
     }
   }, [countdown]);
 
-  // Make textarea bigger with big enough text
+  // Make textarea scalable
   const handleChange = (e) => {
     (e.target.style.height = "inherit"),
       (e.target.style.height = `${e.target.scrollHeight}px`),

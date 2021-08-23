@@ -1,9 +1,9 @@
 from django.test import TestCase
 from django.urls import resolve
-from users.views import (ActivateUser, BlacklistToken, ChangeUserPassword,
-                         CreateUser, GetCurrentUser, ResetUserPassword,
-                         SendEmailPasswordReset, SendEmailVerification,
-                         UploadUserAvatar)
+from users.views import (ActivateUser, BlacklistToken, ChangeUserDetails,
+                         ChangeUserPassword, CreateUser, GetCurrentUser,
+                         ResetUserPassword, SendEmailPasswordReset,
+                         SendEmailVerification, UploadUserAvatar)
 
 
 class TestUrls(TestCase):
@@ -70,3 +70,10 @@ class TestUrls(TestCase):
         """
         url = resolve('/api/user/avatar/')
         assert url.func.cls == UploadUserAvatar
+
+    def test_change_user_details_url(self):
+        """
+        Url is corresponding to ChangeUserDetails view
+        """
+        url = resolve('/api/user/details/')
+        assert url.func.cls == ChangeUserDetails

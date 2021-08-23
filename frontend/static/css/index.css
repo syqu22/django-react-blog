@@ -453,6 +453,12 @@ a {
   color: var(--danger);
 }
 
+.countdown {
+  text-align: center;
+  font-size: 1.15rem;
+  color: var(--light);
+}
+
 .comment-countdown {
   text-align: center;
   font-size: 1.5rem;

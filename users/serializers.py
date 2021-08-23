@@ -1,15 +1,17 @@
-from rest_framework import serializers
+from rest_framework import request, serializers
 from rest_framework.exceptions import ValidationError
 
 from users.models import User
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
-    username = serializers.CharField(required=True)
+    username = serializers.CharField(min_length=3, required=True)
     email = serializers.EmailField(required=True)
     password = serializers.CharField(min_length=6, write_only=True)
-    first_name = serializers.CharField(required=False, allow_blank=True)
-    last_name = serializers.CharField(required=False, allow_blank=True)
+    first_name = serializers.CharField(
+        min_length=3, required=False, allow_blank=True)
+    last_name = serializers.CharField(
+        min_length=3, required=False, allow_blank=True)
 
     class Meta:
         model = User
@@ -91,3 +93,14 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['username', 'first_name', 'last_name',
                   'title', 'avatar', 'is_staff', 'is_verified']
+
+
+class UserPersonalDetailsSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(min_length=3, allow_blank=True)
+    email = serializers.EmailField(allow_blank=True)
+    first_name = serializers.CharField(min_length=3, allow_blank=True)
+    last_name = serializers.CharField(min_length=3, allow_blank=True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name']
