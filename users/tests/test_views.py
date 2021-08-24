@@ -9,7 +9,8 @@ from PIL import Image
 from rest_framework import status
 from rest_framework.test import APITestCase
 from users.models import User
-from users.utils import email_token_generator, password_reset_token_generator
+from users.utils import (delete_acc_token_generator, email_token_generator,
+                         password_reset_token_generator)
 
 
 def generate_image_file():
@@ -38,6 +39,8 @@ class TestViews(APITestCase):
         self.uid = urlsafe_base64_encode(force_bytes(self.user.id))
         self.email_token = email_token_generator.make_token(self.user)
         self.password_reset_token = password_reset_token_generator.make_token(
+            self.user)
+        self.delete_acc_token = delete_acc_token_generator.make_token(
             self.user)
 
     def authenticate_user(self):
@@ -164,7 +167,7 @@ class TestViews(APITestCase):
 
     def test_login_with_wrong_username(self):
         """
-        Login user with wrong username
+        Login user using wrong username
         """
         res = self.client.post('/api/token/', data={
             'username': 'wrongusername',
@@ -175,7 +178,7 @@ class TestViews(APITestCase):
 
     def test_login_with_wrong_password(self):
         """
-        Login user with wrong password
+        Login user using wrong password
         """
         res = self.client.post('/api/token/', data={
             'username': 'test',
@@ -195,7 +198,7 @@ class TestViews(APITestCase):
 
     def test_send_email_verification_with_wrong_email(self):
         """
-        Send E-Mail verification with wrong User E-Mail
+        Send E-Mail verification using wrong User E-Mail
         """
         res = self.client.post(
             '/api/user/verify/wrongemail@test.com/', follow=True)
@@ -287,7 +290,7 @@ class TestViews(APITestCase):
 
     def test_change_user_details_with_wrong_details_as_auth_user(self):
         """
-        Authenticated user cannot change his personal details with wrong values
+        Authenticated user cannot change his personal details using wrong values
         """
         self.authenticate_user()
 
@@ -326,7 +329,7 @@ class TestViews(APITestCase):
 
     def test_activate_user_with_wrong_uid(self):
         """
-        Activate User with wrong UID
+        Activate User using wrong UID
         """
         uid = urlsafe_base64_encode(force_bytes(5343))
         res = self.client.post(
@@ -339,7 +342,7 @@ class TestViews(APITestCase):
 
     def test_activate_user_with_wrong_token(self):
         """
-        Activate User with wrong Token
+        Activate User using wrong Token
         """
         token = 'randomtoken'
         res = self.client.post(
@@ -361,7 +364,7 @@ class TestViews(APITestCase):
 
     def test_send_email_password_reset_with_wrong_email(self):
         """
-        Send password reset E-Mail with wrong User E-Mail
+        Send password reset E-Mail using wrong User E-Mail
         """
         res = self.client.post(
             '/api/user/password/reset/wrongemail@test.com/', follow=True)
@@ -396,7 +399,7 @@ class TestViews(APITestCase):
 
     def test_change_user_password_with_wrong_uid(self):
         """
-        Change User password with wrong UID
+        Change User password using wrong UID
         """
         uid = urlsafe_base64_encode(force_bytes(5343))
         res = self.client.post(
@@ -409,7 +412,7 @@ class TestViews(APITestCase):
 
     def test_change_user_password_with_wrong_token(self):
         """
-        Change User password with wrong Token
+        Change User password using wrong Token
         """
         token = 'randomtoken'
         res = self.client.post(
@@ -435,7 +438,7 @@ class TestViews(APITestCase):
 
     def test_upload_user_avatar_with_wrong_file(self):
         """
-        Upload file with wrong format
+        Upload file using wrong format
         """
         self.authenticate_user()
 
@@ -445,3 +448,91 @@ class TestViews(APITestCase):
             f'/api/user/avatar/', data={'avatar': wrong_file}, follow=True)
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_send_email_delete_user(self):
+        """
+        Not authenticated User can't send E-Mail to delete account
+        """
+
+        res = self.client.post(
+            f'/api/user/delete/', follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_send_email_delete_user_as_auth_user(self):
+        """
+        Authenticated User can send E-Mail to delete his account
+        """
+        self.authenticate_user()
+
+        res = self.client.post(
+            f'/api/user/delete/', follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+    def test_send_many_email_verifications_as_auth_user(self):
+        """
+        Send many E-Mail to delete account as authenticated User
+        """
+        self.authenticate_user()
+
+        res = self.client.post(
+            f'/api/user/delete/', follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+        res = self.client.post(
+            f'/api/user/delete/', follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_429_TOO_MANY_REQUESTS)
+
+    def test_delete_user(self):
+        """
+        Not authenticated User cannot delete account
+        """
+        res = self.client.post(
+            f'/api/user/delete/{self.uid}/{self.delete_acc_token}/', follow=True)
+
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_delete_user_as_auth_user(self):
+        """
+        Authenticated User can delete his account
+        """
+        self.authenticate_user()
+
+        res = self.client.post(
+            f'/api/user/delete/{self.uid}/{self.delete_acc_token}/', follow=True)
+
+        user = User.objects.first()
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        self.assertFalse(user)
+
+    def test_delete_user_as_auth_user_with_wrong_token(self):
+        """
+        Authenticated User can't delete his account using wrong token
+        """
+        self.authenticate_user()
+        token = 'randomtoken'
+
+        res = self.client.post(
+            f'/api/user/delete/{self.uid}/{token}/', follow=True)
+
+        user = User.objects.first()
+
+        self.assertEqual(res.status_code, status.HTTP_406_NOT_ACCEPTABLE)
+        self.assertTrue(user)
+
+    def test_delete_user_as_auth_user_with_wrong_uid(self):
+        """
+        Authenticated User can't delete his account using wrong UID
+        """
+        uid = urlsafe_base64_encode(force_bytes(2137))
+        res = self.client.post(
+            f'/api/user/activate/{uid}/{self.delete_acc_token}/', follow=True)
+
+        user = User.objects.first()
+
+        self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertTrue(user)

@@ -1,4 +1,4 @@
-from rest_framework import request, serializers
+from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from users.models import User

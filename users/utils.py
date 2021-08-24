@@ -15,6 +15,12 @@ class EmailTokenGenerator(PasswordResetTokenGenerator):
         return text_type(user.id) + text_type(timestamp) + text_type(user.is_verified)
 
 
+class DeleteAccountTokenGenerator(PasswordResetTokenGenerator):
+
+    def _make_hash_value(self, user: User, timestamp: int) -> str:
+        return text_type(user.id) + text_type(timestamp) + text_type(user.is_active)
+
+
 def send_email_verification(request: Request, user: User):
     uid = urlsafe_base64_encode(force_bytes(user.id))
     token = email_token_generator.make_token(user)
@@ -47,5 +53,23 @@ def send_email_password_reset(request: Request, user: User):
         print(err)
 
 
+def send_email_delete_user(request: Request, user: User):
+    uid = urlsafe_base64_encode(force_bytes(user.id))
+    token = password_reset_token_generator.make_token(user)
+    domain = get_current_site(request).domain
+
+    link = f'http://{domain}/delete/{uid}/{token}/'
+
+    try:
+        send_mail(subject='Personal Blog - Delete your account',
+                  message=f"Hello {user.username}, click the link below to delete your account.\n{link}\n\n\n"
+                  "If it's not you, immediately change password, your account might be in thief's hands.",
+                  from_email=None, recipient_list=[user.email],
+                  fail_silently=False)
+    except Exception as err:
+        print(err)
+
+
 email_token_generator = EmailTokenGenerator()
 password_reset_token_generator = PasswordResetTokenGenerator()
+delete_acc_token_generator = DeleteAccountTokenGenerator()

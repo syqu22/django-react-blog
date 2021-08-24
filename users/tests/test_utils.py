@@ -3,8 +3,10 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from rest_framework.test import APIRequestFactory, APITestCase
 from users.models import User
-from users.utils import (email_token_generator, password_reset_token_generator,
-                         send_email_password_reset, send_email_verification)
+from users.utils import (delete_acc_token_generator, email_token_generator,
+                         password_reset_token_generator,
+                         send_email_delete_user, send_email_password_reset,
+                         send_email_verification)
 
 
 class TestUtils(APITestCase):
@@ -29,6 +31,16 @@ class TestUtils(APITestCase):
         """
         token = password_reset_token_generator.make_token(self.user)
         token_decoded = password_reset_token_generator.check_token(
+            self.user, token)
+
+        self.assertTrue(token_decoded)
+
+    def test_delete_acc_token_generator(self):
+        """
+        Delete Account Token stays the same after It's decoded
+        """
+        token = delete_acc_token_generator.make_token(self.user)
+        token_decoded = delete_acc_token_generator.check_token(
             self.user, token)
 
         self.assertTrue(token_decoded)
@@ -65,6 +77,24 @@ class TestUtils(APITestCase):
         self.assertEqual(email.to[0], self.user.email)
         self.assertEqual(
             email.subject, 'Personal Blog - Reset your password')
+        self.assertIn(self.user.username, email.body)
+        self.assertIn(uid, email.body)
+        self.assertIn(token, email.body)
+
+    def send_email_delete_user(self):
+        """
+        E-mail with account removal is sent with every important information
+        """
+        send_email_delete_user(self.request, self.user)
+
+        email = mail.outbox[0]
+        uid = urlsafe_base64_encode(force_bytes(self.user.id))
+        token = delete_acc_token_generator.make_token(self.user)
+
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(email.to[0], self.user.email)
+        self.assertEqual(
+            email.subject, 'Personal Blog - Delete your account')
         self.assertIn(self.user.username, email.body)
         self.assertIn(uid, email.body)
         self.assertIn(token, email.body)

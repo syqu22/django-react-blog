@@ -14,10 +14,12 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from users.models import User
 from users.serializers import (AvatarSerializer, CreateUserSerializer,
-                               UserPasswordSerializer, UserPersonalDetailsSerializer,
-                               UserSerializer)
-from users.utils import (email_token_generator, password_reset_token_generator,
-                         send_email_password_reset, send_email_verification)
+                               UserPasswordSerializer,
+                               UserPersonalDetailsSerializer, UserSerializer)
+from users.utils import (delete_acc_token_generator, email_token_generator,
+                         password_reset_token_generator,
+                         send_email_delete_user, send_email_password_reset,
+                         send_email_verification)
 
 
 class GetCurrentUser(APIView):
@@ -160,6 +162,39 @@ class SendEmailVerification(APIView):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
+class SendEmailDeleteUser(APIView):
+    """
+    Send Email to delete User account
+
+    .
+    """
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request: Request, format=None):
+        if not self.request.session.exists(self.request.session.session_key):
+            self.request.session.create()
+
+        # Stop user from spamming email to delete user account
+        if self.request.session.has_key('delete_user_email_sent'):
+            delta = round((self.request.session['delete_user_email_sent'] +
+                           600) - datetime.now().timestamp())
+
+            if delta > 0:
+                return Response({'Too Many Requests': f'Please wait {delta} more seconds before doing another request.'}, status=status.HTTP_429_TOO_MANY_REQUESTS)
+            else:
+                self.request.session.pop('delete_user_email_sent')
+
+        user = request.user
+        if user.is_active:
+            send_email_delete_user(request, user)
+            self.request.session['delete_user_email_sent'] = datetime.now(
+            ).timestamp()
+
+            return Response(status=status.HTTP_200_OK)
+
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
 class ChangeUserPassword(APIView):
     """
     Change user password
@@ -275,6 +310,28 @@ class ActivateUser(APIView):
                 return Response({'Verified': 'Successfully verified user.'}, status=status.HTTP_201_CREATED)
 
             return Response({'Bad Request': 'User is already verified.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({'Invalid Token': 'Given token is not valid'}, status=status.HTTP_406_NOT_ACCEPTABLE)
+
+
+class DeleteUser(APIView):
+    """
+    Delete User account
+
+    Delete a User with given ``UID`` and ``Token``.
+    """
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request: Request, token: str, uid: str, format=None):
+        uidb64 = force_text(urlsafe_base64_decode(uid))
+
+        user = get_object_or_404(User, id=uidb64)
+        token = delete_acc_token_generator.check_token(user, token)
+
+        if token:
+            user.delete()
+
+            return Response({'Deleted': 'Successfully deleted user.'}, status=status.HTTP_201_CREATED)
 
         return Response({'Invalid Token': 'Given token is not valid'}, status=status.HTTP_406_NOT_ACCEPTABLE)
 

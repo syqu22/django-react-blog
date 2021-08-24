@@ -1,8 +1,8 @@
 from django.test import TestCase
 from django.urls import resolve
 from users.views import (ActivateUser, BlacklistToken, ChangeUserDetails,
-                         ChangeUserPassword, CreateUser, GetCurrentUser,
-                         ResetUserPassword, SendEmailPasswordReset,
+                         ChangeUserPassword, CreateUser, DeleteUser, GetCurrentUser,
+                         ResetUserPassword, SendEmailDeleteUser, SendEmailPasswordReset,
                          SendEmailVerification, UploadUserAvatar)
 
 
@@ -77,3 +77,17 @@ class TestUrls(TestCase):
         """
         url = resolve('/api/user/details/')
         assert url.func.cls == ChangeUserDetails
+
+    def test_send_email_delete_user_url(self):
+        """
+        Url is corresponding to SendEmailDeleteUser view
+        """
+        url = resolve('/api/user/delete/')
+        assert url.func.cls == SendEmailDeleteUser
+
+    def test_delete_user_url(self):
+        """
+        Url is corresponding to DeleteUser view
+        """
+        url = resolve('/api/user/delete/uid/token/')
+        assert url.func.cls == DeleteUser
