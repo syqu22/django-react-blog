@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PersonalForm from "./PersonalForm";
 import AvatarForm from "./AvatarForm";
 import PasswordForm from "./PasswordForm";
-import DisableForm from "./DisableForm";
+import DeleteAccountForm from "./DeleteAccountForm";
 
 const User = () => {
   const [tab, setTab] = useState(0);
@@ -16,7 +16,7 @@ const User = () => {
       case 2:
         return <PasswordForm setTab={setTab} />;
       case 3:
-        return <DisableForm />;
+        return <DeleteAccountForm />;
     }
   };
 

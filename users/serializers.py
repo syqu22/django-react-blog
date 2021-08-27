@@ -40,6 +40,8 @@ class CreateUserSerializer(serializers.ModelSerializer):
             raise ValidationError(
                 'Password needs to be at least 6 characters long.')
 
+        return value
+
     def create(self, validated_data):
         password = validated_data.pop('password', None)
 

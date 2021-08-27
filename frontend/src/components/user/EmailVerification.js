@@ -3,22 +3,23 @@ import connection from "../../connection";
 
 const EmailVerification = () => {
   const [error, setError] = useState({});
-  const uid = location.pathname.split("/")[3];
-  const token = location.pathname.split("/")[4];
+  const uid = location.pathname.split("/")[2];
+  const token = location.pathname.split("/")[3];
+
+  console.log(uid);
+  console.log(token);
 
   useEffect(() => {
-    connection.post(`user/activate/${uid}/${token}`).catch((err) => {
+    connection.post(`user/activate/${uid}/${token}/`).catch((err) => {
       setError(err.response.data);
       console.log(err.message);
     });
   }, []);
 
-  console.log(error);
-
   return (
     <div>
-      {error && <p>error.detail</p>}
-      <h1>E-Mail successfully verified.</h1>
+      {error.detail && <span className="invalid-value">{error.detail}</span>}
+      <h1 className="search">E-Mail successfully verified.</h1>
     </div>
   );
 };
