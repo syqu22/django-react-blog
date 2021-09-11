@@ -24,7 +24,7 @@
     "webpack-cli": "^4.7.2"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "moment": "^2.29.1",
     "prop-types": "^15.7.2",
     "react-icons": "^4.2.0",
