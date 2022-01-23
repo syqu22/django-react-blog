@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django.shortcuts import get_object_or_404
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
@@ -78,7 +78,7 @@ class ResetUserPassword(APIView):
 
     def post(self, request: Request, token: str, uid: str, format=None):
         serializer = UserPasswordSerializer(data=request.data)
-        uidb64 = force_text(urlsafe_base64_decode(uid))
+        uidb64 = force_str(urlsafe_base64_decode(uid))
         user = get_object_or_404(User, id=uidb64)
         token = password_reset_token_generator.check_token(user, token)
 
@@ -297,7 +297,7 @@ class ActivateUser(APIView):
 
     @swagger_auto_schema(responses={200: openapi.Response(description='Ok'), 400: openapi.Response(description="Bad Request"), 404: openapi.Response(description='Not Found'), 406: openapi.Response(description="Invalid Token")})
     def post(self, request: Request, token: str, uid: str, format=None):
-        uidb64 = force_text(urlsafe_base64_decode(uid))
+        uidb64 = force_str(urlsafe_base64_decode(uid))
 
         user = get_object_or_404(User, id=uidb64)
         token = email_token_generator.check_token(user, token)
@@ -323,7 +323,7 @@ class DeleteUser(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request: Request, token: str, uid: str, format=None):
-        uidb64 = force_text(urlsafe_base64_decode(uid))
+        uidb64 = force_str(urlsafe_base64_decode(uid))
 
         user = get_object_or_404(User, id=uidb64)
         token = delete_acc_token_generator.check_token(user, token)
