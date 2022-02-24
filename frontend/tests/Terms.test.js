@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
-import Terms from "../../src/components/Terms";
+import Terms from "../src/components/Terms";
 
 let container;
 
@@ -15,7 +15,7 @@ afterEach(() => {
   container = null;
 });
 
-it("Renders terms of service", () => {
+it("Renders terms of service page", () => {
   act(() => {
     ReactDOM.render(<Terms />, container);
   });
@@ -24,7 +24,7 @@ it("Renders terms of service", () => {
   const h2 = container.querySelector("h2");
   const p = container.querySelector("p");
 
-  expect(mainDiv.textContent).toBeTruthy();
+  expect(mainDiv.children).toHaveLength(18);
   expect(h2.textContent).toBe("Terms and Conditions");
   expect(p.textContent).toBe("Welcome to Personal Blog!");
 });

@@ -3,7 +3,7 @@ import React from "react";
 const License = () => {
   return (
     <div className="license">
-      <h3>MIT License Copyright (c) 2021 Aleksander Lejawa</h3>
+      <h3>MIT License Copyright (c) 2022 Aleksander Lejawa</h3>
       <p>
         Permission is hereby granted, free of charge, to any person obtaining a
         copy of this software and associated documentation files (the

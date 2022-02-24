@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
-import Socials from "../../src/components/Socials";
+import Socials from "../src/components/Socials";
 
 let container;
 
@@ -15,7 +15,7 @@ afterEach(() => {
   container = null;
 });
 
-it("Renders socials navbar", () => {
+it("Renders socials navbar page", () => {
   act(() => {
     ReactDOM.render(<Socials />, container);
   });

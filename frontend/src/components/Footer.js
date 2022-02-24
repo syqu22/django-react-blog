@@ -7,7 +7,7 @@ const Footer = () => {
     <div className="footer">
       <footer>
         <div>
-          Blog@2021 by <a href="https://github.com/syqu22">Syqu22</a>
+          Blog@2022 by <a href="https://github.com/syqu22">Syqu22</a>
         </div>
         <div>
           <Link to="/sitemap">Sitemap</Link>

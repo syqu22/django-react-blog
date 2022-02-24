@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
-import Sitemap from "../../src/components/Sitemap";
+import Sitemap from "../src/components/Sitemap";
 
 let container;
 
@@ -15,7 +15,7 @@ afterEach(() => {
   container = null;
 });
 
-it("Renders sitemap", () => {
+it("Renders sitemap page", () => {
   act(() => {
     ReactDOM.render(<Sitemap />, container);
   });
