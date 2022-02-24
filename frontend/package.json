@@ -9,11 +9,12 @@
   "scripts": {
     "dev": "webpack --mode development --watch",
     "build": "webpack --mode production",
+    "sitemap": "node src/sitemap.js",
     "test": "jest"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Syqu",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.14.3",
     "@babel/preset-env": "^7.14.2",

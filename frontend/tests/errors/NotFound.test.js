@@ -15,7 +15,7 @@ afterEach(() => {
   container = null;
 });
 
-it("Renders terms of service page", () => {
+it("Renders not found error page", () => {
   act(() => {
     ReactDOM.render(<NotFound />, container);
   });

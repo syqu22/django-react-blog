@@ -15,7 +15,7 @@ afterEach(() => {
   container = null;
 });
 
-it("Renders terms of service page", () => {
+it("Renders internal server error page", () => {
   act(() => {
     ReactDOM.render(<InternalServer />, container);
   });
