@@ -6,9 +6,6 @@ const EmailVerification = () => {
   const uid = location.pathname.split("/")[2];
   const token = location.pathname.split("/")[3];
 
-  console.log(uid);
-  console.log(token);
-
   useEffect(() => {
     connection.post(`user/activate/${uid}/${token}/`).catch((err) => {
       setError(err.response.data);
