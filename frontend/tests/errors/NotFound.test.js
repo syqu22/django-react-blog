@@ -1,26 +1,9 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import { act } from "react-dom/test-utils";
+import { render } from "@testing-library/react";
 import NotFound from "../../src/components/errors/NotFound";
+import "@testing-library/jest-dom/extend-expect";
 
-let container;
-
-beforeEach(() => {
-  container = document.createElement("div");
-  document.body.appendChild(container);
-});
-
-afterEach(() => {
-  document.body.removeChild(container);
-  container = null;
-});
-
-it("Renders terms of service page", () => {
-  act(() => {
-    ReactDOM.render(<NotFound />, container);
-  });
-
-  const h1 = container.querySelector(".error");
-
-  expect(h1.textContent).toBe("404 - Not Found");
+test("renders Not found error component", async () => {
+  const { getByText } = render(<NotFound />);
+  expect(getByText("404 - Not Found")).toBeInTheDocument();
 });

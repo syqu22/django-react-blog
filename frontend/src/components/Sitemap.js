@@ -1,7 +1,7 @@
 import React from "react";
 
 const Sitemap = () => {
-  return <div></div>;
+  return <div>Sitemap</div>;
 };
 
 export default Sitemap;

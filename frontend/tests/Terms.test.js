@@ -1,30 +1,11 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import { act } from "react-dom/test-utils";
+import { render } from "@testing-library/react";
 import Terms from "../src/components/Terms";
+import "@testing-library/jest-dom/extend-expect";
 
-let container;
+test("renders terms of service component", async () => {
+  const { getByText } = render(<Terms />);
 
-beforeEach(() => {
-  container = document.createElement("div");
-  document.body.appendChild(container);
-});
-
-afterEach(() => {
-  document.body.removeChild(container);
-  container = null;
-});
-
-it("Renders terms of service page", () => {
-  act(() => {
-    ReactDOM.render(<Terms />, container);
-  });
-
-  const mainDiv = container.querySelector(".terms");
-  const h2 = container.querySelector("h2");
-  const p = container.querySelector("p");
-
-  expect(mainDiv.children).toHaveLength(18);
-  expect(h2.textContent).toBe("Terms and Conditions");
-  expect(p.textContent).toBe("Welcome to Personal Blog!");
+  expect(getByText("Terms and Conditions")).toBeInTheDocument();
+  expect(getByText("Welcome to Personal Blog!")).toBeInTheDocument();
 });

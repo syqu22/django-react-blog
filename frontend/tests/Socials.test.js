@@ -1,37 +1,27 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import { act } from "react-dom/test-utils";
+import { render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import Socials from "../src/components/Socials";
 
-let container;
+// Mock window.location
+delete window.location;
+window.location = { assign: jest.fn() };
 
-beforeEach(() => {
-  container = document.createElement("div");
-  document.body.appendChild(container);
+test("renders socials component", async () => {
+  const { getAllByRole } = render(<Socials />);
+  expect(getAllByRole("button")).toHaveLength(3);
 });
 
-afterEach(() => {
-  document.body.removeChild(container);
-  container = null;
-});
+test("buttons refer to the respective urls", async () => {
+  const { getAllByRole } = render(<Socials />);
+  const buttons = getAllByRole("button");
 
-it("Renders socials navbar page", () => {
-  act(() => {
-    ReactDOM.render(<Socials />, container);
-  });
+  userEvent.click(buttons[0]);
+  expect(window.location.href).toContain("https://www.facebook.com/");
 
-  const navbar = container.querySelector("div");
-  const buttons = container.querySelectorAll("button");
+  userEvent.click(buttons[1]);
+  expect(window.location.href).toContain("http://instagram.com/");
 
-  for (const i of buttons) {
-    expect(navbar.children[i]).toBe(buttons[i]);
-  }
-  expect(buttons).toHaveLength(3);
-});
-
-// TODO
-it("Buttons onClick redirects to set socials", () => {
-  act(() => {
-    ReactDOM.render(<Socials />, container);
-  });
+  userEvent.click(buttons[2]);
+  expect(window.location.href).toContain("https://twitter.com/");
 });
