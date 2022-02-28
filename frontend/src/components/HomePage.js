@@ -21,7 +21,7 @@ const HomePage = () => {
   return (
     <>
       <Hero image_url={"/media/images/hero1.jpg"}>
-        <h1>Welcome to my Blog</h1>
+        <h1>Welcome to my Blog!</h1>
         <span>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
           semper eu est eget consectetur. Cras tristique nec nisi ac auctor.

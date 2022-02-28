@@ -1,9 +1,8 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
-import { MemoryRouter } from "react-router-dom";
+import { Router, MemoryRouter } from "react-router-dom";
 import Footer from "../src/components/Footer";
 import "@testing-library/jest-dom/extend-expect";
 
