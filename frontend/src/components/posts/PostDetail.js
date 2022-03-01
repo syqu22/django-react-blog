@@ -47,7 +47,7 @@ const PostDetail = () => {
       <h1>{post.title}</h1>
       <Tags values={post.tags} />
       <div className="post-info">
-        <img src={post.author.avatar} className="avatar" />
+        <img src={post.author.avatar} className="avatar-medium" />
         <p>
           {post.author.first_name} {post.author.last_name}
         </p>

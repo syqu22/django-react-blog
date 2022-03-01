@@ -268,6 +268,10 @@ a {
   padding: 3rem;
 }
 
+.sitemap {
+  padding: 3rem;
+}
+
 .license {
   padding: 2.5rem;
 }
@@ -344,8 +348,29 @@ a {
 .avatar {
   width: 50px;
   height: 50px;
-  border-radius: 50%;
   border: 2px solid var(--secondary);
+}
+
+.avatar-medium {
+  width: 70px;
+  height: 70px;
+  border: 2px solid var(--secondary);
+}
+
+.avatar-big {
+  width: 128px;
+  height: 128px;
+  border: 2px solid var(--secondary);
+}
+
+.avatar-preview {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 1rem;
+}
+
+.avatar-preview img {
+  align-self: end;
 }
 
 .pagination {
@@ -499,10 +524,17 @@ a {
   position: relative;
   bottom: 1rem;
   margin-left: 1rem;
+  font-size: larger;
 }
 
 .left-item p {
   color: var(--light);
+}
+
+.left-item b {
+  position: relative;
+  top: 1rem;
+  display: block;
 }
 
 .left-item img {
@@ -548,6 +580,8 @@ a {
 
 .user-item {
   display: grid;
+  position: relative;
+  bottom: 10rem;
 }
 
 .user-item input[type="text"],
@@ -574,6 +608,7 @@ a {
 
 .file-input {
   cursor: pointer;
+  margin-top: 1rem;
   border: 1px solid var(--secondary);
 }
 
@@ -683,6 +718,10 @@ footer {
 
   .post-info {
     justify-content: center;
+  }
+
+  .post-info p {
+    font-size: large;
   }
 
   .user-form-item input {

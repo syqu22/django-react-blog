@@ -12,6 +12,7 @@ const Comment = ({ values }) => {
       <div className="left-item">
         <img src={values.author.avatar} className="avatar" />
         <span>{values.author.username}</span>
+        {values.author.is_staff ? <b>Staff Member</b> : <b>User</b>}
         <p>{formatDate(values.created_at)}</p>
       </div>
       <div className="right-item">{values.body}</div>

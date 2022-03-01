@@ -21,7 +21,7 @@ const AvatarForm = () => {
     e.preventDefault();
     const file = fileInput.current.files[0];
 
-    if (file.size > 5120) {
+    if (file.size > 41943040) {
       setError({ detail: "Image cannot exceed 5MB." });
     } else {
       let formData = new FormData();
@@ -39,8 +39,11 @@ const AvatarForm = () => {
       {error.detail && <span className="invalid-value">{error.detail}</span>}
       {error.avatar && <span className="invalid-value">{error.avatar}</span>}
 
-      <span>Preview</span>
-      <img src={avatar.url} className="avatar" />
+      <div className="avatar-preview">
+        <img src={avatar.url} className="avatar" />
+        <img src={avatar.url} className="avatar-medium" />
+        <img src={avatar.url} className="avatar-big" />
+      </div>
       <label htmlFor="file" className="file-input">
         Upload Avatar
       </label>
@@ -49,8 +52,6 @@ const AvatarForm = () => {
         type="file"
         name="file"
         id="file"
-        value=""
-        title=""
         accept="image/png, image/jpeg"
         ref={fileInput}
         onChange={handleChange}
