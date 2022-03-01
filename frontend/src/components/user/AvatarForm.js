@@ -21,7 +21,7 @@ const AvatarForm = () => {
     e.preventDefault();
     const file = fileInput.current.files[0];
 
-    if (file.size > 41943040) {
+    if (file.size > 5242880) {
       setError({ detail: "Image cannot exceed 5MB." });
     } else {
       let formData = new FormData();
