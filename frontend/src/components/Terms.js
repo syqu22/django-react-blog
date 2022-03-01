@@ -11,8 +11,7 @@ const Terms = () => {
       <p>Welcome to Personal Blog!</p>
       <p>
         These terms and conditions outline the rules and regulations for the use
-        of Personal Blog&apos;s Website, located at
-        {websiteUrl}.
+        of Personal Blog&apos;s Website, located at {websiteUrl}.
       </p>
       <p>
         By accessing this website we assume you accept these terms and

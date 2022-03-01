@@ -1,0 +1,32 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>http://www.example.com/</loc>
+    </url>
+    <url>
+        <loc>http://www.example.com/user/</loc>
+    </url>
+    <url>
+        <loc>http://www.example.com/signup/</loc>
+    </url>
+    <url>
+        <loc>http://www.example.com/login/</loc>
+    </url>
+    <url>
+        <loc>http://www.example.com/posts/</loc>
+    </url>
+    <url>
+        <loc>http://www.example.com/sitemap/</loc>
+    </url>
+    <url>
+        <loc>http://www.example.com/license/</loc>
+    </url>
+    <url>
+        <loc>http://www.example.com/privacy/</loc>
+    </url>
+    <url>
+        <loc>http://www.example.com/terms/</loc>
+    </url>
+</urlset>

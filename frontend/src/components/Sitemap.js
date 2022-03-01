@@ -1,7 +1,15 @@
 import React from "react";
+import SitemapData from "../../sitemap.xml";
 
 const Sitemap = () => {
-  return <div>Sitemap</div>;
+  return (
+    <div className="terms">
+      <h1>
+        <strong>Sitemap</strong>
+      </h1>
+      {SitemapData}
+    </div>
+  );
 };
 
 export default Sitemap;

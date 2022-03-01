@@ -16,6 +16,10 @@ module.exports = {
           loader: "babel-loader",
         },
       },
+      {
+        test: /\.xml$/i,
+        use: "raw-loader",
+      },
     ],
   },
   optimization: {
