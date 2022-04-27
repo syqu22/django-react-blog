@@ -24,7 +24,6 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     connection
       .post("token/", {
         username: formData.username,

@@ -43,7 +43,7 @@ const PasswordReset = () => {
 
   return (
     <div className="user-container-single">
-      <form className="user-item" onSubmit={handleSubmit} noValidate>
+      <form className="user-form-item" onSubmit={handleSubmit} noValidate>
         <input type="text" autoComplete="username" hidden />
         <h1>Change Password</h1>
         <label htmlFor="password">

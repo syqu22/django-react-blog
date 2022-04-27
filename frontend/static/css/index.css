@@ -474,7 +474,6 @@ a {
 }
 
 .invalid-value {
-  float: right;
   color: var(--danger);
 }
 

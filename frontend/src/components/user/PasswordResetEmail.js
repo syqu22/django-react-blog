@@ -27,7 +27,7 @@ const PasswordResetEmail = () => {
 
   return (
     <div className="user-container-single">
-      <form className="user-item" onSubmit={handleSubmit} noValidate>
+      <form className="user-form-item" onSubmit={handleSubmit} noValidate>
         <h1>Password reset</h1>
         <label htmlFor="email">
           Your email

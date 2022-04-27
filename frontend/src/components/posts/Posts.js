@@ -34,7 +34,7 @@ const Posts = () => {
   };
 
   if (postsList.length === 0) {
-    return <h1 className="error">There are no public posts</h1>;
+    return <h1 className="error">There are currently no public posts</h1>;
   }
 
   return (
