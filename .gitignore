@@ -1,7 +1,6 @@
 .vscode
 .pytest_cache
 venv
-migrations
 __pycache__
 node_modules
 dist
